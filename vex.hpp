@@ -1,4 +1,5 @@
 #define _XS_VEX2_
+#include <string>
 template <typename T> struct vex2;
 template <typename T> struct vex3;
 template <typename T> struct vex4;
@@ -6,6 +7,11 @@ template <typename T> struct vex4;
 template <typename T>
 struct vex2 {
     T x, y;
+    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y)); };
+    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
+#ifdef _XS_STRINX_
+    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y)); };
+#endif
     vex2() = default;
     vex2(const vex2<T>&) = default;
     template <typename _T> vex2(_T v) { x = y = T(v); };
@@ -137,6 +143,11 @@ struct vex2 {
 template <typename T>
 struct vex3 {
     T x, y, z;
+    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
+#ifdef _XS_STRINX_
+    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+#endif
     vex3() = default;
     vex3(const vex3<T>&) = default;
     template <typename _T> vex3(_T v) { x = y = z = T(v); };
@@ -270,6 +281,11 @@ struct vex3 {
 template <typename T>
 struct vex4 {
     T x, y, z, w;
+    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
+#ifdef _XS_STRINX_
+    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+#endif
     vex4() = default;
     vex4(const vex4<T>&) = default;
     template <typename _T> vex4(_T v) { x = y = z = w = T(v); };
@@ -402,23 +418,23 @@ struct vex4 {
     friend std::ostream& operator<<(std::ostream& os, const vex4<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w; return os; };
 };
 
-template<> vex2<int>& vex2<int>::normalize()  = delete;
+template<> vex2<int>& vex2<int>::normalize()= delete;
 template<> vex2<int> vex2<int>::ceil()      = delete;
 template<> vex2<int> vex2<int>::floor()     = delete;
 template<> vex2<int> vex2<int>::round()     = delete;
 template<> vex2<int> vex2<int>::trunc()     = delete;
 
-template<> vex3<int>& vex3<int>::normalize()  = delete;
+template<> vex3<int>& vex3<int>::normalize()= delete;
 template<> vex3<int> vex3<int>::ceil()      = delete;
 template<> vex3<int> vex3<int>::floor()     = delete;
 template<> vex3<int> vex3<int>::round()     = delete;
 template<> vex3<int> vex3<int>::trunc()     = delete;
 
-template<> vex4<int>& vex4<int>::normalize() = delete;
-template<> vex4<int> vex4<int>::ceil() = delete;
-template<> vex4<int> vex4<int>::floor() = delete;
-template<> vex4<int> vex4<int>::round() = delete;
-template<> vex4<int> vex4<int>::trunc() = delete;
+template<> vex4<int>& vex4<int>::normalize()= delete;
+template<> vex4<int> vex4<int>::ceil()      = delete;
+template<> vex4<int> vex4<int>::floor()     = delete;
+template<> vex4<int> vex4<int>::round()     = delete;
+template<> vex4<int> vex4<int>::trunc()     = delete;
 
 template<> template <typename _T> vex2<std::string> vex2<std::string>::operator%(_T v)          = delete;
 template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator%=(_T v)        = delete;
