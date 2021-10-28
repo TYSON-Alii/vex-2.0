@@ -94,6 +94,24 @@ struct vex2 {
     vex2<T> percent(T v)        { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v)); };
     vex2<T> percent(T v1, T v2) { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2)); };
 
+    template <typename _T>
+    vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex2<T>& operator=(vex3<_T> v)   { x  = T(v.x);  y  = T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator+=(vex3<_T> v)  { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator-=(vex3<_T> v)  { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator*=(vex3<_T> v)  { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator/=(vex3<_T> v)  { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator+(vex3<_T> v)   { return vex2<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> vex2<T>& operator-(vex3<_T> v)   { return vex2<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> vex2<T>& operator*(vex3<_T> v)   { return vex2<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> vex2<T>& operator/(vex3<_T> v)   { return vex2<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T>  bool operator==(vex3<_T> v) { return this->x == T(v.x)  && this->y == T(v.y); };
+    template <typename _T>  bool operator!=(vex3<_T> v) { return this->x != T(v.x)  && this->y != T(v.y); };
+    template <typename _T>  bool operator>(vex3<_T> v)  { return this->x > T(v.x)   && this->y > T(v.y);  };
+    template <typename _T>  bool operator<(vex3<_T> v)  { return this->x < T(v.x)   && this->y < T(v.y);  };
+    template <typename _T>  bool operator>=(vex3<_T> v) { return this->x >= T(v.x)  && this->y >= T(v.y); };
+    template <typename _T>  bool operator<=(vex3<_T> v) { return this->x <= T(v.x)  && this->y <= T(v.y); };
+
     friend std::ostream& operator<<(std::ostream& os, const vex2<T>& v) { os << v.x << ' ' << v.y; return os; };
 };
 
@@ -190,6 +208,24 @@ struct vex3 {
     vex3<T> exp()       { return vex3<T>(std::exp(x)   , std::exp(y)  , std::exp(z)  ); };
     vex3<T> percent(T v)        { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v)); };
     vex3<T> percent(T v1, T v2) { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2)); };
+    
+    template <typename _T>
+    vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex3<T>& operator=(vex2<_T> v)   { x  = T(v.x);  y  = T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator+=(vex2<_T> v)  { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator-=(vex2<_T> v)  { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator*=(vex2<_T> v)  { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator/=(vex2<_T> v)  { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator+(vex2<_T> v)   { return vex3<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> vex3<T>& operator-(vex2<_T> v)   { return vex3<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> vex3<T>& operator*(vex2<_T> v)   { return vex3<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> vex3<T>& operator/(vex2<_T> v)   { return vex3<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T>  bool operator==(vex2<_T> v) { return this->x == T(v.x)  && this->y == T(v.y); };
+    template <typename _T>  bool operator!=(vex2<_T> v) { return this->x != T(v.x)  && this->y != T(v.y); };
+    template <typename _T>  bool operator>(vex2<_T> v)  { return this->x > T(v.x)   && this->y > T(v.y);  };
+    template <typename _T>  bool operator<(vex2<_T> v)  { return this->x < T(v.x)   && this->y < T(v.y);  };
+    template <typename _T>  bool operator>=(vex2<_T> v) { return this->x >= T(v.x)  && this->y >= T(v.y); };
+    template <typename _T>  bool operator<=(vex2<_T> v) { return this->x <= T(v.x)  && this->y <= T(v.y); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex3<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z; return os; };
 };
