@@ -36,6 +36,12 @@ struct vex2 {
     template <typename _T>
     vex2<T>& operator%=(vex2<_T> v) { x = std::rand() % int(v.x); y = std::rand() % int(v.y); return *this; };
 
+    template <typename _T>
+    vex2<T> operator|(vex2<_T> v) { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+
+    template <typename _T>
+    vex2<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+
     vex2<T>& operator++() { x++; y++; return *this; };
     vex2<T>& operator--() { x--; y--; return *this; };
 
