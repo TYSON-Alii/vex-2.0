@@ -1,5 +1,3 @@
-#include <iostream>
-
 template <typename T>
 struct vex2 {
     T x, y;
