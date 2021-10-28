@@ -59,23 +59,23 @@ struct vex2 {
     template <typename _T>  vex2<T> operator/(_T v)         { return vex2<T>(this->x / T(v), this->y / T(v)); };
     template <typename _T>  vex2<T> operator/(vex2<_T> v)   { return vex2<T>(this->x / T(v.x), this->y / T(v.y)); };
 
-    template <typename _T>  bool operator==(_T v)       { return this->x == T(v) && this->y == T(v)); };
-    template <typename _T>  bool operator==(vex2<_T> v) { return this->x == T(v.x) && this->y == T(v.y)); };
+    template <typename _T>  bool operator==(_T v)       { return this->x == T(v) && this->y == T(v); };
+    template <typename _T>  bool operator==(vex2<_T> v) { return this->x == T(v.x) && this->y == T(v.y); };
 
-    template <typename _T>  bool operator!=(_T v)       { return this->x != T(v) && this->y != T(v)); };
-    template <typename _T>  bool operator!=(vex2<_T> v) { return this->x != T(v.x) && this->y != T(v.y)); };
+    template <typename _T>  bool operator!=(_T v)       { return this->x != T(v) && this->y != T(v); };
+    template <typename _T>  bool operator!=(vex2<_T> v) { return this->x != T(v.x) && this->y != T(v.y); };
 
-    template <typename _T>  bool operator>(_T v)        { return this->x > T(v) && this->y > T(v)); };
-    template <typename _T>  bool operator>(vex2<_T> v)  { return this->x > T(v.x) && this->y > T(v.y)); };
+    template <typename _T>  bool operator>(_T v)        { return this->x > T(v) && this->y > T(v); };
+    template <typename _T>  bool operator>(vex2<_T> v)  { return this->x > T(v.x) && this->y > T(v.y); };
 
-    template <typename _T>  bool operator<(_T v)        { return this->x < T(v) && this->y < T(v)); };
-    template <typename _T>  bool operator<(vex2<_T> v)  { return this->x < T(v.x) && this->y < T(v.y)); };
+    template <typename _T>  bool operator<(_T v)        { return this->x < T(v) && this->y < T(v); };
+    template <typename _T>  bool operator<(vex2<_T> v)  { return this->x < T(v.x) && this->y < T(v.y); };
 
-    template <typename _T>  bool operator>=(_T v)       { return this->x >= T(v) && this->y >= T(v)); };
-    template <typename _T>  bool operator>=(vex2<_T> v) { return this->x >= T(v.x) && this->y >= T(v.y)); };
+    template <typename _T>  bool operator>=(_T v)       { return this->x >= T(v) && this->y >= T(v); };
+    template <typename _T>  bool operator>=(vex2<_T> v) { return this->x >= T(v.x) && this->y >= T(v.y); };
 
-    template <typename _T>  bool operator<=(_T v)       { return this->x <= T(v) && this->y <= T(v)); };
-    template <typename _T>  bool operator<=(vex2<_T> v) { return this->x <= T(v.x) && this->y <= T(v.y)); };
+    template <typename _T>  bool operator<=(_T v)       { return this->x <= T(v) && this->y <= T(v); };
+    template <typename _T>  bool operator<=(vex2<_T> v) { return this->x <= T(v.x) && this->y <= T(v.y); };
 
     void normalize(){ *this /= x > y ? x : y; };
     vex2<T> ceil()  { return vex2<T>(std::ceil(x), std::ceil(y)); };
@@ -125,7 +125,7 @@ template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator
 template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator/=(vex2<_T> v)  = delete;
 template<> vex2<std::string>& vex2<std::string>::operator++()                                   = delete;
 template<> vex2<std::string>& vex2<std::string>::operator--()                                   = delete;
-template<> void vex2<std::string>::normalize() = delete;
+template<> void vex2<std::string>::normalize()                                                  = delete;
 template<> vex2<std::string> vex2<std::string>::ceil()                                          = delete;
 template<> vex2<std::string> vex2<std::string>::floor()                                         = delete;
 template<> vex2<std::string> vex2<std::string>::abs()                                           = delete;
