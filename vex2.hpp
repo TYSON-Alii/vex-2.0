@@ -18,6 +18,27 @@ struct vex2 {
     template<typename _T>
     vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y); return *this; };
 
+    vex2<T> operator!() { return vex2<T>(y, x); };
+    vex2<T>& swap() { *this = vex2<T>(y, x); return *this; };
+
+    vex2<T> operator()() { return *this; };
+    vex2<T> copy() { return *this; };
+
+    T& operator[](int v) { return fmod(v, 2) == 0 ? x : y; };
+
+    template <typename _T>
+    vex2<T> operator%(_T v) { return vex2<T>(std::rand() % int(v), std::rand() % int(v)); };
+    template <typename _T>
+    vex2<T> operator%(vex2<_T> v) { return vex2<T>(std::rand() % int(v.x), std::rand() % int(v.y)); };
+
+    template <typename _T>
+    vex2<T>& operator%=(_T v) { x = std::rand() % int(v); y = std::rand() % int(v); return *this; };
+    template <typename _T>
+    vex2<T>& operator%=(vex2<_T> v) { x = std::rand() % int(v.x); y = std::rand() % int(v.y); return *this; };
+
+    vex2<T>& operator++() { x++; y++; return *this; };
+    vex2<T>& operator--() { x--; y--; return *this; };
+
     template <typename _T>
     vex2<T>& operator+=(_T v) { x += T(v); y += T(v); return *this; };
     template<typename _T>
@@ -39,24 +60,54 @@ struct vex2 {
     vex2<T>& operator/=(vex2<_T> v) { x /= T(v.x); y /= T(v.y); return *this; };
 
     template <typename _T>
-    vex2<T> operator+(_T v) { return vex2<T>(this->x + v, this->y + v); };
+    vex2<T> operator+(_T v) { return vex2<T>(this->x + T(v), this->y + T(v)); };
     template<typename _T>
-    vex2<T> operator+(vex2<_T> v) { return vex2<T>(this->x + v.x, this->y + v.y); };
+    vex2<T> operator+(vex2<_T> v) { return vex2<T>(this->x + T(v.x), this->y + T(v.y)); };
 
     template <typename _T>
-    vex2<T> operator-(_T v) { return vex2<T>(this->x - v, this->y - v); };
+    vex2<T> operator-(_T v) { return vex2<T>(this->x - T(v), this->y - T(v)); };
     template<typename _T>
-    vex2<T> operator-(vex2<_T> v) { return vex2<T>(this->x - v.x, this->y - v.y); };
+    vex2<T> operator-(vex2<_T> v) { return vex2<T>(this->x - T(v.x), this->y - T(v.y)); };
 
     template <typename _T>
-    vex2<T> operator*(_T v) { return vex2<T>(this->x * v, this->y * v); };
+    vex2<T> operator*(_T v) { return vex2<T>(this->x * T(v), this->y * T(v)); };
     template<typename _T>
-    vex2<T> operator*(vex2<_T> v) { return vex2<T>(this->x * v.x, this->y * v.y); };
+    vex2<T> operator*(vex2<_T> v) { return vex2<T>(this->x * T(v.x), this->y * T(v.y)); };
 
     template <typename _T>
-    vex2<T> operator/(_T v) { return vex2<T>(this->x / v, this->y / v); };
+    vex2<T> operator/(_T v) { return vex2<T>(this->x / T(v), this->y / T(v)); };
     template<typename _T>
-    vex2<T> operator/(vex2<_T> v) { return vex2<T>(this->x / v.x, this->y / v.y); };
+    vex2<T> operator/(vex2<_T> v) { return vex2<T>(this->x / T(v.x), this->y / T(v.y)); };
+
+    template <typename _T>
+    bool operator==(_T v) { return this->x == T(v) && this->y == T(v)); };
+    template<typename _T>
+    bool operator==(vex2<_T> v) { return this->x == T(v.x) && this->y == T(v.y)); };
+
+    template <typename _T>
+    bool operator!=(_T v) { return this->x != T(v) && this->y != T(v)); };
+    template<typename _T>
+    bool operator!=(vex2<_T> v) { return this->x != T(v.x) && this->y != T(v.y)); };
+
+    template <typename _T>
+    bool operator>(_T v) { return this->x > T(v) && this->y > T(v)); };
+    template<typename _T>
+    bool operator>(vex2<_T> v) { return this->x > T(v.x) && this->y > T(v.y)); };
+
+    template <typename _T>
+    bool operator<(_T v) { return this->x < T(v) && this->y < T(v)); };
+    template<typename _T>
+    bool operator<(vex2<_T> v) { return this->x < T(v.x) && this->y < T(v.y)); };
+
+    template <typename _T>
+    bool operator>=(_T v) { return this->x >= T(v) && this->y >= T(v)); };
+    template<typename _T>
+    bool operator>=(vex2<_T> v) { return this->x >= T(v.x) && this->y >= T(v.y)); };
+
+    template <typename _T>
+    bool operator<=(_T v) { return this->x <= T(v) && this->y <= T(v)); };
+    template<typename _T>
+    bool operator<=(vex2<_T> v) { return this->x <= T(v.x) && this->y <= T(v.y)); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex2<T>& v) { os << v.x << ' ' << v.y; return os; };
 };
