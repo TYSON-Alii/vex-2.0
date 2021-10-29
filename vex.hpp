@@ -25,6 +25,7 @@ struct vex2 {
     template <> vex2<T>& operator=(std::string v);
 
     bool isEmpty() { return (x && y) ? false : true; };
+    operator bool() { return isEmpty(); };
 
     vex2<T>& operator~(){ x = T(); y = T(); return *this; };
     bool operator!() { return !isEmpty(); };
@@ -175,6 +176,7 @@ struct vex3 {
     template <> vex3<T>& operator=(std::string v);
 
     bool isEmpty() { return (x && y && z) ? false : true; };
+    operator bool() { return isEmpty(); };
 
     vex3<T>& operator~() { x = T(); y = T(); z = T(); return *this; };
     bool operator!() { return !isEmpty(); };
@@ -325,6 +327,7 @@ struct vex4 {
     template <> vex4<T>& operator=(std::string v);
 
     bool isEmpty() { return (x && y && y && z) ? false : true; };
+    operator bool() { return isEmpty(); };
 
     vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
     bool operator!() { return !isEmpty(); };
