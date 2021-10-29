@@ -101,6 +101,8 @@ struct vex2 {
     template <typename _T>  bool operator<=(_T v)       { return this->x <= T(v)    && this->y <= T(v); };
     template <typename _T>  bool operator<=(vex2<_T> v) { return this->x <= T(v.x)  && this->y <= T(v.y); };
 
+    //template <typename _T> vex2<T>& operator<<(_T& v) { *this = *reinterpret_cast<T*>(v); return *this; };
+
     vex2<T>& normalize(){ *this /= x > y ? x : y; return *this; };
     vex2<T> ceil()      { return vex2<T>(std::ceil(x),  std::ceil(y)); };
     vex2<T> floor()     { return vex2<T>(std::floor(x), std::floor(y)); };
@@ -458,6 +460,11 @@ template<> vex2<int> vex2<int>::ceil()      = delete;
 template<> vex2<int> vex2<int>::floor()     = delete;
 template<> vex2<int> vex2<int>::round()     = delete;
 template<> vex2<int> vex2<int>::trunc()     = delete;
+template<> vex2<size_t>& vex2<size_t>::normalize()= delete;
+template<> vex2<size_t> vex2<size_t>::ceil()      = delete;
+template<> vex2<size_t> vex2<size_t>::floor()     = delete;
+template<> vex2<size_t> vex2<size_t>::round()     = delete;
+template<> vex2<size_t> vex2<size_t>::trunc()     = delete;
 template<> vex2<long int>& vex2<long int>::normalize()= delete;
 template<> vex2<long int> vex2<long int>::ceil()      = delete;
 template<> vex2<long int> vex2<long int>::floor()     = delete;
@@ -474,6 +481,11 @@ template<> vex3<int> vex3<int>::ceil()      = delete;
 template<> vex3<int> vex3<int>::floor()     = delete;
 template<> vex3<int> vex3<int>::round()     = delete;
 template<> vex3<int> vex3<int>::trunc()     = delete;
+template<> vex3<size_t>& vex3<size_t>::normalize()= delete;
+template<> vex3<size_t> vex3<size_t>::ceil()      = delete;
+template<> vex3<size_t> vex3<size_t>::floor()     = delete;
+template<> vex3<size_t> vex3<size_t>::round()     = delete;
+template<> vex3<size_t> vex3<size_t>::trunc()     = delete;
 template<> vex3<long int>& vex3<long int>::normalize()= delete;
 template<> vex3<long int> vex3<long int>::ceil()      = delete;
 template<> vex3<long int> vex3<long int>::floor()     = delete;
@@ -490,6 +502,11 @@ template<> vex4<int> vex4<int>::ceil()      = delete;
 template<> vex4<int> vex4<int>::floor()     = delete;
 template<> vex4<int> vex4<int>::round()     = delete;
 template<> vex4<int> vex4<int>::trunc()     = delete;
+template<> vex4<size_t>& vex4<size_t>::normalize()= delete;
+template<> vex4<size_t> vex4<size_t>::ceil()      = delete;
+template<> vex4<size_t> vex4<size_t>::floor()     = delete;
+template<> vex4<size_t> vex4<size_t>::round()     = delete;
+template<> vex4<size_t> vex4<size_t>::trunc()     = delete;
 template<> vex4<long int>& vex4<long int>::normalize()= delete;
 template<> vex4<long int> vex4<long int>::ceil()      = delete;
 template<> vex4<long int> vex4<long int>::floor()     = delete;
@@ -698,93 +715,106 @@ template<> vex4<strinx> vex4<strinx>::percent(strinx v1, strinx v2, strinx v3, s
 typedef vex4<strinx> vex4x;
 #endif
 
-template<> template<> vex2<float>::vex2(std::string v)          { x = y = std::atof(v.c_str()); };
-template<> template<> vex2<int>::vex2(std::string v)            { x = y = std::atoi(v.c_str()); };
-template<> template<> vex2<long int>::vex2(std::string v)       { x = y = std::atoi(v.c_str()); };
-template<> template<> vex2<long long int>::vex2(std::string v)  { x = y = std::atoi(v.c_str()); };
-template<> template<> vex2<double>::vex2(std::string v)         { x = y = std::atof(v.c_str()); };
-template<> template<> vex2<long double>::vex2(std::string v)    { x = y = std::atof(v.c_str()); };
+template<> template<> vex2<float>::vex2(std::string v)          { x = y = std::stof(v.c_str()); };
+template<> template<> vex2<int>::vex2(std::string v)            { x = y = std::stoi(v.c_str()); };
+template<> template<> vex2<size_t>::vex2(std::string v)         { x = y = std::stoi(v.c_str()); };
+template<> template<> vex2<long int>::vex2(std::string v)       { x = y = std::stoi(v.c_str()); };
+template<> template<> vex2<long long int>::vex2(std::string v)  { x = y = std::stoi(v.c_str()); };
+template<> template<> vex2<double>::vex2(std::string v)         { x = y = std::stof(v.c_str()); };
+template<> template<> vex2<long double>::vex2(std::string v)    { x = y = std::stof(v.c_str()); };
 
-template<> template<> vex2<float>::vex2(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex2<int>::vex2(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex2<long int>::vex2(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex2<long long int>::vex2(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex2<double>::vex2(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex2<long double>::vex2(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex2<float>::vex2(std::string v1, std::string v2)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex2<int>::vex2(std::string v1, std::string v2)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex2<size_t>::vex2(std::string v1, std::string v2)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex2<long int>::vex2(std::string v1, std::string v2)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex2<long long int>::vex2(std::string v1, std::string v2) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex2<double>::vex2(std::string v1, std::string v2)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex2<long double>::vex2(std::string v1, std::string v2)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
 
-template<> template<> vex2<float>& vex2<float>::operator=(std::string v)                { x = y = std::atof(v.c_str()); return *this; };
-template<> template<> vex2<int>& vex2<int>::operator=(std::string v)                    { x = y = std::atoi(v.c_str()); return *this; };
-template<> template<> vex2<long int>& vex2<long int>::operator=(std::string v)          { x = y = std::atoi(v.c_str()); return *this; };
-template<> template<> vex2<long long int>& vex2<long long int>::operator=(std::string v){ x = y = std::atoi(v.c_str()); return *this; };
-template<> template<> vex2<double>& vex2<double>::operator=(std::string v)              { x = y = std::atof(v.c_str()); return *this; };
-template<> template<> vex2<long double>& vex2<long double>::operator=(std::string v)    { x = y = std::atof(v.c_str()); return *this; };
-
-
-template<> template<> vex3<float>::vex3(std::string v)          { x = y = z = std::atof(v.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v)            { x = y = z = std::atoi(v.c_str()); };
-template<> template<> vex3<long int>::vex3(std::string v)       { x = y = z = std::atoi(v.c_str()); };
-template<> template<> vex3<long long int>::vex3(std::string v)  { x = y = z = std::atoi(v.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v)         { x = y = z = std::atof(v.c_str()); };
-template<> template<> vex3<long double>::vex3(std::string v)    { x = y = z = std::atof(v.c_str()); };
-
-template<> template<> vex3<float>::vex3(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex3<long int>::vex3(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex3<long double>::vex3(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-
-template<> template<> vex3<float>::vex3(std::string v1, std::string v2, std::string v3)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v1, std::string v2, std::string v3)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex3<long int>::vex3(std::string v1, std::string v2, std::string v3)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2, std::string v3) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v1, std::string v2, std::string v3)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex3<long double>::vex3(std::string v1, std::string v2, std::string v3)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-
-template<> template<> vex3<float>& vex3<float>::operator=(std::string v)                    { x = y = z = std::atof(v.c_str()); return *this; };
-template<> template<> vex3<int>& vex3<int>::operator=(std::string v)                        { x = y = z = std::atoi(v.c_str()); return *this; };
-template<> template<> vex3<long int>& vex3<long int>::operator=(std::string v)              { x = y = z = std::atoi(v.c_str()); return *this; };
-template<> template<> vex3<long long int>& vex3<long long int>::operator=(std::string v)    { x = y = z = std::atoi(v.c_str()); return *this; };
-template<> template<> vex3<double>& vex3<double>::operator=(std::string v)                  { x = y = z = std::atof(v.c_str()); return *this; };
-template<> template<> vex3<long double>& vex3<long double>::operator=(std::string v)        { x = y = z = std::atof(v.c_str()); return *this; };
+template<> template<> vex2<float>& vex2<float>::operator=(std::string v)                { x = y = std::stof(v.c_str()); return *this; };
+template<> template<> vex2<int>& vex2<int>::operator=(std::string v)                    { x = y = std::stoi(v.c_str()); return *this; };
+template<> template<> vex2<size_t>& vex2<size_t>::operator=(std::string v)              { x = y = std::stoi(v.c_str()); return *this; };
+template<> template<> vex2<long int>& vex2<long int>::operator=(std::string v)          { x = y = std::stoi(v.c_str()); return *this; };
+template<> template<> vex2<long long int>& vex2<long long int>::operator=(std::string v){ x = y = std::stoi(v.c_str()); return *this; };
+template<> template<> vex2<double>& vex2<double>::operator=(std::string v)              { x = y = std::stof(v.c_str()); return *this; };
+template<> template<> vex2<long double>& vex2<long double>::operator=(std::string v)    { x = y = std::stof(v.c_str()); return *this; };
 
 
-template<> template<> vex4<float>::vex4(std::string v)          { x = y = z = w = std::atof(v.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v)            { x = y = z = w = std::atoi(v.c_str()); };
-template<> template<> vex4<long int>::vex4(std::string v)       { x = y = z = w = std::atoi(v.c_str()); };
-template<> template<> vex4<long long int>::vex4(std::string v)  { x = y = z = w = std::atoi(v.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v)         { x = y = z = w = std::atof(v.c_str()); };
-template<> template<> vex4<long double>::vex4(std::string v)    { x = y = z = w = std::atof(v.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v)          { x = y = z = std::stof(v); };
+template<> template<> vex3<int>::vex3(std::string v)            { x = y = z = std::stoi(v); };
+template<> template<> vex3<size_t>::vex3(std::string v)         { x = y = z = std::stoi(v); };
+template<> template<> vex3<long int>::vex3(std::string v)       { x = y = z = std::stoi(v); };
+template<> template<> vex3<long long int>::vex3(std::string v)  { x = y = z = std::stoi(v); };
+template<> template<> vex3<double>::vex3(std::string v)         { x = y = z = std::stof(v); };
+template<> template<> vex3<long double>::vex3(std::string v)    { x = y = z = std::stof(v); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex4<long int>::vex4(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex4<long double>::vex4(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v1, std::string v2)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex3<int>::vex3(std::string v1, std::string v2)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex3<size_t>::vex3(std::string v1, std::string v2)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex3<long int>::vex3(std::string v1, std::string v2)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex3<double>::vex3(std::string v1, std::string v2)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex3<long double>::vex3(std::string v1, std::string v2)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v1, std::string v2, std::string v3)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
+template<> template<> vex3<int>::vex3(std::string v1, std::string v2, std::string v3)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex3<size_t>::vex3(std::string v1, std::string v2, std::string v3)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex3<long int>::vex3(std::string v1, std::string v2, std::string v3)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2, std::string v3) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex3<double>::vex3(std::string v1, std::string v2, std::string v3)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
+template<> template<> vex3<long double>::vex3(std::string v1, std::string v2, std::string v3)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
-template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
-template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
-template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
+template<> template<> vex3<float>& vex3<float>::operator=(std::string v)                    { x = y = z = std::stof(v.c_str()); return *this; };
+template<> template<> vex3<int>& vex3<int>::operator=(std::string v)                        { x = y = z = std::stoi(v.c_str()); return *this; };
+template<> template<> vex3<size_t>& vex3<size_t>::operator=(std::string v)                  { x = y = z = std::stoi(v.c_str()); return *this; };
+template<> template<> vex3<long int>& vex3<long int>::operator=(std::string v)              { x = y = z = std::stoi(v.c_str()); return *this; };
+template<> template<> vex3<long long int>& vex3<long long int>::operator=(std::string v)    { x = y = z = std::stoi(v.c_str()); return *this; };
+template<> template<> vex3<double>& vex3<double>::operator=(std::string v)                  { x = y = z = std::stof(v.c_str()); return *this; };
+template<> template<> vex3<long double>& vex3<long double>::operator=(std::string v)        { x = y = z = std::stof(v.c_str()); return *this; };
 
-template<> template<> vex4<float>& vex4<float>::operator=(std::string v)                    { x = y = z = w = std::atof(v.c_str()); return *this; };
-template<> template<> vex4<int>& vex4<int>::operator=(std::string v)                        { x = y = z = w = std::atoi(v.c_str()); return *this; };
-template<> template<> vex4<long int>& vex4<long int>::operator=(std::string v)              { x = y = z = w = std::atoi(v.c_str()); return *this; };
-template<> template<> vex4<long long int>& vex4<long long int>::operator=(std::string v)    { x = y = z = w = std::atoi(v.c_str()); return *this; };
-template<> template<> vex4<long double>& vex4<long double>::operator=(std::string v)        { x = y = z = w = std::atof(v.c_str()); return *this; };
+
+template<> template<> vex4<float>::vex4(std::string v)          { x = y = z = w = std::stof(v.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v)            { x = y = z = w = std::stoi(v.c_str()); };
+template<> template<> vex4<size_t>::vex4(std::string v)         { x = y = z = w = std::stoi(v.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v)       { x = y = z = w = std::stoi(v.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v)  { x = y = z = w = std::stoi(v.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v)         { x = y = z = w = std::stof(v.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v)    { x = y = z = w = std::stof(v.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex4<size_t>::vex4(std::string v1, std::string v2)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex4<size_t>::vex4(std::string v1, std::string v2, std::string v3)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)         { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); w = std::stof(v4.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)           { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); w = std::stoi(v4.c_str()); };
+template<> template<> vex4<size_t>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)        { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); w = std::stoi(v4.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)      { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); w = std::stoi(v4.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4) { x = std::stoi(v1.c_str()); y = std::stoi(v2.c_str()); z = std::stoi(v3.c_str()); w = std::stoi(v4.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)        { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); w = std::stof(v4.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)   { x = std::stof(v1.c_str()); y = std::stof(v2.c_str()); z = std::stof(v3.c_str()); w = std::stof(v4.c_str()); };
+
+template<> template<> vex4<float>& vex4<float>::operator=(std::string v)                    { x = y = z = w = std::stof(v.c_str()); return *this; };
+template<> template<> vex4<int>& vex4<int>::operator=(std::string v)                        { x = y = z = w = std::stoi(v.c_str()); return *this; };
+template<> template<> vex4<size_t>& vex4<size_t>::operator=(std::string v)                  { x = y = z = w = std::stoi(v.c_str()); return *this; };
+template<> template<> vex4<long int>& vex4<long int>::operator=(std::string v)              { x = y = z = w = std::stoi(v.c_str()); return *this; };
+template<> template<> vex4<long long int>& vex4<long long int>::operator=(std::string v)    { x = y = z = w = std::stoi(v.c_str()); return *this; };
+template<> template<> vex4<long double>& vex4<long double>::operator=(std::string v)        { x = y = z = w = std::stof(v.c_str()); return *this; };
 
 typedef vex2<float>         vex2f;
 typedef vex2<int>           vex2i;
+typedef vex2<size_t>        vex2ui;
 typedef vex2<double>        vex2d;
 typedef vex2<long double>   vex2ld;
 typedef vex2<long int>      vex2li;
@@ -793,6 +823,7 @@ typedef vex2<std::string>   vex2s;
 
 typedef vex3<float>         vex3f;
 typedef vex3<int>           vex3i;
+typedef vex3<size_t>        vex3ui;
 typedef vex3<double>        vex3d;
 typedef vex3<long double>   vex3ld;
 typedef vex3<long int>      vex3li;
@@ -801,6 +832,7 @@ typedef vex3<std::string>   vex3s;
 
 typedef vex4<float>         vex4f;
 typedef vex4<int>           vex4i;
+typedef vex4<size_t>        vex4ui;
 typedef vex4<double>        vex4d;
 typedef vex4<long double>   vex4ld;
 typedef vex4<long int>      vex4li;
