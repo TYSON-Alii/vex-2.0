@@ -7,10 +7,12 @@ template <typename T> struct vex4;
 template <typename T>
 struct vex2 {
     T x, y;
-    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y)); };
-    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
+    template <typename _T>
+    operator _T();
+    template <> operator std::string{ return (std::to_string(x) + ' ' + std::to_string(y)); };
+    template <> operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y)); };
+    template <> operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y)); };
 #endif
     vex2() = default;
     vex2(const vex2<T>&) = default;
@@ -143,10 +145,12 @@ struct vex2 {
 template <typename T>
 struct vex3 {
     T x, y, z;
-    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
-    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
+    template <typename _T>
+    operator _T();
+    template <> operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+    template <> operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+    template <> operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
 #endif
     vex3() = default;
     vex3(const vex3<T>&) = default;
@@ -281,10 +285,12 @@ struct vex3 {
 template <typename T>
 struct vex4 {
     T x, y, z, w;
-    operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
-    operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
+    template <typename _T>
+    operator _T();
+    template <> operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+    template <> operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+    template <> operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
 #endif
     vex4() = default;
     vex4(const vex4<T>&) = default;
@@ -554,10 +560,10 @@ template<> vex4<std::string> vex4<std::string>::percent(std::string v)          
 template<> vex4<std::string> vex4<std::string>::percent(std::string v1, std::string v2, std::string v3, std::string v4) = delete;
 
 #ifdef _XS_STRINX_
-template<> template <typename _T> vex2<std::string> vex2<strinx>::operator%(_T v)           = delete;
-template<> template <typename _T> vex2<std::string>& vex2<strinx>::operator%=(_T v)         = delete;
-template<> template <typename _T> vex2<std::string> vex2<strinx>::operator%(vex2<_T> v)     = delete;
-template<> template <typename _T> vex2<std::string>& vex2<strinx>::operator%=(vex2<_T> v)   = delete;
+template<> template <typename _T> vex2<strinx> vex2<strinx>::operator%(_T v)                = delete;
+template<> template <typename _T> vex2<strinx>& vex2<strinx>::operator%=(_T v)              = delete;
+template<> template <typename _T> vex2<strinx> vex2<strinx>::operator%(vex2<_T> v)          = delete;
+template<> template <typename _T> vex2<strinx>& vex2<strinx>::operator%=(vex2<_T> v)        = delete;
 template<> template <typename _T> bool vex2<strinx>::operator<(_T v)                        = delete;
 template<> template <typename _T> bool vex2<strinx>::operator<(vex2<_T> v)                  = delete;
 template<> template <typename _T> bool vex2<strinx>::operator>(_T v)                        = delete;
@@ -566,7 +572,7 @@ template<> template <typename _T> bool vex2<strinx>::operator<=(_T v)           
 template<> template <typename _T> bool vex2<strinx>::operator<=(vex2<_T> v)                 = delete;
 template<> template <typename _T> bool vex2<strinx>::operator>=(_T v)                       = delete;
 template<> template <typename _T> bool vex2<strinx>::operator>=(vex2<_T> v)                 = delete;
-template<> vex2<T>& vex2<strinx>::normalize()                                                   = delete;
+template<> vex2<strinx>& vex2<strinx>::normalize()                                          = delete;
 template<> vex2<strinx> vex2<strinx>::ceil()                                                = delete;
 template<> vex2<strinx> vex2<strinx>::floor()                                               = delete;
 template<> vex2<strinx> vex2<strinx>::abs()                                                 = delete;
@@ -580,10 +586,10 @@ template<> vex2<strinx> vex2<strinx>::percent(strinx v)                         
 template<> vex2<strinx> vex2<strinx>::percent(strinx v1, strinx v2)                         = delete;
 typedef vex2<strinx> vex2x;
 
-template<> template <typename _T> vex3<std::string> vex3<strinx>::operator%(_T v)           = delete;
-template<> template <typename _T> vex3<std::string>& vex3<strinx>::operator%=(_T v)         = delete;
-template<> template <typename _T> vex3<std::string> vex3<strinx>::operator%(vex3<_T> v)     = delete;
-template<> template <typename _T> vex3<std::string>& vex3<strinx>::operator%=(vex3<_T> v)   = delete;
+template<> template <typename _T> vex3<strinx> vex3<strinx>::operator%(_T v)                = delete;
+template<> template <typename _T> vex3<strinx>& vex3<strinx>::operator%=(_T v)              = delete;
+template<> template <typename _T> vex3<strinx> vex3<strinx>::operator%(vex3<_T> v)          = delete;
+template<> template <typename _T> vex3<strinx>& vex3<strinx>::operator%=(vex3<_T> v)        = delete;
 template<> template <typename _T> bool vex3<strinx>::operator<(_T v)                        = delete;
 template<> template <typename _T> bool vex3<strinx>::operator<(vex3<_T> v)                  = delete;
 template<> template <typename _T> bool vex3<strinx>::operator>(_T v)                        = delete;
@@ -592,7 +598,7 @@ template<> template <typename _T> bool vex3<strinx>::operator<=(_T v)           
 template<> template <typename _T> bool vex3<strinx>::operator<=(vex3<_T> v)                 = delete;
 template<> template <typename _T> bool vex3<strinx>::operator>=(_T v)                       = delete;
 template<> template <typename _T> bool vex3<strinx>::operator>=(vex3<_T> v)                 = delete;
-template<> vex3<T>& vex3<strinx>::normalize()                                               = delete;
+template<> vex3<strinx>& vex3<strinx>::normalize()                                          = delete;
 template<> vex3<strinx> vex3<strinx>::ceil()                                                = delete;
 template<> vex3<strinx> vex3<strinx>::floor()                                               = delete;
 template<> vex3<strinx> vex3<strinx>::abs()                                                 = delete;
@@ -606,10 +612,10 @@ template<> vex3<strinx> vex3<strinx>::percent(strinx v)                         
 template<> vex3<strinx> vex3<strinx>::percent(strinx v1, strinx v2, strinx v3)              = delete;
 typedef vex3<strinx> vex3x;
 
-template<> template <typename _T> vex4<std::string> vex4<strinx>::operator%(_T v)           = delete;
-template<> template <typename _T> vex4<std::string>& vex4<strinx>::operator%=(_T v)         = delete;
-template<> template <typename _T> vex4<std::string> vex4<strinx>::operator%(vex4<_T> v)     = delete;
-template<> template <typename _T> vex4<std::string>& vex4<strinx>::operator%=(vex4<_T> v)   = delete;
+template<> template <typename _T> vex4<strinx> vex4<strinx>::operator%(_T v)                = delete;
+template<> template <typename _T> vex4<strinx>& vex4<strinx>::operator%=(_T v)              = delete;
+template<> template <typename _T> vex4<strinx> vex4<strinx>::operator%(vex4<_T> v)          = delete;
+template<> template <typename _T> vex4<strinx>& vex4<strinx>::operator%=(vex4<_T> v)        = delete;
 template<> template <typename _T> bool vex4<strinx>::operator<(_T v)                        = delete;
 template<> template <typename _T> bool vex4<strinx>::operator<(vex4<_T> v)                  = delete;
 template<> template <typename _T> bool vex4<strinx>::operator>(_T v)                        = delete;
@@ -618,7 +624,7 @@ template<> template <typename _T> bool vex4<strinx>::operator<=(_T v)           
 template<> template <typename _T> bool vex4<strinx>::operator<=(vex4<_T> v)                 = delete;
 template<> template <typename _T> bool vex4<strinx>::operator>=(_T v)                       = delete;
 template<> template <typename _T> bool vex4<strinx>::operator>=(vex4<_T> v)                 = delete;
-template<> vex4<T>& vex4<strinx>::normalize()                                               = delete;
+template<> vex4<strinx>& vex4<strinx>::normalize()                                          = delete;
 template<> vex4<strinx> vex4<strinx>::ceil()                                                = delete;
 template<> vex4<strinx> vex4<strinx>::floor()                                               = delete;
 template<> vex4<strinx> vex4<strinx>::abs()                                                 = delete;
