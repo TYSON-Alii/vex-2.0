@@ -458,18 +458,48 @@ template<> vex2<int> vex2<int>::ceil()      = delete;
 template<> vex2<int> vex2<int>::floor()     = delete;
 template<> vex2<int> vex2<int>::round()     = delete;
 template<> vex2<int> vex2<int>::trunc()     = delete;
+template<> vex2<long int>& vex2<long int>::normalize()= delete;
+template<> vex2<long int> vex2<long int>::ceil()      = delete;
+template<> vex2<long int> vex2<long int>::floor()     = delete;
+template<> vex2<long int> vex2<long int>::round()     = delete;
+template<> vex2<long int> vex2<long int>::trunc()     = delete;
+template<> vex2<long long int>& vex2<long long int>::normalize()= delete;
+template<> vex2<long long int> vex2<long long int>::ceil()      = delete;
+template<> vex2<long long int> vex2<long long int>::floor()     = delete;
+template<> vex2<long long int> vex2<long long int>::round()     = delete;
+template<> vex2<long long int> vex2<long long int>::trunc()     = delete;
 
 template<> vex3<int>& vex3<int>::normalize()= delete;
 template<> vex3<int> vex3<int>::ceil()      = delete;
 template<> vex3<int> vex3<int>::floor()     = delete;
 template<> vex3<int> vex3<int>::round()     = delete;
 template<> vex3<int> vex3<int>::trunc()     = delete;
+template<> vex2<long int>& vex2<long int>::normalize()= delete;
+template<> vex2<long int> vex2<long int>::ceil()      = delete;
+template<> vex2<long int> vex2<long int>::floor()     = delete;
+template<> vex2<long int> vex2<long int>::round()     = delete;
+template<> vex2<long int> vex2<long int>::trunc()     = delete;
+template<> vex2<long long int>& vex2<long long int>::normalize()= delete;
+template<> vex2<long long int> vex2<long long int>::ceil()      = delete;
+template<> vex2<long long int> vex2<long long int>::floor()     = delete;
+template<> vex2<long long int> vex2<long long int>::round()     = delete;
+template<> vex2<long long int> vex2<long long int>::trunc()     = delete;
 
 template<> vex4<int>& vex4<int>::normalize()= delete;
 template<> vex4<int> vex4<int>::ceil()      = delete;
 template<> vex4<int> vex4<int>::floor()     = delete;
 template<> vex4<int> vex4<int>::round()     = delete;
 template<> vex4<int> vex4<int>::trunc()     = delete;
+template<> vex4<long int>& vex4<long int>::normalize()= delete;
+template<> vex4<long int> vex4<long int>::ceil()      = delete;
+template<> vex4<long int> vex4<long int>::floor()     = delete;
+template<> vex4<long int> vex4<long int>::round()     = delete;
+template<> vex4<long int> vex4<long int>::trunc()     = delete;
+template<> vex4<long long int>& vex4<long long int>::normalize()= delete;
+template<> vex4<long long int> vex4<long long int>::ceil()      = delete;
+template<> vex4<long long int> vex4<long long int>::floor()     = delete;
+template<> vex4<long long int> vex4<long long int>::round()     = delete;
+template<> vex4<long long int> vex4<long long int>::trunc()     = delete;
 
 template<> template <typename _T> vex2<std::string> vex2<std::string>::operator%(_T v)          = delete;
 template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator%=(_T v)        = delete;
@@ -668,67 +698,111 @@ template<> vex4<strinx> vex4<strinx>::percent(strinx v1, strinx v2, strinx v3, s
 typedef vex4<strinx> vex4x;
 #endif
 
-template<> template<> vex2<float>::vex2(std::string v)  { x = y = std::atof(v.c_str()); };
-template<> template<> vex2<int>::vex2(std::string v)    { x = y = std::atoi(v.c_str()); };
-template<> template<> vex2<double>::vex2(std::string v) { x = y = std::atof(v.c_str()); };
+template<> template<> vex2<float>::vex2(std::string v)          { x = y = std::atof(v.c_str()); };
+template<> template<> vex2<int>::vex2(std::string v)            { x = y = std::atoi(v.c_str()); };
+template<> template<> vex2<long int>::vex2(std::string v)       { x = y = std::atoi(v.c_str()); };
+template<> template<> vex2<long long int>::vex2(std::string v)  { x = y = std::atoi(v.c_str()); };
+template<> template<> vex2<double>::vex2(std::string v)         { x = y = std::atof(v.c_str()); };
+template<> template<> vex2<long double>::vex2(std::string v)    { x = y = std::atof(v.c_str()); };
 
-template<> template<> vex2<float>::vex2(std::string v1, std::string v2) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex2<int>::vex2(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex2<double>::vex2(std::string v1, std::string v2){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex2<float>::vex2(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex2<int>::vex2(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex2<long int>::vex2(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex2<long long int>::vex2(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex2<double>::vex2(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex2<long double>::vex2(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
 
-template<> template<> vex2<float>& vex2<float>::operator=(std::string v)    { x = y = std::atof(v.c_str()); return *this; };
-template<> template<> vex2<int>& vex2<int>::operator=(std::string v)        { x = y = std::atoi(v.c_str()); return *this; };
-template<> template<> vex2<double>& vex2<double>::operator=(std::string v)  { x = y = std::atof(v.c_str()); return *this; };
-
-
-template<> template<> vex3<float>::vex3(std::string v)  { x = y = z = std::atof(v.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v)    { x = y = z = std::atoi(v.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v) { x = y = z = std::atof(v.c_str()); };
-
-template<> template<> vex3<float>::vex3(std::string v1, std::string v2) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v1, std::string v2){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-
-template<> template<> vex3<float>::vex3(std::string v1, std::string v2, std::string v3) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex3<int>::vex3(std::string v1, std::string v2, std::string v3)   { x = std::atof(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex3<double>::vex3(std::string v1, std::string v2, std::string v3){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-
-template<> template<> vex3<float>& vex3<float>::operator=(std::string v)    { x = y = z = std::atof(v.c_str()); return *this; };
-template<> template<> vex3<int>& vex3<int>::operator=(std::string v)        { x = y = z = std::atoi(v.c_str()); return *this; };
-template<> template<> vex3<double>& vex3<double>::operator=(std::string v)  { x = y = z = std::atof(v.c_str()); return *this; };
+template<> template<> vex2<float>& vex2<float>::operator=(std::string v)                { x = y = std::atof(v.c_str()); return *this; };
+template<> template<> vex2<int>& vex2<int>::operator=(std::string v)                    { x = y = std::atoi(v.c_str()); return *this; };
+template<> template<> vex2<long int>& vex2<long int>::operator=(std::string v)          { x = y = std::atoi(v.c_str()); return *this; };
+template<> template<> vex2<long long int>& vex2<long long int>::operator=(std::string v){ x = y = std::atoi(v.c_str()); return *this; };
+template<> template<> vex2<double>& vex2<double>::operator=(std::string v)              { x = y = std::atof(v.c_str()); return *this; };
+template<> template<> vex2<long double>& vex2<long double>::operator=(std::string v)    { x = y = std::atof(v.c_str()); return *this; };
 
 
-template<> template<> vex4<float>::vex4(std::string v)  { x = y = z = w = std::atof(v.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v)    { x = y = z = w = std::atoi(v.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v) { x = y = z = w = std::atof(v.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v)          { x = y = z = std::atof(v.c_str()); };
+template<> template<> vex3<int>::vex3(std::string v)            { x = y = z = std::atoi(v.c_str()); };
+template<> template<> vex3<long int>::vex3(std::string v)       { x = y = z = std::atoi(v.c_str()); };
+template<> template<> vex3<long long int>::vex3(std::string v)  { x = y = z = std::atoi(v.c_str()); };
+template<> template<> vex3<double>::vex3(std::string v)         { x = y = z = std::atof(v.c_str()); };
+template<> template<> vex3<long double>::vex3(std::string v)    { x = y = z = std::atof(v.c_str()); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2)   { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex3<int>::vex3(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex3<long int>::vex3(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex3<double>::vex3(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex3<long double>::vex3(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3)   { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex3<float>::vex3(std::string v1, std::string v2, std::string v3)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex3<int>::vex3(std::string v1, std::string v2, std::string v3)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex3<long int>::vex3(std::string v1, std::string v2, std::string v3)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex3<long long int>::vex3(std::string v1, std::string v2, std::string v3) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex3<double>::vex3(std::string v1, std::string v2, std::string v3)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex3<long double>::vex3(std::string v1, std::string v2, std::string v3)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
 
-template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3, std::string v4) { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
-template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)   { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
-template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4){ x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
+template<> template<> vex3<float>& vex3<float>::operator=(std::string v)                    { x = y = z = std::atof(v.c_str()); return *this; };
+template<> template<> vex3<int>& vex3<int>::operator=(std::string v)                        { x = y = z = std::atoi(v.c_str()); return *this; };
+template<> template<> vex3<long int>& vex3<long int>::operator=(std::string v)              { x = y = z = std::atoi(v.c_str()); return *this; };
+template<> template<> vex3<long long int>& vex3<long long int>::operator=(std::string v)    { x = y = z = std::atoi(v.c_str()); return *this; };
+template<> template<> vex3<double>& vex3<double>::operator=(std::string v)                  { x = y = z = std::atof(v.c_str()); return *this; };
+template<> template<> vex3<long double>& vex3<long double>::operator=(std::string v)        { x = y = z = std::atof(v.c_str()); return *this; };
 
-template<> template<> vex4<float>& vex4<float>::operator=(std::string v)    { x = y = z = w = std::atof(v.c_str()); return *this; };
-template<> template<> vex4<int>& vex4<int>::operator=(std::string v)        { x = y = z = w = std::atoi(v.c_str()); return *this; };
-template<> template<> vex4<double>& vex4<double>::operator=(std::string v)  { x = y = z = w = std::atof(v.c_str()); return *this; };
+
+template<> template<> vex4<float>::vex4(std::string v)          { x = y = z = w = std::atof(v.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v)            { x = y = z = w = std::atoi(v.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v)       { x = y = z = w = std::atoi(v.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v)  { x = y = z = w = std::atoi(v.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v)         { x = y = z = w = std::atof(v.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v)    { x = y = z = w = std::atof(v.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); };
+
+template<> template<> vex4<float>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)         { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
+template<> template<> vex4<int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)           { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
+template<> template<> vex4<long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)      { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
+template<> template<> vex4<long long int>::vex4(std::string v1, std::string v2, std::string v3, std::string v4) { x = std::atoi(v1.c_str()); y = std::atoi(v2.c_str()); z = std::atoi(v3.c_str()); w = std::atoi(v4.c_str()); };
+template<> template<> vex4<double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)        { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
+template<> template<> vex4<long double>::vex4(std::string v1, std::string v2, std::string v3, std::string v4)   { x = std::atof(v1.c_str()); y = std::atof(v2.c_str()); z = std::atof(v3.c_str()); w = std::atof(v4.c_str()); };
+
+template<> template<> vex4<float>& vex4<float>::operator=(std::string v)                    { x = y = z = w = std::atof(v.c_str()); return *this; };
+template<> template<> vex4<int>& vex4<int>::operator=(std::string v)                        { x = y = z = w = std::atoi(v.c_str()); return *this; };
+template<> template<> vex4<long int>& vex4<long int>::operator=(std::string v)              { x = y = z = w = std::atoi(v.c_str()); return *this; };
+template<> template<> vex4<long long int>& vex4<long long int>::operator=(std::string v)    { x = y = z = w = std::atoi(v.c_str()); return *this; };
+template<> template<> vex4<long double>& vex4<long double>::operator=(std::string v)        { x = y = z = w = std::atof(v.c_str()); return *this; };
 
 typedef vex2<float>         vex2f;
 typedef vex2<int>           vex2i;
 typedef vex2<double>        vex2d;
+typedef vex2<long double>   vex2ld;
+typedef vex2<long int>      vex2li;
+typedef vex2<long long int> vex2li;
 typedef vex2<std::string>   vex2s;
 
 typedef vex3<float>         vex3f;
 typedef vex3<int>           vex3i;
 typedef vex3<double>        vex3d;
+typedef vex3<long double>   vex3ld;
+typedef vex3<long int>      vex3li;
+typedef vex3<long long int> vex3li;
 typedef vex3<std::string>   vex3s;
 
 typedef vex4<float>         vex4f;
 typedef vex4<int>           vex4i;
 typedef vex4<double>        vex4d;
+typedef vex4<long double>   vex4ld;
+typedef vex4<long int>      vex4li;
+typedef vex4<long long int> vex4li;
 typedef vex4<std::string>   vex4s;
