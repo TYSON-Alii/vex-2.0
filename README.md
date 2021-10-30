@@ -17,7 +17,7 @@ int main() {
 };
 ```
 
-###Supported Types
+### Supported Types
 - float
 - double
 - long double
