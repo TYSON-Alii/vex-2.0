@@ -10,7 +10,7 @@ struct vex2 {
     operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y)); };
     operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y)); };
+    operator strinx() { return strinx(x) + ' ' + strinx(y); };
 #endif
     vex2() = default;
     vex2(const vex2<T>&) = default;
@@ -166,7 +166,7 @@ struct vex3 {
     operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
     operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+    operator strinx() { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z); };
 #endif
     vex3() = default;
     vex3(const vex3<T>&) = default;
@@ -323,7 +323,7 @@ struct vex4 {
     operator std::string() { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
     operator char* () { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() { return strinx(std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+    operator strinx() { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
 #endif
     vex4() = default;
     vex4(const vex4<T>&) = default;
