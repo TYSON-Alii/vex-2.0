@@ -16,3 +16,15 @@ int main() {
     cout << vec << '\n';
 };
 ```
+
+###Supported Types
+- float
+- double
+- long double
+- bool
+- int
+- unsigned int
+- long int
+- long long int
+- string
+- !(strinx)[https://github.com/TYSON-Alii/strinx]
