@@ -27,4 +27,4 @@ int main() {
 - long int
 - long long int
 - string
-- (strinx)[https://github.com/TYSON-Alii/strinx]
+- [strinx](https://github.com/TYSON-Alii/strinx)
