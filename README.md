@@ -5,7 +5,7 @@ Vector2, Vector3 and Vector4.
 _Code View:_
 ```cpp
 #include <iostream>
-#include "Vex.hpp"
+#include "vex.hpp"
 
 using namespace std;
 
