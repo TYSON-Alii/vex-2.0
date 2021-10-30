@@ -15,6 +15,9 @@ struct vex2 {
     vex2() = default;
     vex2(const vex2<T>&) = default;
     template <typename _T> vex2(_T v) { x = y = T(v); };
+    template <typename _T> vex2(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T1, typename _T2> vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
 
     template <typename _T>  vex2<T>& operator=(_T v)        { x = y = T(v);             return *this; };
@@ -49,9 +52,15 @@ struct vex2 {
     template <typename _T>  vex2<T>& operator%=(_T v)       { x = std::rand() % int(v);     y = std::rand() % int(v);   return *this; };
     template <typename _T>  vex2<T>& operator%=(vex2<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); return *this; };
 
+    template <typename _T>  vex2<T> operator|(_T v) { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
     template <typename _T>  vex2<T> operator|(vex2<_T> v)   { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
-
     template <typename _T>  vex2<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+
+    template <typename _T>  vex2<T> operator|(vex3<_T> v)   { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T>  vex2<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    
+    template <typename _T>  vex2<T> operator|(vex4<_T> v)   { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T>  vex2<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
 
     vex2<T>& operator++() { x++; y++; return *this; };
     vex2<T>& operator--() { x--; y--; return *this; };
@@ -116,19 +125,15 @@ struct vex2 {
     vex2<T> percent(T v)        { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v)); };
     vex2<T> percent(T v1, T v2) { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2)); };
 
-    template <typename _T>
-    vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T>
-    vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T> vex2<T>& operator=(vex3<_T> v)   { x  = T(v.x);  y  = T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator+=(vex3<_T> v)  { x += T(v.x);  y += T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator-=(vex3<_T> v)  { x -= T(v.x);  y -= T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator*=(vex3<_T> v)  { x *= T(v.x);  y *= T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator/=(vex3<_T> v)  { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator+(vex3<_T> v)   { return vex2<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex2<T>& operator-(vex3<_T> v)   { return vex2<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex2<T>& operator*(vex3<_T> v)   { return vex2<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex2<T>& operator/(vex3<_T> v)   { return vex2<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> vex2<T> operator+(vex3<_T> v)   { return vex2<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> vex2<T> operator-(vex3<_T> v)   { return vex2<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> vex2<T> operator*(vex3<_T> v)   { return vex2<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> vex2<T> operator/(vex3<_T> v)   { return vex2<T>(x / T(v.x), y / T(v.y)); };
     template <typename _T>  bool operator==(vex3<_T> v) { return this->x == T(v.x)  && this->y == T(v.y); };
     template <typename _T>  bool operator!=(vex3<_T> v) { return this->x != T(v.x)  && this->y != T(v.y); };
     template <typename _T>  bool operator>(vex3<_T> v)  { return this->x > T(v.x)   && this->y > T(v.y);  };
@@ -166,8 +171,14 @@ struct vex3 {
     vex3() = default;
     vex3(const vex3<T>&) = default;
     template <typename _T> vex3(_T v) { x = y = z = T(v); };
+    template <typename _T> vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex3(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
+    template <typename _T> vex3(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
     template <typename _T1, typename _T2> vex3(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
     template <typename _T1, typename _T2, typename _T3> vex3(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
+   
+    template <typename _T1, typename _T2> vex3(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
+    template <typename _T1, typename _T2> vex3(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
 
     template <typename _T>  vex3<T>& operator=(_T v) { x = y = z = T(v); return *this; };
     template <typename _T>  vex3<T>& operator=(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); return *this; };
@@ -203,9 +214,15 @@ struct vex3 {
     template <typename _T>  vex3<T>& operator%=(_T v)       { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   return *this; };
     template <typename _T>  vex3<T>& operator%=(vex3<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); return *this; };
 
+    template <typename _T>  vex3<T> operator|(_T v) { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
     template <typename _T>  vex3<T> operator|(vex3<_T> v)   { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
-
     template <typename _T>  vex3<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    
+    template <typename _T>  vex3<T> operator|(vex2<_T> v)   { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T>  vex3<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    
+    template <typename _T>  vex3<T> operator|(vex4<_T> v)   { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T>  vex3<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
 
     vex3<T>& operator++() { x++; y++; z++; return *this; };
     vex3<T>& operator--() { x--; y--; z--; return *this; };
@@ -265,19 +282,15 @@ struct vex3 {
     vex3<T> percent(T v)                { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v), z / T(100) * T(v)); };
     vex3<T> percent(T v1, T v2, T v3)   { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2), z / T(100) * T(v3)); };
     
-    template <typename _T>
-    vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T>
-    vex3(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
     template <typename _T> vex3<T>& operator=(vex2<_T> v)   { x  = T(v.x);  y  = T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator+=(vex2<_T> v)  { x += T(v.x);  y += T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator-=(vex2<_T> v)  { x -= T(v.x);  y -= T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator*=(vex2<_T> v)  { x *= T(v.x);  y *= T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator/=(vex2<_T> v)  { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex3<T>& operator+(vex2<_T> v)   { return vex3<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex3<T>& operator-(vex2<_T> v)   { return vex3<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex3<T>& operator*(vex2<_T> v)   { return vex3<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex3<T>& operator/(vex2<_T> v)   { return vex3<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> vex3<T> operator+(vex2<_T> v)   { return vex3<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> vex3<T> operator-(vex2<_T> v)   { return vex3<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> vex3<T> operator*(vex2<_T> v)   { return vex3<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> vex3<T> operator/(vex2<_T> v)   { return vex3<T>(x / T(v.x), y / T(v.y)); };
     template <typename _T>  bool operator==(vex2<_T> v) { return this->x == T(v.x)  && this->y == T(v.y); };
     template <typename _T>  bool operator!=(vex2<_T> v) { return this->x != T(v.x)  && this->y != T(v.y); };
     template <typename _T>  bool operator>(vex2<_T> v)  { return this->x > T(v.x)   && this->y > T(v.y);  };
@@ -315,9 +328,22 @@ struct vex4 {
     vex4() = default;
     vex4(const vex4<T>&) = default;
     template <typename _T> vex4(_T v) { x = y = z = w = T(v); };
+    template <typename _T> vex4(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> vex4(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
+    template <typename _T> vex4(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); };
     template <typename _T1, typename _T2> vex4(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
     template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
     template <typename _T1, typename _T2, typename _T3, typename _T4> vex4(_T1 v1, _T2 v2, _T3 v3, _T4 v4) { x = T(v1); y = T(v2); z = T(v3); w = T(v4); };
+
+    template <typename _T1, typename _T2> vex4(_T1 v1, vex3<_T2> v2_3_4) { x = T(v1); y = T(v2_3_4.x); z = T(v2_3_4.y); w = T(v2_3_4.z); };
+    template <typename _T1, typename _T2> vex4(vex3<_T1> v1_2_3, _T2 v4) { x = T(v1_2_3.x); y = T(v1_2_3.y); z = T(v1_2_3.z); w = T(v4); };
+
+    template <typename _T1, typename _T2> vex4(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
+    template <typename _T1, typename _T2> vex4(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
+    template <typename _T1, typename _T2> vex4(vex2<_T1> v1_2, vex2<_T2> v3_4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3_4.x); w = T(v3_4.y); };
+    template <typename _T1, typename _T2, typename _T3> vex4(vex2<_T1> v1_2, _T2 v3, _T3 v4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); w = T(v4); };
+    template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, vex2<_T2> v2_3, _T3 v4) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); w = T(v4); };
+    template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, _T2 v2, vex2<_T3> v3_4) { x = T(v1); y = T(v2); z = T(v3_4.x); w = T(v3_4.y); };
 
     template <typename _T>  vex4<T>& operator=(_T v) { x = y = z = T(v); return *this; };
     template <typename _T>  vex4<T>& operator=(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); return *this; };
@@ -328,7 +354,7 @@ struct vex4 {
     template <> vex4(std::string v1, std::string v2, std::string v3, std::string v4);
     template <> vex4<T>& operator=(std::string v);
 
-    bool isEmpty() { return (x && y && y && z) ? false : true; };
+    bool isEmpty() { return (x && y && z && w) ? false : true; };
     operator bool() { return isEmpty(); };
 
     vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
@@ -354,9 +380,15 @@ struct vex4 {
     template <typename _T>  vex4<T>& operator%=(_T v)       { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   w = std::rand() % int(v);  return *this; };
     template <typename _T>  vex4<T>& operator%=(vex4<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); w = std::rand() % int(v.w); return *this; };
 
+    template <typename _T>  vex4<T> operator|(_T v) { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
     template <typename _T>  vex4<T> operator|(vex4<_T> v)   { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
-
     template <typename _T>  vex4<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    
+    template <typename _T>  vex4<T> operator|(vex3<_T> v)   { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T>  vex4<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    
+    template <typename _T>  vex4<T> operator|(vex2<_T> v)   { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T>  vex4<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
 
     vex4<T>& operator++() { x++; y++; z++; w++; return *this; };
     vex4<T>& operator--() { x--; y--; z--; w--; return *this; };
@@ -416,19 +448,15 @@ struct vex4 {
     vex4<T> percent(T v)        { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v), z / T(100) * T(v), w / T(100) * T(v)); };
     vex4<T> percent(T v1, T v2, T v3, T v4) { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2), z / T(100) * T(v3), w / T(100) * T(v4)); };
     
-    template <typename _T>
-    vex4(vex2<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T>
-    vex4(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
     template <typename _T> vex4<T>& operator=(vex2<_T> v)   { x  = T(v.x);  y  = T(v.y);    return *this; };
     template <typename _T> vex4<T>& operator+=(vex2<_T> v)  { x += T(v.x);  y += T(v.y);    return *this; };
     template <typename _T> vex4<T>& operator-=(vex2<_T> v)  { x -= T(v.x);  y -= T(v.y);    return *this; };
     template <typename _T> vex4<T>& operator*=(vex2<_T> v)  { x *= T(v.x);  y *= T(v.y);    return *this; };
     template <typename _T> vex4<T>& operator/=(vex2<_T> v)  { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex4<T>& operator+(vex2<_T> v)   { return vex4<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex4<T>& operator-(vex2<_T> v)   { return vex4<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex4<T>& operator*(vex2<_T> v)   { return vex4<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex4<T>& operator/(vex2<_T> v)   { return vex4<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> vex4<T> operator+(vex2<_T> v)   { return vex4<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> vex4<T> operator-(vex2<_T> v)   { return vex4<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> vex4<T> operator*(vex2<_T> v)   { return vex4<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> vex4<T> operator/(vex2<_T> v)   { return vex4<T>(x / T(v.x), y / T(v.y)); };
     template <typename _T>  bool operator==(vex2<_T> v) { return this->x == T(v.x)  && this->y == T(v.y); };
     template <typename _T>  bool operator!=(vex2<_T> v) { return this->x != T(v.x)  && this->y != T(v.y); };
     template <typename _T>  bool operator>(vex2<_T> v)  { return this->x > T(v.x)   && this->y > T(v.y);  };
