@@ -16,7 +16,7 @@ struct vex2 {
         T tarr[2] {x, y};
         return tarr;
     };
-    const char* str(const char* sep = " ", const char* end = "") { return _strdup((std::to_string(x) + sep + std::to_string(y) + end).c_str()); };
+    const char* str(const char* sep = " ", const char* end = "") { return ((std::to_string(x) + sep + std::to_string(y) + end).c_str()); };
     vex2() = default;
     vex2(const vex2<T>&) = default;
     template <typename _T> vex2(_T v) { x = y = T(v); };
@@ -177,7 +177,7 @@ struct vex3 {
         T tarr[3]{ x, y, z };
         return tarr;
     };
-    const char* str(const char* sep = " ", const char* end = "") { return _strdup((std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end).c_str()); };
+    const char* str(const char* sep = " ", const char* end = "") { return ((std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end).c_str()); };
     vex3() = default;
     vex3(const vex3<T>&) = default;
     template <typename _T> vex3(_T v) { x = y = z = T(v); };
@@ -339,7 +339,7 @@ struct vex4 {
         T tarr[4]{ x, y, z, w };
         return tarr;
     };
-    const char* str(const char* sep = " ", const char* end = "") { return _strdup((std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end).c_str()); };
+    const char* str(const char* sep = " ", const char* end = "") { return ((std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end).c_str()); };
     vex4() = default;
     vex4(const vex4<T>&) = default;
     template <typename _T> vex4(_T v) { x = y = z = w = T(v); };
