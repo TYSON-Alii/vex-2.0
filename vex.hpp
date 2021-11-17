@@ -12,6 +12,9 @@ struct vex2 {
 #ifdef _XS_STRINX_
     operator strinx() const { return strinx(x) + ' ' + strinx(y); };
 #endif
+#ifdef __VEX2GLM_FUNCS__ // in GLM-Vex.hpp
+    __VEX2GLM_FUNCS__
+#endif
     T* arr() const { return new T[2]{ x, y }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
@@ -112,7 +115,7 @@ struct vex2 {
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v); };
     template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    //template <typename _T> vex2<T>& operator<<(_T& v) { *this = *reinterpret_cast<T*>(v); return *this; };
+    template <typename _T> vex2<T>& operator<<(_T v) { x = v.x; y = v.y; return *this; };
 
     vex2<T>& normalize() { *this /= x > y ? x : y; return *this; };
     vex2<T> ceil() const { return vex2<T>(std::ceil(x), std::ceil(y)); };
@@ -169,6 +172,9 @@ struct vex3 {
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
 #ifdef _XS_STRINX_
     operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z); };
+#endif
+#ifdef __VEX3GLM_FUNCS__
+    __VEX3GLM_FUNCS__
 #endif
     T* arr() const { return new T[3]{ x, y, z }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
@@ -273,6 +279,8 @@ struct vex3 {
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v); };
     template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
+    template <typename _T> vex3<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; return *this; };
+
     vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
     vex3<T> ceil()  const { return vex3<T>(std::ceil(x), std::ceil(y), std::ceil(z)); };
     vex3<T> floor() const { return vex3<T>(std::floor(x), std::floor(y), std::floor(z)); };
@@ -328,6 +336,9 @@ struct vex4 {
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
     operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
+#endif
+#ifdef __VEX3GLM_FUNCS__
+    __VEX3GLM_FUNCS__
 #endif
     T* arr() { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
@@ -440,6 +451,8 @@ struct vex4 {
 
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v) && this->w <= T(v); };
     template <typename _T>  bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
+
+    template <typename _T> vex4<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
 
     vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
     vex4<T> ceil()  const { return vex4<T>(std::ceil(x), std::ceil(y), std::ceil(z), std::ceil(w)); };
