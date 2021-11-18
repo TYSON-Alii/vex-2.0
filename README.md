@@ -5,6 +5,7 @@ Vector2, Vector3 and Vector4.
 _Code View:_
 ```cpp
 #include <iostream>
+//#include "GLM-Vec.hpp" // optional (if you using glm vectors)
 #include "vex.hpp"
 
 using namespace std;
