@@ -115,7 +115,7 @@ struct vex2 {
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v); };
     template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T> vex2<T>& operator<<(_T v) { x = v.x; y = v.y; return *this; };
+    template <typename _T> vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
 
     vex2<T>& normalize() { *this /= x > y ? x : y; return *this; };
     vex2<T> ceil() const { return vex2<T>(std::ceil(x), std::ceil(y)); };
@@ -279,7 +279,7 @@ struct vex3 {
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v); };
     template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
-    template <typename _T> vex3<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; return *this; };
+    template <typename _T> vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
 
     vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
     vex3<T> ceil()  const { return vex3<T>(std::ceil(x), std::ceil(y), std::ceil(z)); };
@@ -452,7 +452,7 @@ struct vex4 {
     template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v) && this->w <= T(v); };
     template <typename _T>  bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
 
-    template <typename _T> vex4<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
+    template <typename _T> vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
 
     vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
     vex4<T> ceil()  const { return vex4<T>(std::ceil(x), std::ceil(y), std::ceil(z), std::ceil(w)); };
@@ -1005,3 +1005,34 @@ typedef vex4<long double>   vex4ld;
 typedef vex4<long int>      vex4li;
 typedef vex4<long long int> vex4lli;
 typedef vex4<std::string>   vex4s;
+/*
+vex2b operator""_vex2b(unsigned long long v) { return vex2b(v); };
+vex2f operator""_vex2f(unsigned long long v) { return vex2f(v); };
+vex2i operator""_vex2i(unsigned long long v) { return vex2i(v); };
+vex2ui operator""_vex2ui(unsigned long long v) { return vex2ui(v); };
+vex2d operator""_vex2d(unsigned long long v) { return vex2d(v); };
+vex2ld operator""_vex2ld(unsigned long long v) { return vex2ld(v); };
+vex2li operator""_vex2li(unsigned long long v) { return vex2li(v); };
+vex2lli operator""_vex2lli(unsigned long long v) { return vex2lli(v); };
+vex2s operator""_vex2s(unsigned long long v) { return vex2s(v); };
+
+vex3b operator""_vex3b(unsigned long long v) { return vex3b(v); };
+vex3f operator""_vex3f(unsigned long long v) { return vex3f(v); };
+vex3i operator""_vex3i(unsigned long long v) { return vex3i(v); };
+vex3ui operator""_vex3ui(unsigned long long v) { return vex3ui(v); };
+vex3d operator""_vex3d(unsigned long long v) { return vex3d(v); };
+vex3ld operator""_vex3ld(unsigned long long v) { return vex3ld(v); };
+vex3li operator""_vex3li(unsigned long long v) { return vex3li(v); };
+vex3lli operator""_vex3lli(unsigned long long v) { return vex3lli(v); };
+vex3s operator""_vex3s(unsigned long long v) { return vex3s(v); };
+
+vex4b operator""_vex4b(unsigned long long v) { return vex4b(v); };
+vex4f operator""_vex4f(unsigned long long v) { return vex4f(v); };
+vex4i operator""_vex4i(unsigned long long v) { return vex4i(v); };
+vex4ui operator""_vex4ui(unsigned long long v) { return vex4ui(v); };
+vex4d operator""_vex4d(unsigned long long v) { return vex4d(v); };
+vex4ld operator""_vex4ld(unsigned long long v) { return vex4ld(v); };
+vex4li operator""_vex4li(unsigned long long v) { return vex4li(v); };
+vex4lli operator""_vex4lli(unsigned long long v) { return vex4lli(v); };
+vex4s operator""_vex4s(unsigned long long v) { return vex4s(v); };
+*/
