@@ -1029,3 +1029,27 @@ vex4d operator""_vex4d(unsigned long long v) { return vex4d(v); };
 vex4ld operator""_vex4ld(unsigned long long v) { return vex4ld(v); };
 vex4li operator""_vex4li(unsigned long long v) { return vex4li(v); };
 vex4lli operator""_vex4lli(unsigned long long v) { return vex4lli(v); };
+
+vex2f operator""_vex2f(long double v) { return vex2f(v); };
+vex2i operator""_vex2i(long double v) { return vex2i(v); };
+vex2ui operator""_vex2ui(long double v) { return vex2ui(v); };
+vex2d operator""_vex2d(long double v) { return vex2d(v); };
+vex2ld operator""_vex2ld(long double v) { return vex2ld(v); };
+vex2li operator""_vex2li(long double v) { return vex2li(v); };
+vex2lli operator""_vex2lli(long double v) { return vex2lli(v); };
+
+vex3f operator""_vex3f(long double v) { return vex3f(v); };
+vex3i operator""_vex3i(long double v) { return vex3i(v); };
+vex3ui operator""_vex3ui(long double v) { return vex3ui(v); };
+vex3d operator""_vex3d(long double v) { return vex3d(v); };
+vex3ld operator""_vex3ld(long double v) { return vex3ld(v); };
+vex3li operator""_vex3li(long double v) { return vex3li(v); };
+vex3lli operator""_vex3lli(long double v) { return vex3lli(v); };
+
+vex4f operator""_vex4f(long double v) { return vex4f(v); };
+vex4i operator""_vex4i(long double v) { return vex4i(v); };
+vex4ui operator""_vex4ui(long double v) { return vex4ui(v); };
+vex4d operator""_vex4d(long double v) { return vex4d(v); };
+vex4ld operator""_vex4ld(long double v) { return vex4ld(v); };
+vex4li operator""_vex4li(long double v) { return vex4li(v); };
+vex4lli operator""_vex4lli(long double v) { return vex4lli(v); };
