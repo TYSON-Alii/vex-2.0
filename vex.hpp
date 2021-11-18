@@ -337,8 +337,8 @@ struct vex4 {
 #ifdef _XS_STRINX_
     operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
 #endif
-#ifdef __VEX3GLM_FUNCS__
-    __VEX3GLM_FUNCS__
+#ifdef __VEX4GLM_FUNCS__
+    __VEX4GLM_FUNCS__
 #endif
     T* arr() { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
