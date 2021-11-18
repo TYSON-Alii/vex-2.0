@@ -25,8 +25,8 @@ struct vex2 {
     template <typename _T> vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T1, typename _T2> vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
 
-    template <typename _T>  vex2<T>& operator=(_T v) { x = y = T(v);             return *this; };
-    template <typename _T>  vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y);   return *this; };
+    template <typename _T>  vex2<T>& operator=(_T v)        { x = y = T(v);             return *this; };
+    template <typename _T>  vex2<T>& operator=(vex2<_T> v)  { x = T(v.x); y = T(v.y);   return *this; };
 
     template <> vex2(std::string v);
     template <> vex2(std::string v1, std::string v2);
@@ -163,6 +163,7 @@ struct vex2 {
     template <typename _T>  bool operator<=(vex4<_T> v)  const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex2<T>& v) { os << v.x << ' ' << v.y; return os; };
+    friend std::istream& operator>>(std::istream& is, vex2<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; return is; };
 };
 
 template <typename T>
@@ -327,6 +328,7 @@ struct vex3 {
     template <typename _T>  bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex3<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z; return os; };
+    friend std::istream& operator>>(std::istream& is, vex3<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; return is; };
 };
 
 template <typename T>
@@ -500,6 +502,7 @@ struct vex4 {
     template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex4<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w; return os; };
+    friend std::istream& operator>>(std::istream& is, vex4<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; std::cout << "w: "; is >> v.w; return is; };
 };
 
 template<> vex2<int>& vex2<int>::normalize() = delete;
