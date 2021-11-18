@@ -1005,8 +1005,7 @@ typedef vex4<long double>   vex4ld;
 typedef vex4<long int>      vex4li;
 typedef vex4<long long int> vex4lli;
 typedef vex4<std::string>   vex4s;
-/*
-vex2b operator""_vex2b(unsigned long long v) { return vex2b(v); };
+
 vex2f operator""_vex2f(unsigned long long v) { return vex2f(v); };
 vex2i operator""_vex2i(unsigned long long v) { return vex2i(v); };
 vex2ui operator""_vex2ui(unsigned long long v) { return vex2ui(v); };
@@ -1014,9 +1013,7 @@ vex2d operator""_vex2d(unsigned long long v) { return vex2d(v); };
 vex2ld operator""_vex2ld(unsigned long long v) { return vex2ld(v); };
 vex2li operator""_vex2li(unsigned long long v) { return vex2li(v); };
 vex2lli operator""_vex2lli(unsigned long long v) { return vex2lli(v); };
-vex2s operator""_vex2s(unsigned long long v) { return vex2s(v); };
 
-vex3b operator""_vex3b(unsigned long long v) { return vex3b(v); };
 vex3f operator""_vex3f(unsigned long long v) { return vex3f(v); };
 vex3i operator""_vex3i(unsigned long long v) { return vex3i(v); };
 vex3ui operator""_vex3ui(unsigned long long v) { return vex3ui(v); };
@@ -1024,9 +1021,7 @@ vex3d operator""_vex3d(unsigned long long v) { return vex3d(v); };
 vex3ld operator""_vex3ld(unsigned long long v) { return vex3ld(v); };
 vex3li operator""_vex3li(unsigned long long v) { return vex3li(v); };
 vex3lli operator""_vex3lli(unsigned long long v) { return vex3lli(v); };
-vex3s operator""_vex3s(unsigned long long v) { return vex3s(v); };
 
-vex4b operator""_vex4b(unsigned long long v) { return vex4b(v); };
 vex4f operator""_vex4f(unsigned long long v) { return vex4f(v); };
 vex4i operator""_vex4i(unsigned long long v) { return vex4i(v); };
 vex4ui operator""_vex4ui(unsigned long long v) { return vex4ui(v); };
@@ -1034,5 +1029,3 @@ vex4d operator""_vex4d(unsigned long long v) { return vex4d(v); };
 vex4ld operator""_vex4ld(unsigned long long v) { return vex4ld(v); };
 vex4li operator""_vex4li(unsigned long long v) { return vex4li(v); };
 vex4lli operator""_vex4lli(unsigned long long v) { return vex4lli(v); };
-vex4s operator""_vex4s(unsigned long long v) { return vex4s(v); };
-*/
