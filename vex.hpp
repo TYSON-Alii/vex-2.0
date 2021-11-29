@@ -15,6 +15,9 @@ struct vex2 {
 #ifdef __VEX2GLM_FUNCS__ // in GLM-Vex.hpp
     __VEX2GLM_FUNCS__
 #endif
+#ifdef __VEX2IM_FUNCS__ // in ImGui-Vex.hpp
+        __VEX2IM_FUNCS__
+#endif
     T* arr() const { return new T[2]{ x, y }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
@@ -176,6 +179,9 @@ struct vex3 {
 #endif
 #ifdef __VEX3GLM_FUNCS__
     __VEX3GLM_FUNCS__
+#endif
+#ifdef __VEX3IM_FUNCS__
+        __VEX3IM_FUNCS__
 #endif
     T* arr() const { return new T[3]{ x, y, z }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
@@ -341,6 +347,9 @@ struct vex4 {
 #endif
 #ifdef __VEX4GLM_FUNCS__
     __VEX4GLM_FUNCS__
+#endif
+#ifdef __VEX4IM_FUNCS__
+        __VEX4IM_FUNCS__
 #endif
     T* arr() { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
@@ -1056,3 +1065,7 @@ vex4d operator""_vex4d(long double v) { return vex4d(v); };
 vex4ld operator""_vex4ld(long double v) { return vex4ld(v); };
 vex4li operator""_vex4li(long double v) { return vex4li(v); };
 vex4lli operator""_vex4lli(long double v) { return vex4lli(v); };
+
+#ifdef __XSIMFUNCS__
+__XSIMFUNCS__
+#endif
