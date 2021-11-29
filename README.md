@@ -33,7 +33,7 @@ int main() {
 - GLM Vectors
 - ImGui Vectors and Functions
 ## Docs
-# Consturactors
+## Consturactors
 ```cpp
 vex2f vec = 0.f; // set all element.
 vex2f vec = vex3f(1,5,7); // any vex type.
@@ -44,7 +44,7 @@ vex4f(float(), vex2f(), float()) // ok.
 vex4f(float(), vex3f()) // like these all ok.
 vec << sf::Vector2f(234,356); // this is how you can copy other non-integrated vectors.
 ```
-# Arithmetic Operators (+, -, /, *, ^, ++, --)
+## Arithmetic Operators (+, -, /, *, ^, ++, --)
 ```cpp
 vex3f vec = 0.f;
 vec += 5.f; // x + 5.f, y + 5.f and z + 5.f.
@@ -54,7 +54,7 @@ vec /= 255; // x * 255, y * 255 and z * 255.
 vec = vec^5; // x, y and z pow 5.
 vec = vec - vex4f(6.f, 89ui);
 ```
-# Boolean Operators (==, !=, <, <=, >, >=)
+## Boolean Operators (==, !=, <, <=, >, >=)
 ```cpp
 vex3f vec = 37;
 if (vec == 0.f); // check all element.
@@ -66,7 +66,7 @@ if (vec < vex2f(0.f)) // check x and y.
 if (vec > vex2f(0.f)) // check x and y.
 // any vex type support.
 ```
-# Special Operators (%, |, ',', ~, [], ())
+## Special Operators (%, |, ',', ~, [], ())
 ```cpp
 vex4f vec = 0;
 vec = vec % 100; // x, y, z, and w random 0-100 a value.
@@ -77,14 +77,14 @@ vec = ~vec; // x, y, z and w make float().
 float v = vec[0]; // get elemnt like array (0 = x, 1 = y..).
 vec() += 10; // copy of vec.
 ```
-# Casts
+## Casts
 ```cpp
 vex4f vec = 5.f;
 std::cout << (char*)vec << '\n';
 std::cout << (std::string)vec << '\n';
 if (vec); // bool cast
 ```
-# Usefull Functions
+## Usefull Functions
 ```cpp
 vex3f vec = 0.f;
 float* v_array = vec.arr(); // float[3] { x, y, z };
@@ -98,7 +98,7 @@ vec.percent(10); // percent.
 std::cout << vec; // ostream support.
 std::cin >> vec; // istream support.
 ```
-# Another Features
+## Another Features
 *  All vex's work integrated with each other.
 *  Copyable any vectors
 ```cpp
