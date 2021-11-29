@@ -29,3 +29,6 @@ int main() {
 - long long int
 - string
 - [strinx](https://github.com/TYSON-Alii/strinx)
+### Integrations
+- GLM Vectors
+- ImGui Vectors and Functions
