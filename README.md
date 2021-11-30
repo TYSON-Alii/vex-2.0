@@ -69,7 +69,7 @@ if (vec > vex2f(0.f)) // check x and y.
 ```cpp
 vex4f vec = 0;
 vec = vec % 100; // x, y, z, and w random 0-100 a value.
-vec = vex2f(31) | vex3i(453); // randomly chooses one of the two.
+vec = vex2f(31) | vex3i(453); // randomly chooses one
 vex4f vec2 = 45;
 vec, vec2; // swap.
 vec = ~vec; // x, y, z and w make float().
