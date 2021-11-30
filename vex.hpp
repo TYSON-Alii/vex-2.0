@@ -1069,4 +1069,34 @@ vex4lli operator""_vex4lli(long double v) { return vex4lli(v); };
 #ifdef __XSIMFUNCS__
 __XSIMFUNCS__
 #endif
-    
+
+#define _VexTypedefs_              \
+typedef vex2<bool>          v2b;   \
+typedef vex2<float>         v2f;   \
+typedef vex2<int>           v2i;   \
+typedef vex2<size_t>        v2ui;  \
+typedef vex2<double>        v2d;   \
+typedef vex2<long double>   v2ld;  \
+typedef vex2<long int>      v2li;  \
+typedef vex2<long long int> v2lli; \
+typedef vex2<std::string>   v2s;   \
+                                   \
+typedef vex3<bool>          v3b;   \
+typedef vex3<float>         v3f;   \
+typedef vex3<int>           v3i;   \
+typedef vex3<size_t>        v3ui;  \
+typedef vex3<double>        v3d;   \
+typedef vex3<long double>   v3ld;  \
+typedef vex3<long int>      v3li;  \
+typedef vex3<long long int> v3lli; \
+typedef vex3<std::string>   v3s;   \
+                                   \
+typedef vex4<bool>          v4b;   \
+typedef vex4<float>         v4f;   \
+typedef vex4<int>           v4i;   \
+typedef vex4<size_t>        v4ui;  \
+typedef vex4<double>        v4d;   \
+typedef vex4<long double>   v4ld;  \
+typedef vex4<long int>      v4li;  \
+typedef vex4<long long int> v4lli; \
+typedef vex4<std::string>   v4s;
