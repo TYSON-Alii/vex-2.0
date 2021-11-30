@@ -38,10 +38,10 @@ int main() {
 vex2f vec = 0.f; // set all element.
 vex2f vec = vex3f(1,5,7); // set x and y, works any vex type.
 vex4f vec = vex2f(34,567); // set x and y.
-vex3f(vex2f(), float()) // ok.
-vex3f(float(), vex2f()) // ok.
-vex4f(float(), vex2f(), float()) // ok.
-vex4f(float(), vex3f()) // like these all ok.
+vex3f(vex2f(), float()); // ok.
+vex3f(float(), vex2f()); // ok.
+vex4f(float(), vex2f(), float()); // ok.
+vex4f(float(), vex3f()); // like these all ok.
 ```
 ### Arithmetic Operators (+, -, /, *, ^, ++, --)
 ```cpp
