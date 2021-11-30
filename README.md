@@ -30,19 +30,18 @@ int main() {
 - string
 - [strinx](https://github.com/TYSON-Alii/strinx)
 ### Integrations
-- GLM Vectors
-- ImGui Vectors and Functions
+- [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
+- [ImGui Vectors and Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
 ## Docs
 ### Consturactors
 ```cpp
 vex2f vec = 0.f; // set all element.
-vex2f vec = vex3f(1,5,7); // any vex type.
+vex2f vec = vex3f(1,5,7); // set x and y, works any vex type.
 vex4f vec = vex2f(34,567); // set x and y.
 vex3f(vex2f(), float()) // ok.
 vex3f(float(), vex2f()) // ok.
 vex4f(float(), vex2f(), float()) // ok.
 vex4f(float(), vex3f()) // like these all ok.
-vec << sf::Vector2f(234,356); // this is how you can copy other non-integrated vectors.
 ```
 ### Arithmetic Operators (+, -, /, *, ^, ++, --)
 ```cpp
@@ -95,20 +94,24 @@ vec.swap(); // x = y, y = x.
 vec.copy(); // copy.
 vec.normalize(); // normalize vec. just float and double vex's.
 vec.percent(10); // percent.
-std::cout << vec; // ostream support.
-std::cin >> vec; // istream support.
 ```
 ## Another Features
 *  All vex's work integrated with each other.
 *  Copyable any vectors
 ```cpp
-vex4f vec << sf::Vector2f(23,234); // copy x and y.
-//vex2f vec << sf::Vector3f(23,234); // error.
+//vex4f vec << sf::Vector2f(23,234); // error, z and w not element of sf::Vector2f.
+vex2f vec << sf::Vector3f(23,234,543); // copy x and y.
 ```
 * All functions return a value. (returns a copy or self address)
 ```cpp
 vex2i vec, vec2, vec3;
 vec = vec2 = vec3 = 35; // works.
+```
+* ostream and istream support
+```cpp
+vex3f vec = 9.7f;
+std::cout << vec << '\n';
+std::cin >> vec;
 ```
 * GLM Vector, ImGui Vector and Functions integration.
 ```cpp
