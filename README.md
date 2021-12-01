@@ -32,6 +32,7 @@ int main() {
 ### Integrations
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
 - [ImGui Vectors and Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
+- [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
 ## Docs
 ### Consturactors
 ```cpp
@@ -113,7 +114,7 @@ vex3f vec = 9.7f;
 std::cout << vec << '\n';
 std::cin >> vec;
 ```
-* GLM Vector, ImGui Vector and Functions integration.
+* OpenGL Functions, GLM Vectors, ImGui Vectors/Functions integration.
 ```cpp
 vex2i vec = glm::vec3(345,435,354); // works.
 ImGui::SliderFloat2("Slider", vec, 0, 100); // works.
