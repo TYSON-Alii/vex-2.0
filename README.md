@@ -6,7 +6,9 @@ _Code View:_
 ```cpp
 #include <iostream>
 //#include "GLM-Vec.hpp" // optional (if you using glm vectors)
-#include "vex.hpp"
+#include "StdLib-Vex.hpp" // in extras folder
+//#define _VEX_NO_SHORT_NAMES // delete v2f/v4i like vex types.
+#include "Vex.hpp"
 
 using namespace std;
 
@@ -33,6 +35,7 @@ int main() {
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
 - [ImGui Vectors and Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
 - [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
+- [Some STL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/StdLib-Vex.hpp)
 ## Docs
 ### Consturactors
 ```cpp
