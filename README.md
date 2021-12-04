@@ -14,7 +14,8 @@ using namespace std;
 
 int main() {
     srand(time(NULL)); // optional
-    v2i/*v2i = vex2i*/ vec = vex4f(5, vex3d(double(2), vex2f("5"s) % 15)) | vex2d(float(3), int(8)) * vex3d(0u, vex2f(53)); // works!!
+    /*v2i = vex2i*/
+    v2i vec = vex4f(5, vex3d(double(2), vex2f("5"s) % 15)) | vex2d(float(3), int(8)) * vex3d(0u, vex2f(53)); // works!!
     
     cout << vec.str(", ") << '\n';
 };
