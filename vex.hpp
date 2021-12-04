@@ -41,6 +41,7 @@ struct vex2 {
     vex2<T>& operator~() { x = T(); y = T(); return *this; };
     bool operator!() const { return !isEmpty(); };
     vex2<T>& swap() { *this = vex2<T>(y, x); return *this; };
+    vex2<T> swap() const { *this = vex2<T>(y, x); return *this; };
     template <typename _T>
     vex2<T>& operator,(vex2<_T>& v) {
         const vex2<T> c = *this;
@@ -52,7 +53,8 @@ struct vex2 {
     vex2<T> operator()() const { return *this; };
     vex2<T> copy() const { return *this; };
 
-    T& operator[](int v) const { return fmod(v, 2) == 0 ? x : y; };
+    T& operator[](const int& v) { return fmod(v, 2) == 0 ? x : y; };
+    T operator[](const int& v) const { return fmod(v, 2) == 0 ? x : y; };
 
     template <typename _T>  vex2<T> operator%(_T v) const { return vex2<T>(std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex2<T> operator%(vex2<_T> v) const { return vex2<T>(std::rand() % int(v.x), std::rand() % int(v.y)); };
@@ -120,7 +122,8 @@ struct vex2 {
 
     template <typename _T> vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
 
-    vex2<T>& normalize() { *this /= x > y ? x : y; return *this; };
+    vex2<T>& normalize() { *this /= (x > y ? x : y); return *this; };
+    vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
     vex2<T> ceil() const { return vex2<T>(std::ceil(x), std::ceil(y)); };
     vex2<T> floor() const { return vex2<T>(std::floor(x), std::floor(y)); };
     vex2<T> abs() const { return vex2<T>(std::abs(x), std::abs(y)); };
@@ -211,6 +214,7 @@ struct vex3 {
     vex3<T>& operator~() { x = T(); y = T(); z = T(); return *this; };
     bool operator!() const { return !isEmpty(); };
     vex3<T>& swap() { *this = vex3<T>(z, y, x); return *this; };
+    vex3<T> swap() const { return vex3<T>(z, y, x); };
 
     template <typename _T>
     vex3<T>& operator,(vex3<_T>& v) {
@@ -223,7 +227,8 @@ struct vex3 {
     vex3<T> operator()() const { return *this; };
     vex3<T> copy() const { return *this; };
 
-    T& operator[](int v) const { return fmod(v, 3) == 0 ? x : fmod(v, 3) == 1 ? y : z; };
+    T& operator[](const int& v) { return fmod(v, 3) == 0 ? x : fmod(v, 3) == 1 ? y : z; };
+    T operator[](const int& v) const { return fmod(v, 3) == 0 ? x : fmod(v, 3) == 1 ? y : z; };
 
     template <typename _T>  vex3<T> operator%(_T v) const { return vex3<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex3<T> operator%(vex3<_T> v) const { return vex3<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z)); };
@@ -289,6 +294,7 @@ struct vex3 {
     template <typename _T> vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
 
     vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
+    vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
     vex3<T> ceil()  const { return vex3<T>(std::ceil(x), std::ceil(y), std::ceil(z)); };
     vex3<T> floor() const { return vex3<T>(std::floor(x), std::floor(y), std::floor(z)); };
     vex3<T> abs()  const { return vex3<T>(std::abs(x), std::abs(y), std::abs(z)); };
@@ -388,6 +394,7 @@ struct vex4 {
     vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
     bool operator!() const { return !isEmpty(); };
     vex4<T>& swap() { *this = vex4<T>(w, z, y, x); return *this; };
+    vex4<T> swap() const { return vex4<T>(w, z, y, x); };
 
     template <typename _T>
     vex4<T>& operator,(vex4<_T>& v) {
@@ -400,7 +407,8 @@ struct vex4 {
     vex4<T> operator()() const { return *this; };
     vex4<T> copy() const { return *this; };
 
-    T& operator[](int v) const { return fmod(v, 4) == 0 ? x : fmod(v, 4) == 1 ? y : fmod(v, 4) == 2 ? z : w; };
+    T& operator[](const int& v) { return fmod(v, 4) == 0 ? x : fmod(v, 4) == 1 ? y : fmod(v, 4) == 2 ? z : w; };
+    T operator[](const int& v) const { return fmod(v, 4) == 0 ? x : fmod(v, 4) == 1 ? y : fmod(v, 4) == 2 ? z : w; };
 
     template <typename _T>  vex4<T> operator%(_T v) const { return vex4<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex4<T> operator%(vex4<_T> v) const { return vex4<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z), std::rand() % int(v.w)); };
@@ -466,6 +474,7 @@ struct vex4 {
     template <typename _T> vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
 
     vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
+    vex4<T> normalize() const { return (*this) / x > y ? x : y; };
     vex4<T> ceil()  const { return vex4<T>(std::ceil(x), std::ceil(y), std::ceil(z), std::ceil(w)); };
     vex4<T> floor() const { return vex4<T>(std::floor(x), std::floor(y), std::floor(z), std::floor(w)); };
     vex4<T> abs()  const { return vex4<T>(std::abs(x), std::abs(y), std::abs(z), std::abs(w)); };
@@ -515,63 +524,75 @@ struct vex4 {
 };
 
 template<> vex2<int>& vex2<int>::normalize() = delete;
+template<> vex2<int> vex2<int>::normalize() const = delete;
 template<> vex2<int> vex2<int>::ceil() const = delete;
 template<> vex2<int> vex2<int>::floor() const = delete;
 template<> vex2<int> vex2<int>::round() const = delete;
 template<> vex2<int> vex2<int>::trunc() const = delete;
 template<> vex2<size_t>& vex2<size_t>::normalize() = delete;
+template<> vex2<size_t> vex2<size_t>::normalize() const = delete;
 template<> vex2<size_t> vex2<size_t>::ceil()  const = delete;
 template<> vex2<size_t> vex2<size_t>::floor() const = delete;
 template<> vex2<size_t> vex2<size_t>::round() const = delete;
 template<> vex2<size_t> vex2<size_t>::trunc() const = delete;
 template<> vex2<long int>& vex2<long int>::normalize() = delete;
+template<> vex2<long int> vex2<long int>::normalize() const = delete;
 template<> vex2<long int> vex2<long int>::ceil()  const = delete;
 template<> vex2<long int> vex2<long int>::floor() const = delete;
 template<> vex2<long int> vex2<long int>::round() const = delete;
 template<> vex2<long int> vex2<long int>::trunc() const = delete;
 template<> vex2<long long int>& vex2<long long int>::normalize() = delete;
+template<> vex2<long long int> vex2<long long int>::normalize() const = delete;
 template<> vex2<long long int> vex2<long long int>::ceil()  const = delete;
 template<> vex2<long long int> vex2<long long int>::floor() const = delete;
 template<> vex2<long long int> vex2<long long int>::round() const = delete;
 template<> vex2<long long int> vex2<long long int>::trunc() const = delete;
 
 template<> vex3<int>& vex3<int>::normalize() = delete;
+template<> vex3<int> vex3<int>::normalize() const = delete;
 template<> vex3<int> vex3<int>::ceil()  const = delete;
 template<> vex3<int> vex3<int>::floor() const = delete;
 template<> vex3<int> vex3<int>::round() const = delete;
 template<> vex3<int> vex3<int>::trunc() const = delete;
 template<> vex3<size_t>& vex3<size_t>::normalize() = delete;
+template<> vex3<size_t> vex3<size_t>::normalize() const = delete;
 template<> vex3<size_t> vex3<size_t>::ceil()  const = delete;
 template<> vex3<size_t> vex3<size_t>::floor() const = delete;
 template<> vex3<size_t> vex3<size_t>::round() const = delete;
 template<> vex3<size_t> vex3<size_t>::trunc() const = delete;
 template<> vex3<long int>& vex3<long int>::normalize() = delete;
+template<> vex3<long int> vex3<long int>::normalize() const = delete;
 template<> vex3<long int> vex3<long int>::ceil()  const = delete;
 template<> vex3<long int> vex3<long int>::floor() const = delete;
 template<> vex3<long int> vex3<long int>::round() const = delete;
 template<> vex3<long int> vex3<long int>::trunc() const = delete;
 template<> vex3<long long int>& vex3<long long int>::normalize() = delete;
+template<> vex3<long long int> vex3<long long int>::normalize() const = delete;
 template<> vex3<long long int> vex3<long long int>::ceil()  const = delete;
 template<> vex3<long long int> vex3<long long int>::floor() const = delete;
 template<> vex3<long long int> vex3<long long int>::round() const = delete;
 template<> vex3<long long int> vex3<long long int>::trunc() const = delete;
 
 template<> vex4<int>& vex4<int>::normalize() = delete;
+template<> vex4<int> vex4<int>::normalize() const = delete;
 template<> vex4<int> vex4<int>::ceil()  const = delete;
 template<> vex4<int> vex4<int>::floor() const = delete;
 template<> vex4<int> vex4<int>::round() const = delete;
 template<> vex4<int> vex4<int>::trunc() const = delete;
 template<> vex4<size_t>& vex4<size_t>::normalize() = delete;
+template<> vex4<size_t> vex4<size_t>::normalize() const = delete;
 template<> vex4<size_t> vex4<size_t>::ceil()  const = delete;
 template<> vex4<size_t> vex4<size_t>::floor() const = delete;
 template<> vex4<size_t> vex4<size_t>::round() const = delete;
 template<> vex4<size_t> vex4<size_t>::trunc() const = delete;
 template<> vex4<long int>& vex4<long int>::normalize() = delete;
+template<> vex4<long int> vex4<long int>::normalize() const = delete;
 template<> vex4<long int> vex4<long int>::ceil()  const = delete;
 template<> vex4<long int> vex4<long int>::floor() const = delete;
 template<> vex4<long int> vex4<long int>::round() const = delete;
 template<> vex4<long int> vex4<long int>::trunc() const = delete;
 template<> vex4<long long int>& vex4<long long int>::normalize() = delete;
+template<> vex4<long long int> vex4<long long int>::normalize() const = delete;
 template<> vex4<long long int> vex4<long long int>::ceil()  const = delete;
 template<> vex4<long long int> vex4<long long int>::floor() const = delete;
 template<> vex4<long long int> vex4<long long int>::round() const = delete;
@@ -604,6 +625,7 @@ template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator
 template<> vex2<std::string>& vex2<std::string>::operator++() = delete;
 template<> vex2<std::string>& vex2<std::string>::operator--() = delete;
 template<> vex2<std::string>& vex2<std::string>::normalize() = delete;
+template<> vex2<std::string> vex2<std::string>::normalize() const = delete;
 template<> vex2<std::string> vex2<std::string>::ceil()  const = delete;
 template<> vex2<std::string> vex2<std::string>::floor() const = delete;
 template<> vex2<std::string> vex2<std::string>::abs()  const = delete;
@@ -643,6 +665,7 @@ template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator
 template<> vex3<std::string>& vex3<std::string>::operator++() = delete;
 template<> vex3<std::string>& vex3<std::string>::operator--() = delete;
 template<> vex3<std::string>& vex3<std::string>::normalize() = delete;
+template<> vex3<std::string> vex3<std::string>::normalize() const = delete;
 template<> vex3<std::string> vex3<std::string>::ceil()  const = delete;
 template<> vex3<std::string> vex3<std::string>::floor() const = delete;
 template<> vex3<std::string> vex3<std::string>::abs()  const = delete;
@@ -682,6 +705,7 @@ template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator
 template<> vex4<std::string>& vex4<std::string>::operator++() = delete;
 template<> vex4<std::string>& vex4<std::string>::operator--() = delete;
 template<> vex4<std::string>& vex4<std::string>::normalize() = delete;
+template<> vex4<std::string> vex4<std::string>::normalize() const = delete;
 template<> vex4<std::string> vex4<std::string>::ceil()  const = delete;
 template<> vex4<std::string> vex4<std::string>::floor() const = delete;
 template<> vex4<std::string> vex4<std::string>::abs()  const = delete;
@@ -721,6 +745,7 @@ template<> template <typename _T> vex2<bool>& vex2<bool>::operator/=(vex2<_T> v)
 template<> vex2<bool>& vex2<bool>::operator++() = delete;
 template<> vex2<bool>& vex2<bool>::operator--() = delete;
 template<> vex2<bool>& vex2<bool>::normalize() = delete;
+template<> vex2<bool> vex2<bool>::normalize() const = delete;
 template<> vex2<bool> vex2<bool>::ceil()  const = delete;
 template<> vex2<bool> vex2<bool>::floor() const = delete;
 template<> vex2<bool> vex2<bool>::abs()  const = delete;
@@ -760,6 +785,7 @@ template<> template <typename _T> vex3<bool>& vex3<bool>::operator/=(vex3<_T> v)
 template<> vex3<bool>& vex3<bool>::operator++() = delete;
 template<> vex3<bool>& vex3<bool>::operator--() = delete;
 template<> vex3<bool>& vex3<bool>::normalize() = delete;
+template<> vex3<bool> vex3<bool>::normalize() const = delete;
 template<> vex3<bool> vex3<bool>::ceil()  const = delete;
 template<> vex3<bool> vex3<bool>::floor() const = delete;
 template<> vex3<bool> vex3<bool>::abs()  const = delete;
@@ -799,6 +825,7 @@ template<> template <typename _T> vex4<bool>& vex4<bool>::operator/=(vex4<_T> v)
 template<> vex4<bool>& vex4<bool>::operator++() = delete;
 template<> vex4<bool>& vex4<bool>::operator--() = delete;
 template<> vex4<bool>& vex4<bool>::normalize() = delete;
+template<> vex4<bool> vex4<bool>::normalize() const = delete;
 template<> vex4<bool> vex4<bool>::ceil()  const = delete;
 template<> vex4<bool> vex4<bool>::floor() const = delete;
 template<> vex4<bool> vex4<bool>::abs()  const = delete;
@@ -825,6 +852,7 @@ template<> template <typename _T> bool vex2<strinx>::operator<=(vex2<_T> v) cons
 template<> template <typename _T> bool vex2<strinx>::operator>=(_T v) const = delete;
 template<> template <typename _T> bool vex2<strinx>::operator>=(vex2<_T> v) const = delete;
 template<> vex2<strinx>& vex2<strinx>::normalize() = delete;
+template<> vex2<strinx> vex2<strinx>::normalize() const = delete;
 template<> vex2<strinx> vex2<strinx>::ceil()  const = delete;
 template<> vex2<strinx> vex2<strinx>::floor() const = delete;
 template<> vex2<strinx> vex2<strinx>::abs()  const = delete;
@@ -851,6 +879,7 @@ template<> template <typename _T> bool vex3<strinx>::operator<=(vex3<_T> v) cons
 template<> template <typename _T> bool vex3<strinx>::operator>=(_T v) const = delete;
 template<> template <typename _T> bool vex3<strinx>::operator>=(vex3<_T> v) const = delete;
 template<> vex3<strinx>& vex3<strinx>::normalize() = delete;
+template<> vex3<strinx> vex3<strinx>::normalize() const = delete;
 template<> vex3<strinx> vex3<strinx>::ceil()  const = delete;
 template<> vex3<strinx> vex3<strinx>::floor() const = delete;
 template<> vex3<strinx> vex3<strinx>::abs()  const = delete;
@@ -877,6 +906,7 @@ template<> template <typename _T> bool vex4<strinx>::operator<=(vex4<_T> v) cons
 template<> template <typename _T> bool vex4<strinx>::operator>=(_T v) const = delete;
 template<> template <typename _T> bool vex4<strinx>::operator>=(vex4<_T> v) const = delete;
 template<> vex4<strinx>& vex4<strinx>::normalize() = delete;
+template<> vex4<strinx> vex4<strinx>::normalize() const = delete;
 template<> vex4<strinx> vex4<strinx>::ceil()  const = delete;
 template<> vex4<strinx> vex4<strinx>::floor() const = delete;
 template<> vex4<strinx> vex4<strinx>::abs()  const = delete;
@@ -1100,3 +1130,106 @@ typedef vex4<long double>   v4ld;  \
 typedef vex4<long int>      v4li;  \
 typedef vex4<long long int> v4lli; \
 typedef vex4<std::string>   v4s;
+
+#if !defined(_VEX_NO_SHORT_NAMES)
+_VexTypedefs_
+#endif
+
+#ifdef __XSSTDLIB_FUNCS__
+__XSSTDLIB_FUNCS__
+#endif
+
+#if !defined(_VEX_NO_MATH_FUNCS)
+template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    if (v.x < (T)min)
+        v.x = _restart ? (T)max : (T)min;
+    else if (v.x > (T)max)
+        v.x = _restart ? (T)min : (T)max;
+    if (v.y < (T)min)
+        v.y = _restart ? (T)max : (T)min;
+    else if (v.y > (T)max)
+        v.y = _restart ? (T)min : (T)max;
+    return v;
+};
+template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const vex2<T1> min, const vex2<T2> max, const bool& _restart = false) {
+    if (v.x < (T)min.x)
+        v.x = _restart ? (T)max.x : (T)min.x;
+    else if (v.x > (T)max.x)
+        v.x = _restart ? (T)min.x : (T)max.x;
+    if (v.y < (T)min.y)
+        v.y = _restart ? (T)max.y : (T)min.y;
+    else if (v.y > (T)max.y)
+        v.y = _restart ? (T)min.y : (T)max.y;
+    return v;
+};
+
+template <typename T, typename T1, typename T2> vex3<T>& limit(vex3<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    if (v.x < (T)min)
+        v.x = _restart ? (T)max : (T)min;
+    else if (v.x > (T)max)
+        v.x = _restart ? (T)min : (T)max;
+    if (v.y < (T)min)
+        v.y = _restart ? (T)max : (T)min;
+    else if (v.y > (T)max)
+        v.y = _restart ? (T)min : (T)max;
+    if (v.z < (T)min)
+        v.z = _restart ? (T)max : (T)min;
+    else if (v.z > (T)max)
+        v.z = _restart ? (T)min : (T)max;
+    return v;
+};
+template <typename T, typename T1, typename T2> vex3<T>& limit(vex3<T>& v, const vex3<T1> min, const vex3<T2> max, const bool& _restart = false) {
+    if (v.x < (T)min.x)
+        v.x = _restart ? (T)max.x : (T)min.x;
+    else if (v.x > (T)max.x)
+        v.x = _restart ? (T)min.x : (T)max.x;
+    if (v.y < (T)min.y)
+        v.y = _restart ? (T)max.y : (T)min.y;
+    else if (v.y > (T)max.y)
+        v.y = _restart ? (T)min.y : (T)max.y;
+    if (v.z < (T)min.z)
+        v.z = _restart ? (T)max.z : (T)min.z;
+    else if (v.z > (T)max.z)
+        v.z = _restart ? (T)min.z : (T)max.z;
+    return v;
+};
+
+template <typename T, typename T1, typename T2> vex4<T>& limit(vex4<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    if (v.x < (T)min)
+        v.x = _restart ? (T)max : (T)min;
+    else if (v.x > (T)max)
+        v.x = _restart ? (T)min : (T)max;
+    if (v.y < (T)min)
+        v.y = _restart ? (T)max : (T)min;
+    else if (v.y > (T)max)
+        v.y = _restart ? (T)min : (T)max;
+    if (v.z < (T)min)
+        v.z = _restart ? (T)max : (T)min;
+    else if (v.z > (T)max)
+        v.z = _restart ? (T)min : (T)max;
+    if (v.w < (T)min)
+        v.w = _restart ? (T)max : (T)min;
+    else if (v.w > (T)max)
+        v.w = _restart ? (T)min : (T)max;
+    return v;
+};
+template <typename T, typename T1, typename T2> vex4<T>& limit(vex4<T>& v, const vex4<T1> min, const vex4<T2> max, const bool& _restart = false) {
+    if (v.x < (T)min.x)
+        v.x = _restart ? (T)max.x : (T)min.x;
+    else if (v.x > (T)max.x)
+        v.x = _restart ? (T)min.x : (T)max.x;
+    if (v.y < (T)min.y)
+        v.y = _restart ? (T)max.y : (T)min.y;
+    else if (v.y > (T)max.y)
+        v.y = _restart ? (T)min.y : (T)max.y;
+    if (v.z < (T)min.z)
+        v.z = _restart ? (T)max.z : (T)min.z;
+    else if (v.z > (T)max.z)
+        v.z = _restart ? (T)min.z : (T)max.z;
+    if (v.w < (T)min.w)
+        v.w = _restart ? (T)max.w : (T)min.w;
+    else if (v.w > (T)max.w)
+        v.w = _restart ? (T)min.w : (T)max.w;
+    return v;
+};
+#endif
