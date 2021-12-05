@@ -63,11 +63,11 @@ vec = vec - vex4f(6.f, 89ui);
 vex3f vec = 37;
 if (vec == 0.f); // check all element.
 if (vec == vex2f(0.f)) // check x and y.
-if (vec != vex2f(0.f)) // check x and y.
-if (vec <= vex2f(0.f)) // check x and y.
-if (vec >= vex2f(0.f)) // check x and y.
-if (vec < vex2f(0.f)) // check x and y.
-if (vec > vex2f(0.f)) // check x and y.
+if (vec != vex3f(0.f)) // check x and y.
+if (vec <= vex4f(0.f)) // check x, y and z.
+if (vec >= vex2i(0.f)) // check x and y.
+if (vec < vex4d(0.f)) // check x, y and z.
+if (vec > vex2ui(0.f)) // check x and y.
 // any vex type support.
 ```
 ### Special Operators (%, |, ',', ~, [], ())
