@@ -1232,4 +1232,12 @@ template <typename T, typename T1, typename T2> vex4<T>& limit(vex4<T>& v, const
         v.w = _restart ? (T)min.w : (T)max.w;
     return v;
 };
+
+template <typename T> const T& max(const vex2<T>& v) { return (v.x > v.y) ? v.x : v.y; };
+template <typename T> const T& max(const vex3<T>& v) { return (v.x > v.y && v.x > v.z) ? v.x : (v.y > v.z) ? v.y : v.z; };
+template <typename T> const T& max(const vex4<T>& v) { return (v.x > v.y && v.x > v.z && v.x > v.w) ? v.x : (v.y > v.z && v.y > v.w) ? v.y : (v.z > v.w) ? v.z : v.w; };
+
+template <typename T> const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
+template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y && v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
+template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y && v.x < v.z && v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
 #endif
