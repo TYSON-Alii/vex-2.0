@@ -6,7 +6,6 @@ _Code View:_
 ```cpp
 #include <iostream>
 //#include "GLM-Vec.hpp" // optional (if you using glm vectors)
-#include "StdLib-Vex.hpp" // in extras folder
 //#define _VEX_NO_SHORT_NAMES // delete v2f/v4i like vex types.
 #include "Vex.hpp"
 
@@ -36,7 +35,7 @@ int main() {
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
 - [ImGui Vectors and Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
 - [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
-- [Some STL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/StdLib-Vex.hpp)
+- Some STL Functions
 ## Docs
 ### Consturactors
 ```cpp
@@ -98,7 +97,6 @@ vex2f vec = 0.f;
 vec.swap(); // x = y, y = x.
 vec.copy(); // copy.
 vec.normalize(); // normalize vec. just float and double vex's.
-vec.percent(10); // percent.
 ```
 ## Another Features
 *  All vex's work integrated with each other.
