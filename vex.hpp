@@ -1,5 +1,6 @@
 #define _XS_VEX2_
 #include <string>
+#include <sstream>
 template <typename T> struct vex2;
 template <typename T> struct vex3;
 template <typename T> struct vex4;
@@ -28,8 +29,8 @@ struct vex2 {
     template <typename _T> vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T1, typename _T2> vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
 
-    template <typename _T>  vex2<T>& operator=(_T v)        { x = y = T(v);             return *this; };
-    template <typename _T>  vex2<T>& operator=(vex2<_T> v)  { x = T(v.x); y = T(v.y);   return *this; };
+    template <typename _T>  vex2<T>& operator=(_T v) { x = y = T(v);             return *this; };
+    template <typename _T>  vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y);   return *this; };
 
     template <> vex2(std::string v);
     template <> vex2(std::string v1, std::string v2);
@@ -53,8 +54,8 @@ struct vex2 {
     vex2<T> operator()() const { return *this; };
     vex2<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return fmod(v, 2) == 0 ? x : y; };
-    T operator[](const int& v) const { return fmod(v, 2) == 0 ? x : y; };
+    T& operator[](const int& v) { return (v % 2) == 0 ? x : y; };
+    T operator[](const int& v) const { return (v % 2) == 0 ? x : y; };
 
     template <typename _T>  vex2<T> operator%(_T v) const { return vex2<T>(std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex2<T> operator%(vex2<_T> v) const { return vex2<T>(std::rand() % int(v.x), std::rand() % int(v.y)); };
@@ -124,17 +125,6 @@ struct vex2 {
 
     vex2<T>& normalize() { *this /= (x > y ? x : y); return *this; };
     vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
-    vex2<T> ceil() const { return vex2<T>(std::ceil(x), std::ceil(y)); };
-    vex2<T> floor() const { return vex2<T>(std::floor(x), std::floor(y)); };
-    vex2<T> abs() const { return vex2<T>(std::abs(x), std::abs(y)); };
-    vex2<T> sqrt() const { return vex2<T>(std::sqrt(x), std::sqrt(y)); };
-    vex2<T> cbrt() const { return vex2<T>(std::cbrt(x), std::cbrt(y)); };
-    vex2<T> pow(int v) const { return vex2<T>(std::pow(x, v), std::pow(y, v)); };
-    vex2<T> round() const { return vex2<T>(std::round(x), std::round(y)); };
-    vex2<T> trunc() const { return vex2<T>(std::trunc(x), std::trunc(y)); };
-    vex2<T> exp() const { return vex2<T>(std::exp(x), std::exp(y)); };
-    vex2<T> percent(T v) const { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v)); };
-    vex2<T> percent(T v1, T v2) const { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2)); };
 
     template <typename _T> vex2<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
@@ -152,7 +142,7 @@ struct vex2 {
     template <typename _T>  bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
     template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T> vex2<T>& operator=(vex4<_T> v)  { x = T(v.x);  y = T(v.y);    return *this; };
+    template <typename _T> vex2<T>& operator=(vex4<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
     template <typename _T> vex2<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
@@ -186,7 +176,7 @@ struct vex3 {
 #ifdef __VEX3IM_FUNCS__
         __VEX3IM_FUNCS__
 #endif
-    T* arr() const { return new T[3]{ x, y, z }; };
+        T* arr() const { return new T[3]{ x, y, z }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
     vex3() = default;
     vex3(const vex3<T>&) = default;
@@ -227,8 +217,8 @@ struct vex3 {
     vex3<T> operator()() const { return *this; };
     vex3<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return fmod(v, 3) == 0 ? x : fmod(v, 3) == 1 ? y : z; };
-    T operator[](const int& v) const { return fmod(v, 3) == 0 ? x : fmod(v, 3) == 1 ? y : z; };
+    T& operator[](const int& v) { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
+    T operator[](const int& v) const { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
 
     template <typename _T>  vex3<T> operator%(_T v) const { return vex3<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex3<T> operator%(vex3<_T> v) const { return vex3<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z)); };
@@ -295,17 +285,6 @@ struct vex3 {
 
     vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
     vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
-    vex3<T> ceil()  const { return vex3<T>(std::ceil(x), std::ceil(y), std::ceil(z)); };
-    vex3<T> floor() const { return vex3<T>(std::floor(x), std::floor(y), std::floor(z)); };
-    vex3<T> abs()  const { return vex3<T>(std::abs(x), std::abs(y), std::abs(z)); };
-    vex3<T> sqrt() const { return vex3<T>(std::sqrt(x), std::sqrt(y), std::sqrt(z)); };
-    vex3<T> cbrt() const { return vex3<T>(std::cbrt(x), std::cbrt(y), std::cbrt(z)); };
-    vex3<T> pow(int v) const { return vex3<T>(std::pow(x, v), std::pow(y, v), std::pow(z, v)); };
-    vex3<T> round() const { return vex3<T>(std::round(x), std::round(y), std::round(z)); };
-    vex3<T> trunc() const { return vex3<T>(std::trunc(x), std::trunc(y), std::trunc(z)); };
-    vex3<T> exp()   const { return vex3<T>(std::exp(x), std::exp(y), std::exp(z)); };
-    vex3<T> percent(T v) const { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v), z / T(100) * T(v)); };
-    vex3<T> percent(T v1, T v2, T v3) const { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2), z / T(100) * T(v3)); };
 
     template <typename _T> vex3<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
@@ -357,7 +336,7 @@ struct vex4 {
 #ifdef __VEX4IM_FUNCS__
         __VEX4IM_FUNCS__
 #endif
-    T* arr() { return new T[4]{ x, y, z, w }; };
+        T* arr() { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
@@ -407,8 +386,8 @@ struct vex4 {
     vex4<T> operator()() const { return *this; };
     vex4<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return fmod(v, 4) == 0 ? x : fmod(v, 4) == 1 ? y : fmod(v, 4) == 2 ? z : w; };
-    T operator[](const int& v) const { return fmod(v, 4) == 0 ? x : fmod(v, 4) == 1 ? y : fmod(v, 4) == 2 ? z : w; };
+    T& operator[](const int& v) { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
+    T operator[](const int& v) const { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
 
     template <typename _T>  vex4<T> operator%(_T v) const { return vex4<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
     template <typename _T>  vex4<T> operator%(vex4<_T> v) const { return vex4<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z), std::rand() % int(v.w)); };
@@ -474,18 +453,7 @@ struct vex4 {
     template <typename _T> vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
 
     vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
-    vex4<T> normalize() const { return (*this) / x > y ? x : y; };
-    vex4<T> ceil()  const { return vex4<T>(std::ceil(x), std::ceil(y), std::ceil(z), std::ceil(w)); };
-    vex4<T> floor() const { return vex4<T>(std::floor(x), std::floor(y), std::floor(z), std::floor(w)); };
-    vex4<T> abs()  const { return vex4<T>(std::abs(x), std::abs(y), std::abs(z), std::abs(w)); };
-    vex4<T> sqrt() const { return vex4<T>(std::sqrt(x), std::sqrt(y), std::sqrt(z), std::sqrt(w)); };
-    vex4<T> cbrt() const { return vex4<T>(std::cbrt(x), std::cbrt(y), std::cbrt(z), std::cbrt(w)); };
-    vex4<T> pow(int v) const { return vex4<T>(std::pow(x, v), std::pow(y, v), std::pow(z, v), std::pow(w, v)); };
-    vex4<T> round() const { return vex4<T>(std::round(x), std::round(y), std::round(z), std::round(w)); };
-    vex4<T> trunc() const { return vex4<T>(std::trunc(x), std::trunc(y), std::trunc(z), std::trunc(w)); };
-    vex4<T> exp()   const { return vex4<T>(std::exp(x), std::exp(y), std::exp(z), std::exp(w)); };
-    vex4<T> percent(T v) const { return vex2<T>(x / T(100) * T(v), y / T(100) * T(v), z / T(100) * T(v), w / T(100) * T(v)); };
-    vex4<T> percent(T v1, T v2, T v3, T v4) const { return vex2<T>(x / T(100) * T(v1), y / T(100) * T(v2), z / T(100) * T(v3), w / T(100) * T(v4)); };
+    vex4<T> normalize() const { return (*this) / (x > y) ? x : y; };
 
     template <typename _T> vex4<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
     template <typename _T> vex4<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
@@ -523,320 +491,58 @@ struct vex4 {
     friend std::istream& operator>>(std::istream& is, vex4<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; std::cout << "w: "; is >> v.w; return is; };
 };
 
-template<> vex2<int>& vex2<int>::normalize() = delete;
-template<> vex2<int> vex2<int>::normalize() const = delete;
-template<> vex2<int> vex2<int>::ceil() const = delete;
-template<> vex2<int> vex2<int>::floor() const = delete;
-template<> vex2<int> vex2<int>::round() const = delete;
-template<> vex2<int> vex2<int>::trunc() const = delete;
-template<> vex2<size_t>& vex2<size_t>::normalize() = delete;
-template<> vex2<size_t> vex2<size_t>::normalize() const = delete;
-template<> vex2<size_t> vex2<size_t>::ceil()  const = delete;
-template<> vex2<size_t> vex2<size_t>::floor() const = delete;
-template<> vex2<size_t> vex2<size_t>::round() const = delete;
-template<> vex2<size_t> vex2<size_t>::trunc() const = delete;
-template<> vex2<long int>& vex2<long int>::normalize() = delete;
-template<> vex2<long int> vex2<long int>::normalize() const = delete;
-template<> vex2<long int> vex2<long int>::ceil()  const = delete;
-template<> vex2<long int> vex2<long int>::floor() const = delete;
-template<> vex2<long int> vex2<long int>::round() const = delete;
-template<> vex2<long int> vex2<long int>::trunc() const = delete;
-template<> vex2<long long int>& vex2<long long int>::normalize() = delete;
-template<> vex2<long long int> vex2<long long int>::normalize() const = delete;
-template<> vex2<long long int> vex2<long long int>::ceil()  const = delete;
-template<> vex2<long long int> vex2<long long int>::floor() const = delete;
-template<> vex2<long long int> vex2<long long int>::round() const = delete;
-template<> vex2<long long int> vex2<long long int>::trunc() const = delete;
+#define DelForIntVexs(_type) \
+template<> vex2<_type>& vex2<_type>::normalize() = delete;      \
+template<> vex2<_type> vex2<_type>::normalize() const = delete; \
+template<> vex3<_type>& vex3<_type>::normalize() = delete;      \
+template<> vex3<_type> vex3<_type>::normalize() const = delete; \
+template<> vex4<_type>& vex4<_type>::normalize() = delete;      \
+template<> vex4<_type> vex4<_type>::normalize() const = delete;
+DelForIntVexs(int)
+DelForIntVexs(size_t)
+DelForIntVexs(long int)
+DelForIntVexs(long long int)
 
-template<> vex3<int>& vex3<int>::normalize() = delete;
-template<> vex3<int> vex3<int>::normalize() const = delete;
-template<> vex3<int> vex3<int>::ceil()  const = delete;
-template<> vex3<int> vex3<int>::floor() const = delete;
-template<> vex3<int> vex3<int>::round() const = delete;
-template<> vex3<int> vex3<int>::trunc() const = delete;
-template<> vex3<size_t>& vex3<size_t>::normalize() = delete;
-template<> vex3<size_t> vex3<size_t>::normalize() const = delete;
-template<> vex3<size_t> vex3<size_t>::ceil()  const = delete;
-template<> vex3<size_t> vex3<size_t>::floor() const = delete;
-template<> vex3<size_t> vex3<size_t>::round() const = delete;
-template<> vex3<size_t> vex3<size_t>::trunc() const = delete;
-template<> vex3<long int>& vex3<long int>::normalize() = delete;
-template<> vex3<long int> vex3<long int>::normalize() const = delete;
-template<> vex3<long int> vex3<long int>::ceil()  const = delete;
-template<> vex3<long int> vex3<long int>::floor() const = delete;
-template<> vex3<long int> vex3<long int>::round() const = delete;
-template<> vex3<long int> vex3<long int>::trunc() const = delete;
-template<> vex3<long long int>& vex3<long long int>::normalize() = delete;
-template<> vex3<long long int> vex3<long long int>::normalize() const = delete;
-template<> vex3<long long int> vex3<long long int>::ceil()  const = delete;
-template<> vex3<long long int> vex3<long long int>::floor() const = delete;
-template<> vex3<long long int> vex3<long long int>::round() const = delete;
-template<> vex3<long long int> vex3<long long int>::trunc() const = delete;
+#undef DelForIntVexs
 
-template<> vex4<int>& vex4<int>::normalize() = delete;
-template<> vex4<int> vex4<int>::normalize() const = delete;
-template<> vex4<int> vex4<int>::ceil()  const = delete;
-template<> vex4<int> vex4<int>::floor() const = delete;
-template<> vex4<int> vex4<int>::round() const = delete;
-template<> vex4<int> vex4<int>::trunc() const = delete;
-template<> vex4<size_t>& vex4<size_t>::normalize() = delete;
-template<> vex4<size_t> vex4<size_t>::normalize() const = delete;
-template<> vex4<size_t> vex4<size_t>::ceil()  const = delete;
-template<> vex4<size_t> vex4<size_t>::floor() const = delete;
-template<> vex4<size_t> vex4<size_t>::round() const = delete;
-template<> vex4<size_t> vex4<size_t>::trunc() const = delete;
-template<> vex4<long int>& vex4<long int>::normalize() = delete;
-template<> vex4<long int> vex4<long int>::normalize() const = delete;
-template<> vex4<long int> vex4<long int>::ceil()  const = delete;
-template<> vex4<long int> vex4<long int>::floor() const = delete;
-template<> vex4<long int> vex4<long int>::round() const = delete;
-template<> vex4<long int> vex4<long int>::trunc() const = delete;
-template<> vex4<long long int>& vex4<long long int>::normalize() = delete;
-template<> vex4<long long int> vex4<long long int>::normalize() const = delete;
-template<> vex4<long long int> vex4<long long int>::ceil()  const = delete;
-template<> vex4<long long int> vex4<long long int>::floor() const = delete;
-template<> vex4<long long int> vex4<long long int>::round() const = delete;
-template<> vex4<long long int> vex4<long long int>::trunc() const = delete;
+#define DelSVexs(_type, _t)                                                            \
+template<> template <typename _T> _type _type::operator%(_T v) const = delete;       \
+template<> template <typename _T> _type& _type::operator%=(_T v) = delete;           \
+template<> template <typename _T> _type _type::operator%(_t<_T> v) const = delete; \
+template<> template <typename _T> _type& _type::operator%=(_t<_T> v) = delete;     \
+template<> template <typename _T> bool _type::operator<(_T v) const = delete;        \
+template<> template <typename _T> bool _type::operator<(_t<_T> v) const = delete;  \
+template<> template <typename _T> bool _type::operator>(_T v) const = delete;        \
+template<> template <typename _T> bool _type::operator>(_t<_T> v) const = delete;  \
+template<> template <typename _T> bool _type::operator<=(_T v) const = delete;       \
+template<> template <typename _T> bool _type::operator<=(_t<_T> v) const = delete; \
+template<> template <typename _T> bool _type::operator>=(_T v) const = delete;       \
+template<> template <typename _T> bool _type::operator>=(_t<_T> v) const = delete; \
+template<> template <typename _T> _type _type::operator-(_T v)const = delete;        \
+template<> template <typename _T> _type _type::operator-(_t<_T> v) const = delete; \
+template<> template <typename _T> _type& _type::operator-=(_T v) = delete;           \
+template<> template <typename _T> _type& _type::operator-=(_t<_T> v) = delete;     \
+template<> template <typename _T> _type _type::operator*(_T v) const = delete;       \
+template<> template <typename _T> _type _type::operator*(_t<_T> v) const = delete; \
+template<> template <typename _T> _type& _type::operator*=(_T v) = delete;           \
+template<> template <typename _T> _type& _type::operator*=(_t<_T> v) = delete;     \
+template<> template <typename _T> _type _type::operator/(_T v) const = delete;       \
+template<> template <typename _T> _type _type::operator/(_t<_T> v) const = delete; \
+template<> template <typename _T> _type& _type::operator/=(_T v) = delete;           \
+template<> template <typename _T> _type& _type::operator/=(_t<_T> v) = delete;     \
+template<> _type& _type::operator++() = delete;                                      \
+template<> _type& _type::operator--() = delete;                                      \
+template<> _type& _type::normalize() = delete;                                       \
+template<> _type _type::normalize() const = delete;                                  \
 
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator%(_T v) const = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator%=(_T v) = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator%(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator%=(vex2<_T> v) = delete;
-template<> template <typename _T> bool vex2<std::string>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator<(vex2<_T> v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator>(vex2<_T> v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator<=(vex2<_T> v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex2<std::string>::operator>=(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator-(_T v)const = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator-(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator-=(_T v) = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator-=(vex2<_T> v) = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator*(_T v) const = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator*(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator*=(_T v) = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator*=(vex2<_T> v) = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator/(_T v) const = delete;
-template<> template <typename _T> vex2<std::string> vex2<std::string>::operator/(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator/=(_T v) = delete;
-template<> template <typename _T> vex2<std::string>& vex2<std::string>::operator/=(vex2<_T> v) = delete;
-template<> vex2<std::string>& vex2<std::string>::operator++() = delete;
-template<> vex2<std::string>& vex2<std::string>::operator--() = delete;
-template<> vex2<std::string>& vex2<std::string>::normalize() = delete;
-template<> vex2<std::string> vex2<std::string>::normalize() const = delete;
-template<> vex2<std::string> vex2<std::string>::ceil()  const = delete;
-template<> vex2<std::string> vex2<std::string>::floor() const = delete;
-template<> vex2<std::string> vex2<std::string>::abs()  const = delete;
-template<> vex2<std::string> vex2<std::string>::sqrt() const = delete;
-template<> vex2<std::string> vex2<std::string>::cbrt() const = delete;
-template<> vex2<std::string> vex2<std::string>::pow(int v) const = delete;
-template<> vex2<std::string> vex2<std::string>::round() const = delete;
-template<> vex2<std::string> vex2<std::string>::trunc() const = delete;
-template<> vex2<std::string> vex2<std::string>::exp()   const = delete;
-template<> vex2<std::string> vex2<std::string>::percent(std::string v) const = delete;
-template<> vex2<std::string> vex2<std::string>::percent(std::string v1, std::string v2) const = delete;
+DelSVexs(vex2<std::string>, vex2)
+DelSVexs(vex3<std::string>, vex3)
+DelSVexs(vex4<std::string>, vex4)
+DelSVexs(vex2<bool>, vex2)
+DelSVexs(vex3<bool>, vex3)
+DelSVexs(vex4<bool>, vex4)
 
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator%(_T v) const = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator%=(_T v) = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator%(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator%=(vex3<_T> v) = delete;
-template<> template <typename _T> bool vex3<std::string>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator<(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator>(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator<=(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex3<std::string>::operator>=(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator-(_T v) const = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator-(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator-=(_T v) = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator-=(vex3<_T> v) = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator*(_T v) const = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator*(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator*=(_T v) = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator*=(vex3<_T> v) = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator/(_T v) const = delete;
-template<> template <typename _T> vex3<std::string> vex3<std::string>::operator/(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator/=(_T v) = delete;
-template<> template <typename _T> vex3<std::string>& vex3<std::string>::operator/=(vex3<_T> v) = delete;
-template<> vex3<std::string>& vex3<std::string>::operator++() = delete;
-template<> vex3<std::string>& vex3<std::string>::operator--() = delete;
-template<> vex3<std::string>& vex3<std::string>::normalize() = delete;
-template<> vex3<std::string> vex3<std::string>::normalize() const = delete;
-template<> vex3<std::string> vex3<std::string>::ceil()  const = delete;
-template<> vex3<std::string> vex3<std::string>::floor() const = delete;
-template<> vex3<std::string> vex3<std::string>::abs()  const = delete;
-template<> vex3<std::string> vex3<std::string>::sqrt() const = delete;
-template<> vex3<std::string> vex3<std::string>::cbrt() const = delete;
-template<> vex3<std::string> vex3<std::string>::pow(int v) const = delete;
-template<> vex3<std::string> vex3<std::string>::round() const = delete;
-template<> vex3<std::string> vex3<std::string>::trunc() const = delete;
-template<> vex3<std::string> vex3<std::string>::exp()   const = delete;
-template<> vex3<std::string> vex3<std::string>::percent(std::string v) const = delete;
-template<> vex3<std::string> vex3<std::string>::percent(std::string v1, std::string v2, std::string v3) const = delete;
-
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator%(_T v) const = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator%=(_T v) = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator%(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator%=(vex4<_T> v) = delete;
-template<> template <typename _T> bool vex4<std::string>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator<(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator>(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator<=(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex4<std::string>::operator>=(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator-(_T v) const = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator-(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator-=(_T v) = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator-=(vex4<_T> v) = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator*(_T v) const = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator*(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator*=(_T v) = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator*=(vex4<_T> v) = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator/(_T v) const = delete;
-template<> template <typename _T> vex4<std::string> vex4<std::string>::operator/(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator/=(_T v) = delete;
-template<> template <typename _T> vex4<std::string>& vex4<std::string>::operator/=(vex4<_T> v) = delete;
-template<> vex4<std::string>& vex4<std::string>::operator++() = delete;
-template<> vex4<std::string>& vex4<std::string>::operator--() = delete;
-template<> vex4<std::string>& vex4<std::string>::normalize() = delete;
-template<> vex4<std::string> vex4<std::string>::normalize() const = delete;
-template<> vex4<std::string> vex4<std::string>::ceil()  const = delete;
-template<> vex4<std::string> vex4<std::string>::floor() const = delete;
-template<> vex4<std::string> vex4<std::string>::abs()  const = delete;
-template<> vex4<std::string> vex4<std::string>::sqrt() const = delete;
-template<> vex4<std::string> vex4<std::string>::cbrt() const = delete;
-template<> vex4<std::string> vex4<std::string>::pow(int v) const = delete;
-template<> vex4<std::string> vex4<std::string>::round() const = delete;
-template<> vex4<std::string> vex4<std::string>::trunc() const = delete;
-template<> vex4<std::string> vex4<std::string>::exp()   const = delete;
-template<> vex4<std::string> vex4<std::string>::percent(std::string v) const = delete;
-template<> vex4<std::string> vex4<std::string>::percent(std::string v1, std::string v2, std::string v3, std::string v4) const = delete;
-
-template<> template <typename _T> vex2<bool> vex2<bool>::operator%(_T v) const = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator%=(_T v) = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator%(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator%=(vex2<_T> v) = delete;
-template<> template <typename _T> bool vex2<bool>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator<(vex2<_T> v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator>(vex2<_T> v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator<=(vex2<_T> v)const = delete;
-template<> template <typename _T> bool vex2<bool>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex2<bool>::operator>=(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator-(_T v) const = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator-(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator-=(_T v) = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator-=(vex2<_T> v) = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator*(_T v) const = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator*(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator*=(_T v) = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator*=(vex2<_T> v) = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator/(_T v) const = delete;
-template<> template <typename _T> vex2<bool> vex2<bool>::operator/(vex2<_T> v) const = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator/=(_T v) = delete;
-template<> template <typename _T> vex2<bool>& vex2<bool>::operator/=(vex2<_T> v) = delete;
-template<> vex2<bool>& vex2<bool>::operator++() = delete;
-template<> vex2<bool>& vex2<bool>::operator--() = delete;
-template<> vex2<bool>& vex2<bool>::normalize() = delete;
-template<> vex2<bool> vex2<bool>::normalize() const = delete;
-template<> vex2<bool> vex2<bool>::ceil()  const = delete;
-template<> vex2<bool> vex2<bool>::floor() const = delete;
-template<> vex2<bool> vex2<bool>::abs()  const = delete;
-template<> vex2<bool> vex2<bool>::sqrt() const = delete;
-template<> vex2<bool> vex2<bool>::cbrt() const = delete;
-template<> vex2<bool> vex2<bool>::pow(int v) const = delete;
-template<> vex2<bool> vex2<bool>::round() const = delete;
-template<> vex2<bool> vex2<bool>::trunc() const = delete;
-template<> vex2<bool> vex2<bool>::exp()   const = delete;
-template<> vex2<bool> vex2<bool>::percent(bool v) const = delete;
-template<> vex2<bool> vex2<bool>::percent(bool v1, bool v2) const = delete;
-
-template<> template <typename _T> vex3<bool> vex3<bool>::operator%(_T v) const = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator%=(_T v) = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator%(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator%=(vex3<_T> v) = delete;
-template<> template <typename _T> bool vex3<bool>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator<(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator>(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator<=(vex3<_T> v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex3<bool>::operator>=(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator-(_T v) const = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator-(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator-=(_T v) = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator-=(vex3<_T> v) = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator*(_T v) const = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator*(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator*=(_T v) = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator*=(vex3<_T> v) = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator/(_T v) const = delete;
-template<> template <typename _T> vex3<bool> vex3<bool>::operator/(vex3<_T> v) const = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator/=(_T v) = delete;
-template<> template <typename _T> vex3<bool>& vex3<bool>::operator/=(vex3<_T> v) = delete;
-template<> vex3<bool>& vex3<bool>::operator++() = delete;
-template<> vex3<bool>& vex3<bool>::operator--() = delete;
-template<> vex3<bool>& vex3<bool>::normalize() = delete;
-template<> vex3<bool> vex3<bool>::normalize() const = delete;
-template<> vex3<bool> vex3<bool>::ceil()  const = delete;
-template<> vex3<bool> vex3<bool>::floor() const = delete;
-template<> vex3<bool> vex3<bool>::abs()  const = delete;
-template<> vex3<bool> vex3<bool>::sqrt() const = delete;
-template<> vex3<bool> vex3<bool>::cbrt() const = delete;
-template<> vex3<bool> vex3<bool>::pow(int v) const = delete;
-template<> vex3<bool> vex3<bool>::round() const = delete;
-template<> vex3<bool> vex3<bool>::trunc() const = delete;
-template<> vex3<bool> vex3<bool>::exp()   const = delete;
-template<> vex3<bool> vex3<bool>::percent(bool v) const = delete;
-template<> vex3<bool> vex3<bool>::percent(bool v1, bool v2, bool v3) const = delete;
-
-template<> template <typename _T> vex4<bool> vex4<bool>::operator%(_T v) const = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator%=(_T v) = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator%(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator%=(vex4<_T> v) = delete;
-template<> template <typename _T> bool vex4<bool>::operator<(_T v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator<(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator>(_T v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator>(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator<=(_T v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator<=(vex4<_T> v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator>=(_T v) const = delete;
-template<> template <typename _T> bool vex4<bool>::operator>=(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator-(_T v) const = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator-(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator-=(_T v) = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator-=(vex4<_T> v) = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator*(_T v) const = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator*(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator*=(_T v) = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator*=(vex4<_T> v) = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator/(_T v) const = delete;
-template<> template <typename _T> vex4<bool> vex4<bool>::operator/(vex4<_T> v) const = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator/=(_T v) = delete;
-template<> template <typename _T> vex4<bool>& vex4<bool>::operator/=(vex4<_T> v) = delete;
-template<> vex4<bool>& vex4<bool>::operator++() = delete;
-template<> vex4<bool>& vex4<bool>::operator--() = delete;
-template<> vex4<bool>& vex4<bool>::normalize() = delete;
-template<> vex4<bool> vex4<bool>::normalize() const = delete;
-template<> vex4<bool> vex4<bool>::ceil()  const = delete;
-template<> vex4<bool> vex4<bool>::floor() const = delete;
-template<> vex4<bool> vex4<bool>::abs()  const = delete;
-template<> vex4<bool> vex4<bool>::sqrt() const = delete;
-template<> vex4<bool> vex4<bool>::cbrt() const = delete;
-template<> vex4<bool> vex4<bool>::pow(int v) const = delete;
-template<> vex4<bool> vex4<bool>::round() const = delete;
-template<> vex4<bool> vex4<bool>::trunc() const = delete;
-template<> vex4<bool> vex4<bool>::exp()   const = delete;
-template<> vex4<bool> vex4<bool>::percent(bool v) const = delete;
-template<> vex4<bool> vex4<bool>::percent(bool v1, bool v2, bool v3, bool v4) const = delete;
+#undef DelSVexs
 
 #ifdef _XS_STRINX_
 template<> template <typename _T> vex2<strinx> vex2<strinx>::operator%(_T v) const = delete;
@@ -853,17 +559,6 @@ template<> template <typename _T> bool vex2<strinx>::operator>=(_T v) const = de
 template<> template <typename _T> bool vex2<strinx>::operator>=(vex2<_T> v) const = delete;
 template<> vex2<strinx>& vex2<strinx>::normalize() = delete;
 template<> vex2<strinx> vex2<strinx>::normalize() const = delete;
-template<> vex2<strinx> vex2<strinx>::ceil()  const = delete;
-template<> vex2<strinx> vex2<strinx>::floor() const = delete;
-template<> vex2<strinx> vex2<strinx>::abs()  const = delete;
-template<> vex2<strinx> vex2<strinx>::sqrt() const = delete;
-template<> vex2<strinx> vex2<strinx>::cbrt() const = delete;
-template<> vex2<strinx> vex2<strinx>::pow(int v) const = delete;
-template<> vex2<strinx> vex2<strinx>::round() const = delete;
-template<> vex2<strinx> vex2<strinx>::trunc() const = delete;
-template<> vex2<strinx> vex2<strinx>::exp()   const = delete;
-template<> vex2<strinx> vex2<strinx>::percent(strinx v) const = delete;
-template<> vex2<strinx> vex2<strinx>::percent(strinx v1, strinx v2) const = delete;
 typedef vex2<strinx> vex2x;
 
 template<> template <typename _T> vex3<strinx> vex3<strinx>::operator%(_T v) const = delete;
@@ -880,17 +575,6 @@ template<> template <typename _T> bool vex3<strinx>::operator>=(_T v) const = de
 template<> template <typename _T> bool vex3<strinx>::operator>=(vex3<_T> v) const = delete;
 template<> vex3<strinx>& vex3<strinx>::normalize() = delete;
 template<> vex3<strinx> vex3<strinx>::normalize() const = delete;
-template<> vex3<strinx> vex3<strinx>::ceil()  const = delete;
-template<> vex3<strinx> vex3<strinx>::floor() const = delete;
-template<> vex3<strinx> vex3<strinx>::abs()  const = delete;
-template<> vex3<strinx> vex3<strinx>::sqrt() const = delete;
-template<> vex3<strinx> vex3<strinx>::cbrt() const = delete;
-template<> vex3<strinx> vex3<strinx>::pow(int v) const = delete;
-template<> vex3<strinx> vex3<strinx>::round() const = delete;
-template<> vex3<strinx> vex3<strinx>::trunc() const = delete;
-template<> vex3<strinx> vex3<strinx>::exp()   const = delete;
-template<> vex3<strinx> vex3<strinx>::percent(strinx v) const = delete;
-template<> vex3<strinx> vex3<strinx>::percent(strinx v1, strinx v2, strinx v3) const = delete;
 typedef vex3<strinx> vex3x;
 
 template<> template <typename _T> vex4<strinx> vex4<strinx>::operator%(_T v) const = delete;
@@ -907,15 +591,6 @@ template<> template <typename _T> bool vex4<strinx>::operator>=(_T v) const = de
 template<> template <typename _T> bool vex4<strinx>::operator>=(vex4<_T> v) const = delete;
 template<> vex4<strinx>& vex4<strinx>::normalize() = delete;
 template<> vex4<strinx> vex4<strinx>::normalize() const = delete;
-template<> vex4<strinx> vex4<strinx>::ceil()  const = delete;
-template<> vex4<strinx> vex4<strinx>::floor() const = delete;
-template<> vex4<strinx> vex4<strinx>::abs()  const = delete;
-template<> vex4<strinx> vex4<strinx>::sqrt() const = delete;
-template<> vex4<strinx> vex4<strinx>::cbrt() const = delete;
-template<> vex4<strinx> vex4<strinx>::pow(int v) const = delete;
-template<> vex4<strinx> vex4<strinx>::round() const = delete;
-template<> vex4<strinx> vex4<strinx>::trunc() const = delete;
-template<> vex4<strinx> vex4<strinx>::exp()   const = delete;
 template<> vex4<strinx> vex4<strinx>::percent(strinx v) const = delete;
 template<> vex4<strinx> vex4<strinx>::percent(strinx v1, strinx v2, strinx v3, strinx v4) const = delete;
 typedef vex4<strinx> vex4x;
@@ -1135,9 +810,208 @@ typedef vex4<std::string>   v4s;
 _VexTypedefs_
 #endif
 
-#ifdef __XSSTDLIB_FUNCS__
-__XSSTDLIB_FUNCS__
-#endif
+namespace std {
+    inline vex2f    ceil(vex2f v) { return vex2f(std::ceil(v.x), std::ceil(v.y)); };
+    inline vex2d    ceil(vex2d v) { return vex2d(std::ceil(v.x), std::ceil(v.y)); };
+    inline vex2f    floor(vex2f v) { return vex2f(std::floor(v.x), std::floor(v.y)); };
+    inline vex2d    floor(vex2d v) { return vex2d(std::floor(v.x), std::floor(v.y)); };
+    inline vex2f    abs(vex2f v) { return vex2f(std::abs(v.x), std::abs(v.y)); };
+    inline vex2d    abs(vex2d v) { return vex2d(std::abs(v.x), std::abs(v.y)); };
+    inline vex2f    round(vex2f v) { return vex2f(std::round(v.x), std::round(v.y)); };
+    inline vex2d    round(vex2d v) { return vex2d(std::round(v.x), std::round(v.y)); };
+    inline vex2f    trunc(vex2f v) { return vex2f(std::trunc(v.x), std::trunc(v.y)); };
+    inline vex2d    trunc(vex2d v) { return vex2d(std::trunc(v.x), std::trunc(v.y)); };
+    inline vex2f    exp(vex2f v) { return vex2f(std::exp(v.x), std::exp(v.y)); };
+    inline vex2d    exp(vex2d v) { return vex2d(std::exp(v.x), std::exp(v.y)); };
+    inline vex2f    sqrt(vex2f v) { return vex2f(std::sqrt(v.x), std::sqrt(v.y)); };
+    inline vex2d    sqrt(vex2d v) { return vex2d(std::sqrt(v.x), std::sqrt(v.y)); };
+    inline vex2i    sqrt(vex2i v) { return vex2i(std::sqrt(v.x), std::sqrt(v.y)); };
+    inline vex2li   sqrt(vex2li v) { return vex2li(std::sqrt(v.x), std::sqrt(v.y)); };
+    inline vex2lli  sqrt(vex2lli v) { return vex2lli(std::sqrt(v.x), std::sqrt(v.y)); };
+    inline vex2f    cbrt(vex2f v) { return vex2f(std::cbrt(v.x), std::cbrt(v.y)); };
+    inline vex2d    cbrt(vex2d v) { return vex2d(std::cbrt(v.x), std::cbrt(v.y)); };
+    inline vex2i    cbrt(vex2i v) { return vex2i(std::cbrt(v.x), std::cbrt(v.y)); };
+    inline vex2li   cbrt(vex2li v) { return vex2li(std::cbrt(v.x), std::cbrt(v.y)); };
+    inline vex2lli  cbrt(vex2lli v) { return vex2lli(std::cbrt(v.x), std::cbrt(v.y)); };
+    inline vex2f    pow(vex2f v, int p) { return vex2f(std::pow(v.x, p), std::pow(v.y, p)); };
+    inline vex2d    pow(vex2d v, int p) { return vex2d(std::pow(v.x, p), std::pow(v.y, p)); };
+    inline vex2i    pow(vex2i v, int p) { return vex2i(std::pow(v.x, p), std::pow(v.y, p)); };
+    inline vex2li   pow(vex2li v, int p) { return vex2li(std::pow(v.x, p), std::pow(v.y, p)); };
+    inline vex2lli  pow(vex2lli v, int p) { return vex2lli(std::pow(v.x, p), std::pow(v.y, p)); };
+    inline vex2f&   max(vex2f& v1, vex2f& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex2d&   max(vex2d& v1, vex2d& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex2i&   max(vex2i& v1, vex2i& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex2li&  max(vex2li& v1, vex2li& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex2lli& max(vex2lli& v1, vex2lli& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex2f&   min(vex2f& v1, vex2f& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex2d&   min(vex2d& v1, vex2d& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex2i&   min(vex2i& v1, vex2i& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex2li&  min(vex2li& v1, vex2li& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex2lli& min(vex2lli& v1, vex2lli& v2) { return (v1 < v2) ? v1 : v2; };
+
+    inline vex3f   ceil(vex3f v) { return vex3f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); };
+    inline vex3d   ceil(vex3d v) { return vex3f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); };
+    inline vex3f   floor(vex3f v) { return vex3f(std::floor(v.x), std::floor(v.y), std::floor(v.z)); };
+    inline vex3d   floor(vex3d v) { return vex3d(std::floor(v.x), std::floor(v.y), std::floor(v.z)); };
+    inline vex3f   abs(vex3f v) { return vex3f(std::abs(v.x), std::abs(v.y), std::abs(v.z)); };
+    inline vex3d   abs(vex3d v) { return vex3d(std::abs(v.x), std::abs(v.y), std::abs(v.z)); };
+    inline vex3f   round(vex3f v) { return vex3f(std::round(v.x), std::round(v.y), std::round(v.z)); };
+    inline vex3d   round(vex3d v) { return vex3d(std::round(v.x), std::round(v.y), std::round(v.z)); };
+    inline vex3f   trunc(vex3f v) { return vex3f(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); };
+    inline vex3d   trunc(vex3d v) { return vex3d(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); };
+    inline vex3f   exp(vex3f v) { return vex3f(std::exp(v.x), std::exp(v.y), std::exp(v.z)); };
+    inline vex3d   exp(vex3d v) { return vex3d(std::exp(v.x), std::exp(v.y), std::exp(v.z)); };
+    inline vex3f   sqrt(vex3f v) { return vex3f(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); };
+    inline vex3d   sqrt(vex3d v) { return vex3d(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); };
+    inline vex3i   sqrt(vex3i v) { return vex3i(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); };
+    inline vex3li  sqrt(vex3li v) { return vex3li(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); };
+    inline vex3lli sqrt(vex3lli v) { return vex3lli(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z)); };
+    inline vex3f   cbrt(vex3f v) { return vex3f(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); };
+    inline vex3d   cbrt(vex3d v) { return vex3d(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); };
+    inline vex3i   cbrt(vex3i v) { return vex3i(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); };
+    inline vex3li  cbrt(vex3li v) { return vex3li(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); };
+    inline vex3lli cbrt(vex3lli v) { return vex3lli(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z)); };
+    inline vex3f   pow(vex3f v, int p) { return vex3f(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p)); };
+    inline vex3d   pow(vex3d v, int p) { return vex3d(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p)); };
+    inline vex3i   pow(vex3i v, int p) { return vex3i(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p)); };
+    inline vex3li  pow(vex3li v, int p) { return vex3li(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p)); };
+    inline vex3lli pow(vex3lli v, int p) { return vex3lli(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p)); };
+    inline vex3f&  max(vex3f& v1, vex3f& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex3d&  max(vex3d& v1, vex3d& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex3i&  max(vex3i& v1, vex3i& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex3li& max(vex3li& v1, vex3li& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex3lli& max(vex3lli& v1, vex3lli& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex3f&  min(vex3f& v1, vex3f& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex3d&  min(vex3d& v1, vex3d& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex3i&  min(vex3i& v1, vex3i& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex3li& min(vex3li& v1, vex3li& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex3lli& min(vex3lli& v1, vex3lli& v2) { return (v1 < v2) ? v1 : v2; };
+
+    inline vex4f   ceil(vex4f v) { return vex4f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w)); };
+    inline vex4d   ceil(vex4d v) { return vex4f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w)); };
+    inline vex4f   floor(vex4f v) { return vex4f(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w)); };
+    inline vex4d   floor(vex4d v) { return vex4d(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w)); };
+    inline vex4f   abs(vex4f v) { return vex4f(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); };
+    inline vex4d   abs(vex4d v) { return vex4d(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); };
+    inline vex4f   round(vex4f v) { return vex4f(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w)); };
+    inline vex4d   round(vex4d v) { return vex4d(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w)); };
+    inline vex4f   trunc(vex4f v) { return vex4f(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w)); };
+    inline vex4d   trunc(vex4d v) { return vex4d(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w)); };
+    inline vex4d   exp(vex4d v) { return vex4f(std::exp(v.x), std::exp(v.y), std::exp(v.z), std::exp(v.w)); };
+    inline vex4f   exp(vex4f v) { return vex4d(std::exp(v.x), std::exp(v.y), std::exp(v.z), std::exp(v.w)); };
+    inline vex4f   sqrt(vex4f v) { return vex4f(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w)); };
+    inline vex4d   sqrt(vex4d v) { return vex4d(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w)); };
+    inline vex4i   sqrt(vex4i v) { return vex4i(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w)); };
+    inline vex4li  sqrt(vex4li v) { return vex4li(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w)); };
+    inline vex4lli sqrt(vex4lli v) { return vex4lli(std::sqrt(v.x), std::sqrt(v.y), std::sqrt(v.z), std::sqrt(v.w)); };
+    inline vex4f   cbrt(vex4f v) { return vex4f(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); };
+    inline vex4d   cbrt(vex4d v) { return vex4d(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); };
+    inline vex4i   cbrt(vex4i v) { return vex4i(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); };
+    inline vex4li  cbrt(vex4li v) { return vex4li(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); };
+    inline vex4lli cbrt(vex4lli v) { return vex4lli(std::cbrt(v.x), std::cbrt(v.y), std::cbrt(v.z), std::cbrt(v.w)); };
+    inline vex4f   pow(vex4f v, int p) { return vex4f(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p), std::pow(v.w, p)); };
+    inline vex4d   pow(vex4d v, int p) { return vex4d(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p), std::pow(v.w, p)); };
+    inline vex4i   pow(vex4i v, int p) { return vex4i(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p), std::pow(v.w, p)); };
+    inline vex4li  pow(vex4li v, int p) { return vex4li(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p), std::pow(v.w, p)); };
+    inline vex4lli pow(vex4lli v, int p) { return vex4lli(std::pow(v.x, p), std::pow(v.y, p), std::pow(v.z, p), std::pow(v.w, p)); };
+    inline vex4f&  max(vex4f& v1, vex4f& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex4d&  max(vex4d& v1, vex4d& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex4i&  max(vex4i& v1, vex4i& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex4li& max(vex4li& v1, vex4li& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex4lli& max(vex4lli& v1, vex4lli& v2) { return (v1 > v2) ? v1 : v2; };
+    inline vex4f&  min(vex4f& v1, vex4f& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex4d&  min(vex4d& v1, vex4d& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex4i&  min(vex4i& v1, vex4i& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex4li& min(vex4li& v1, vex4li& v2) { return (v1 < v2) ? v1 : v2; };
+    inline vex4lli& min(vex4lli& v1, vex4lli& v2) { return (v1 < v2) ? v1 : v2; };
+    vex2f strtov2f(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex2f t;
+        ss << _s;
+        for (size_t i = 0u; i < 2u and ss >> s; i++)
+            t[i] = stof(s);
+        return t;
+    };
+    vex2d strtov2d(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex2d t;
+        ss << _s;
+        for (size_t i = 0u; i < 2u and ss >> s; i++)
+            t[i] = stod(s);
+        return t;
+    };
+    vex2i strtov2i(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex2i t;
+        ss << _s;
+        for (size_t i = 0u; i < 2u and ss >> s; i++)
+            t[i] = stoi(s);
+        return t;
+    };
+    vex3f strtov3f(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex3f t;
+        ss << _s;
+        for (size_t i = 0u; i < 3u and ss >> s; i++)
+            t[i] = stof(s);
+        return t;
+    };
+    vex3d strtov3d(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex3d t;
+        ss << _s;
+        for (size_t i = 0u; i < 3u and ss >> s; i++)
+            t[i] = stod(s);
+        return t;
+    };
+    vex3i strtov3i(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex3i t;
+        ss << _s;
+        for (size_t i = 0u; i < 3u and ss >> s; i++)
+            t[i] = stoi(s);
+        return t;
+    };
+    vex4f strtov4f(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex4f t;
+        ss << _s;
+        for (size_t i = 0u; i < 4u and ss >> s; i++)
+            t[i] = stof(s);
+        return t;
+    };
+    vex4d strtov4d(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex4d t;
+        ss << _s;
+        for (size_t i = 0u; i < 4u and ss >> s; i++)
+            t[i] = stod(s);
+        return t;
+    };
+    vex4i strtov4i(const std::string& _s) {
+        stringstream ss;
+        string s;
+        vex4i t;
+        ss << _s;
+        for (size_t i = 0u; i < 4u and ss >> s; i++)
+            t[i] = stoi(s);
+        return t;
+    };
+};
+
+namespace std {
+    template <typename T> std::string to_string(vex2<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
+    template <typename T> std::string to_string(vex3<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
+    template <typename T> std::string to_string(vex4<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
+};
 
 #if !defined(_VEX_NO_MATH_FUNCS)
 template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
@@ -1238,6 +1112,6 @@ template <typename T> const T& max(const vex3<T>& v) { return (v.x > v.y && v.x 
 template <typename T> const T& max(const vex4<T>& v) { return (v.x > v.y && v.x > v.z && v.x > v.w) ? v.x : (v.y > v.z && v.y > v.w) ? v.y : (v.z > v.w) ? v.z : v.w; };
 
 template <typename T> const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
-template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y && v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
-template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y && v.x < v.z && v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
+template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y&& v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
+template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z&& v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
 #endif
