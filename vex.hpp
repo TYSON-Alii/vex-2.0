@@ -50,9 +50,10 @@ struct vex2 {
         v = c;
         return *this;
     };
+    inline vex2<T> operator-() const { return vex2<T>(-x, -y); };
 
-    vex2<T> operator()() const { return *this; };
-    vex2<T> copy() const { return *this; };
+    inline vex2<T> operator()() const { return *this; };
+    inline vex2<T> copy() const { return *this; };
 
     T& operator[](const int& v) { return (v % 2) == 0 ? x : y; };
     T operator[](const int& v) const { return (v % 2) == 0 ? x : y; };
@@ -213,9 +214,10 @@ struct vex3 {
         v = c;
         return *this;
     };
+    inline vex3<T> operator-() const { return vex3<T>(-x, -y, -z); };
 
-    vex3<T> operator()() const { return *this; };
-    vex3<T> copy() const { return *this; };
+    inline vex3<T> operator()() const { return *this; };
+    inline vex3<T> copy() const { return *this; };
 
     T& operator[](const int& v) { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
     T operator[](const int& v) const { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
@@ -382,9 +384,10 @@ struct vex4 {
         v = c;
         return *this;
     };
+    inline vex4<T> operator-() const { return vex4<T>(-x, -y, -z, -w); };
 
-    vex4<T> operator()() const { return *this; };
-    vex4<T> copy() const { return *this; };
+    inline vex4<T> operator()() const { return *this; };
+    inline vex4<T> copy() const { return *this; };
 
     T& operator[](const int& v) { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
     T operator[](const int& v) const { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
