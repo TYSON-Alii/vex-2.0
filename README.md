@@ -53,7 +53,7 @@ vex3f vec = 0.f;
 vec += 5.f; // x + 5.f, y + 5.f and z + 5.f.
 vec -= vex2f(3); // x - 3.f and y - 5.f.
 vec *= vex4f(17.f, 19.f, 0.f); // x * 17.f, y * 19.f and z * 0.f.
-vec /= 255; // x * 255, y * 255 and z * 255.
+vec /= 255; // x / 255, y / 255 and z / 255.
 vec = vec^5; // x, y and z pow 5.
 vec = vec - vex4f(6.f, 89ui);
 ```
