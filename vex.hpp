@@ -8,6 +8,7 @@ template <typename T> struct vex4;
 template <typename T>
 struct vex2 {
     T x, y;
+    operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
 #ifdef _XS_STRINX_
@@ -19,6 +20,8 @@ struct vex2 {
 #ifdef __VEX2IM_FUNCS__ // in ImGui-Vex.hpp
         __VEX2IM_FUNCS__
 #endif
+    T* data() { return &x; };
+    T* data() const { return &x; };
     T* arr() const { return new T[2]{ x, y }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
@@ -166,6 +169,7 @@ struct vex2 {
 template <typename T>
 struct vex3 {
     T x, y, z;
+    operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
 #ifdef _XS_STRINX_
@@ -177,7 +181,9 @@ struct vex3 {
 #ifdef __VEX3IM_FUNCS__
         __VEX3IM_FUNCS__
 #endif
-        T* arr() const { return new T[3]{ x, y, z }; };
+    T* data() { return &x; };
+    T* data() const { return &x; };
+    T* arr() const { return new T[3]{ x, y, z }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
     vex3() = default;
     vex3(const vex3<T>&) = default;
@@ -327,6 +333,7 @@ struct vex3 {
 template <typename T>
 struct vex4 {
     T x, y, z, w;
+    operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
@@ -338,7 +345,9 @@ struct vex4 {
 #ifdef __VEX4IM_FUNCS__
         __VEX4IM_FUNCS__
 #endif
-        T* arr() { return new T[4]{ x, y, z, w }; };
+    T* data() { return &x; };
+    T* data() const { return &x; };
+    T* arr() { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
@@ -1008,13 +1017,62 @@ namespace std {
             t[i] = stoi(s);
         return t;
     };
-};
-
-namespace std {
     template <typename T> std::string to_string(vex2<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
     template <typename T> std::string to_string(vex3<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
     template <typename T> std::string to_string(vex4<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
 };
+
+inline vex2f operator+(const char* l, const vex2f& r) { return std::strtov2f(l) + r; };
+inline vex2f operator-(const char* l, const vex2f& r) { return std::strtov2f(l) - r; };
+inline vex2f operator/(const char* l, const vex2f& r) { return std::strtov2f(l) / r; };
+inline vex2f operator*(const char* l, const vex2f& r) { return std::strtov2f(l) * r; };
+inline vex2d operator+(const char* l, const vex2d& r) { return std::strtov2d(l) + r; };
+inline vex2d operator-(const char* l, const vex2d& r) { return std::strtov2d(l) - r; };
+inline vex2d operator/(const char* l, const vex2d& r) { return std::strtov2d(l) / r; };
+inline vex2d operator*(const char* l, const vex2d& r) { return std::strtov2d(l) * r; };
+inline vex2i operator+(const char* l, const vex2i& r) { return std::strtov2i(l) + r; };
+inline vex2i operator-(const char* l, const vex2i& r) { return std::strtov2i(l) - r; };
+inline vex2i operator/(const char* l, const vex2i& r) { return std::strtov2i(l) / r; };
+inline vex2i operator*(const char* l, const vex2i& r) { return std::strtov2i(l) * r; };
+
+inline vex3f operator+(const char* l, const vex3f& r) { return std::strtov3f(l) + r; };
+inline vex3f operator-(const char* l, const vex3f& r) { return std::strtov3f(l) - r; };
+inline vex3f operator/(const char* l, const vex3f& r) { return std::strtov3f(l) / r; };
+inline vex3f operator*(const char* l, const vex3f& r) { return std::strtov3f(l) * r; };
+inline vex3d operator+(const char* l, const vex3d& r) { return std::strtov3d(l) + r; };
+inline vex3d operator-(const char* l, const vex3d& r) { return std::strtov3d(l) - r; };
+inline vex3d operator/(const char* l, const vex3d& r) { return std::strtov3d(l) / r; };
+inline vex3d operator*(const char* l, const vex3d& r) { return std::strtov3d(l) * r; };
+inline vex3i operator+(const char* l, const vex3i& r) { return std::strtov3i(l) + r; };
+inline vex3i operator-(const char* l, const vex3i& r) { return std::strtov3i(l) - r; };
+inline vex3i operator/(const char* l, const vex3i& r) { return std::strtov3i(l) / r; };
+inline vex3i operator*(const char* l, const vex3i& r) { return std::strtov3i(l) * r; };
+
+inline vex4f operator+(const char* l, const vex4f& r) { return std::strtov4f(l) + r; };
+inline vex4f operator-(const char* l, const vex4f& r) { return std::strtov4f(l) - r; };
+inline vex4f operator/(const char* l, const vex4f& r) { return std::strtov4f(l) / r; };
+inline vex4f operator*(const char* l, const vex4f& r) { return std::strtov4f(l) * r; };
+inline vex4d operator+(const char* l, const vex4d& r) { return std::strtov4d(l) + r; };
+inline vex4d operator-(const char* l, const vex4d& r) { return std::strtov4d(l) - r; };
+inline vex4d operator/(const char* l, const vex4d& r) { return std::strtov4d(l) / r; };
+inline vex4d operator*(const char* l, const vex4d& r) { return std::strtov4d(l) * r; };
+inline vex4i operator+(const char* l, const vex4i& r) { return std::strtov4i(l) + r; };
+inline vex4i operator-(const char* l, const vex4i& r) { return std::strtov4i(l) - r; };
+inline vex4i operator/(const char* l, const vex4i& r) { return std::strtov4i(l) / r; };
+inline vex4i operator*(const char* l, const vex4i& r) { return std::strtov4i(l) * r; };
+
+template <typename T> inline vex2<T> operator+(const int& l, const vex2<T>& r) { return vex2<T>(l) + r; };
+template <typename T> inline vex2<T> operator-(const int& l, const vex2<T>& r) { return vex2<T>(l) - r; };
+template <typename T> inline vex2<T> operator/(const int& l, const vex2<T>& r) { return vex2<T>(l) / r; };
+template <typename T> inline vex2<T> operator*(const int& l, const vex2<T>& r) { return vex2<T>(l) * r; };
+template <typename T> inline vex2<T> operator+(const float& l, const vex2<T>& r) { return vex2<T>(l) + r; };
+template <typename T> inline vex2<T> operator-(const float& l, const vex2<T>& r) { return vex2<T>(l) - r; };
+template <typename T> inline vex2<T> operator/(const float& l, const vex2<T>& r) { return vex2<T>(l) / r; };
+template <typename T> inline vex2<T> operator*(const float& l, const vex2<T>& r) { return vex2<T>(l) * r; };
+template <typename T> inline vex2<T> operator+(const double& l, const vex2<T>& r) { return vex2<T>(l) + r; };
+template <typename T> inline vex2<T> operator-(const double& l, const vex2<T>& r) { return vex2<T>(l) - r; };
+template <typename T> inline vex2<T> operator/(const double& l, const vex2<T>& r) { return vex2<T>(l) / r; };
+template <typename T> inline vex2<T> operator*(const double& l, const vex2<T>& r) { return vex2<T>(l) * r; };
 
 #if !defined(_VEX_NO_MATH_FUNCS)
 template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
