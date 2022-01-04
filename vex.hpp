@@ -8,6 +8,7 @@ template <typename T> struct vex4;
 template <typename T>
 struct vex2 {
     T x, y;
+    operator T* () { return arr(); };
     operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
@@ -32,8 +33,8 @@ struct vex2 {
     template <typename _T> vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T1, typename _T2> vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
 
-    template <typename _T>  vex2<T>& operator=(_T v) { x = y = T(v);             return *this; };
-    template <typename _T>  vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y);   return *this; };
+    template <typename _T>  vex2<T>& operator=(_T v) { x = y = T(v); return *this; };
+    template <typename _T>  vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y); return *this; };
 
     template <> vex2(std::string v);
     template <> vex2(std::string v1, std::string v2);
@@ -169,6 +170,7 @@ struct vex2 {
 template <typename T>
 struct vex3 {
     T x, y, z;
+    operator T* () { return arr(); };
     operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
@@ -294,7 +296,7 @@ struct vex3 {
     vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
     vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
 
-    template <typename _T> vex3<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
+    template <typename _T> vex3<T>& operator=(vex2<_T> v)  { x =  T(v.x);   y = T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
     template <typename _T> vex3<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
@@ -310,7 +312,7 @@ struct vex3 {
     template <typename _T>  bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
     template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T> vex3<T>& operator=(vex4<_T> v) { x = T(v.x);  y = T(v.y);  z = T(v.z);  return *this; };
+    template <typename _T> vex3<T>& operator=(vex4<_T> v)  { x =  T(v.x);  y =  T(v.y);  z =  T(v.z);  return *this; };
     template <typename _T> vex3<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);  z += T(v.z);  return *this; };
     template <typename _T> vex3<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);  z -= T(v.z);  return *this; };
     template <typename _T> vex3<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);  z *= T(v.z);  return *this; };
@@ -333,6 +335,7 @@ struct vex3 {
 template <typename T>
 struct vex4 {
     T x, y, z, w;
+    operator T* () { return arr(); };
     operator T* () const { return arr(); };
     operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
     operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
@@ -347,7 +350,7 @@ struct vex4 {
 #endif
     T* data() { return &x; };
     T* data() const { return &x; };
-    T* arr() { return new T[4]{ x, y, z, w }; };
+    T* arr() const { return new T[4]{ x, y, z, w }; };
     std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
@@ -378,7 +381,7 @@ struct vex4 {
     template <> vex4(std::string v1, std::string v2, std::string v3, std::string v4);
     template <> vex4<T>& operator=(std::string v);
 
-    bool isEmpty()  const { return (x && y && z && w) ? false : true; };
+    bool isEmpty() const { return (x && y && z && w) ? false : true; };
     operator bool() const { return isEmpty(); };
 
     vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
