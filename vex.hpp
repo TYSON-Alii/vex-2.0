@@ -8,12 +8,12 @@ template <typename T> struct vex4;
 template <typename T>
 struct vex2 {
     T x, y;
-    operator T* () { return arr(); };
-    operator T* () const { return arr(); };
-    operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y)); };
-    operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
+    inline operator T* () { return arr(); };
+    inline operator T* () const { return arr(); };
+    inline operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y)); };
+    inline operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() const { return strinx(x) + ' ' + strinx(y); };
+    inline operator strinx() const { return strinx(x) + ' ' + strinx(y); };
 #endif
 #ifdef __VEX2GLM_FUNCS__ // in GLM-Vex.hpp
     __VEX2GLM_FUNCS__
@@ -21,34 +21,34 @@ struct vex2 {
 #ifdef __VEX2IM_FUNCS__ // in ImGui-Vex.hpp
         __VEX2IM_FUNCS__
 #endif
-    T* data() { return &x; };
-    T* data() const { return &x; };
-    T* arr() const { return new T[2]{ x, y }; };
-    std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
+    inline T* data() { return &x; };
+    inline T* data() const { return &x; };
+    inline T* arr() const { return new T[2]{ x, y }; };
+    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
     vex2(const vex2<T>&) = default;
-    template <typename _T> vex2(_T v) { x = y = T(v); };
-    template <typename _T> vex2(vex2<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T> vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T> vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T1, typename _T2> vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
+    template <typename _T> inline vex2(_T v) { x = y = T(v); };
+    template <typename _T> inline vex2(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> inline vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> inline vex2(vex4<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T1, typename _T2> inline vex2(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
 
-    template <typename _T>  vex2<T>& operator=(_T v) { x = y = T(v); return *this; };
-    template <typename _T>  vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y); return *this; };
+    template <typename _T> inline vex2<T>& operator=(_T v) { x = y = T(v); return *this; };
+    template <typename _T> inline vex2<T>& operator=(vex2<_T> v) { x = T(v.x); y = T(v.y); return *this; };
 
     template <> vex2(std::string v);
     template <> vex2(std::string v1, std::string v2);
     template <> vex2<T>& operator=(std::string v);
 
-    bool isEmpty() const { return (x && y) ? false : true; };
-    operator bool() const { return isEmpty(); };
+    inline bool isEmpty() const { return (x && y) ? false : true; };
+    inline operator bool() const { return isEmpty(); };
 
-    vex2<T>& operator~() { x = T(); y = T(); return *this; };
-    bool operator!() const { return !isEmpty(); };
-    vex2<T>& swap() { *this = vex2<T>(y, x); return *this; };
-    vex2<T> swap() const { *this = vex2<T>(y, x); return *this; };
+    inline vex2<T>& operator~() { x = y = T(); return *this; };
+    inline bool operator!() const { return !isEmpty(); };
+    inline vex2<T>& swap() { *this = vex2<T>(y, x); return *this; };
+    inline vex2<T> swap() const { *this = vex2<T>(y, x); return *this; };
     template <typename _T>
-    vex2<T>& operator,(vex2<_T>& v) {
+    inline vex2<T>& operator,(vex2<_T>& v) {
         const vex2<T> c = *this;
         *this = v;
         v = c;
@@ -59,109 +59,93 @@ struct vex2 {
     inline vex2<T> operator()() const { return *this; };
     inline vex2<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return (v % 2) == 0 ? x : y; };
-    T operator[](const int& v) const { return (v % 2) == 0 ? x : y; };
+    inline T& operator[](const int& v) { return (v % 2) == 0 ? x : y; };
+    inline T operator[](const int& v) const { return (v % 2) == 0 ? x : y; };
 
-    template <typename _T>  vex2<T> operator%(_T v) const { return vex2<T>(std::rand() % int(v), std::rand() % int(v)); };
-    template <typename _T>  vex2<T> operator%(vex2<_T> v) const { return vex2<T>(std::rand() % int(v.x), std::rand() % int(v.y)); };
+    template <typename _T> inline vex2<T> operator%(_T v) const { return vex2<T>(std::rand() % int(v), std::rand() % int(v)); };
+    template <typename _T> inline vex2<T> operator%(vex2<_T> v) const { return vex2<T>(std::rand() % int(v.x), std::rand() % int(v.y)); };
+    template <typename _T> inline vex2<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   return *this; };
+    template <typename _T> inline vex2<T>& operator%=(vex2<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); return *this; };
 
-    template <typename _T>  vex2<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   return *this; };
-    template <typename _T>  vex2<T>& operator%=(vex2<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); return *this; };
+    template <typename _T> inline vex2<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
 
-    template <typename _T>  vex2<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
-    template <typename _T>  vex2<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
-    template <typename _T>  vex2<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    inline vex2<T>& operator++() { x++; y++; return *this; };
+    inline vex2<T>& operator--() { x--; y--; return *this; };
 
-    template <typename _T>  vex2<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
-    template <typename _T>  vex2<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline vex2<T>& operator+=(_T v) { x += T(v); y += T(v); return *this; };
+    template <typename _T> inline vex2<T>& operator+=(vex2<_T> v) { x += T(v.x); y += T(v.y); return *this; };
+    template <typename _T> inline vex2<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      return *this; };
+    template <typename _T> inline vex2<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator*=(_T v) { x *= T(v); y *= T(v); return *this; };
+    template <typename _T> inline vex2<T>& operator*=(vex2<_T> v) { x *= T(v.x); y *= T(v.y); return *this; };
+    template <typename _T> inline vex2<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      return *this; };
+    template <typename _T> inline vex2<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T> operator+(_T v) const { return vex2<T>(this->x + T(v), this->y + T(v)); };
+    template <typename _T> inline vex2<T> operator+(vex2<_T> v) const { return vex2<T>(this->x + T(v.x), this->y + T(v.y)); };
+    template <typename _T> inline vex2<T> operator-(_T v) const { return vex2<T>(this->x - T(v), this->y - T(v)); };
+    template <typename _T> inline vex2<T> operator-(vex2<_T> v) const { return vex2<T>(this->x - T(v.x), this->y - T(v.y)); };
+    template <typename _T> inline vex2<T> operator*(_T v) const { return vex2<T>(this->x * T(v), this->y * T(v)); };
+    template <typename _T> inline vex2<T> operator*(vex2<_T> v) const { return vex2<T>(this->x * T(v.x), this->y * T(v.y)); };
+    template <typename _T> inline vex2<T> operator/(_T v) const { return vex2<T>(this->x / T(v), this->y / T(v)); };
+    template <typename _T> inline vex2<T> operator/(vex2<_T> v) const { return vex2<T>(this->x / T(v.x), this->y / T(v.y)); };
+    template <typename _T> inline vex2<T> operator^(_T v) const { return vex2<T>(std::pow(this->x, v), std::pow(this->y, v)); };
+    template <typename _T> inline vex2<T> operator^(vex2<_T> v) const { return vex2<T>(std::pow(this->x, v.x), std::pow(this->y, v.y)); };
 
-    template <typename _T>  vex2<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
-    template <typename _T>  vex2<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex2<T>(v) : *this; };
+    template <typename _T> inline bool operator==(_T v) const { return this->x == T(v) && this->y == T(v); };
+    template <typename _T> inline bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
+    template <typename _T> inline bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v); };
+    template <typename _T> inline bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
+    template <typename _T> inline bool operator>(_T v) const { return this->x > T(v) && this->y > T(v); };
+    template <typename _T> inline bool operator>(vex2<_T> v) const { return this->x > T(v.x) && this->y > T(v.y); };
+    template <typename _T> inline bool operator<(_T v) const { return this->x < T(v) && this->y < T(v); };
+    template <typename _T> inline bool operator<(vex2<_T> v) const { return this->x < T(v.x) && this->y < T(v.y); };
+    template <typename _T> inline bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v); };
+    template <typename _T> inline bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
+    template <typename _T> inline bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v); };
+    template <typename _T> inline bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    vex2<T>& operator++() { x++; y++; return *this; };
-    vex2<T>& operator--() { x--; y--; return *this; };
+    template <typename _T> inline vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
 
-    template <typename _T>  vex2<T>& operator+=(_T v) { x += T(v);    y += T(v);      return *this; };
-    template <typename _T>  vex2<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
+    inline vex2<T>& normalize() { *this /= (x > y ? x : y); return *this; };
+    inline vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
 
-    template <typename _T>  vex2<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      return *this; };
-    template <typename _T>  vex2<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T> operator+(vex3<_T> v) const { return vex2<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> inline vex2<T> operator-(vex3<_T> v) const { return vex2<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> inline vex2<T> operator*(vex3<_T> v) const { return vex2<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> inline vex2<T> operator/(vex3<_T> v) const { return vex2<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> inline bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
+    template <typename _T> inline bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
+    template <typename _T> inline bool operator>(vex3<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
+    template <typename _T> inline bool operator<(vex3<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
+    template <typename _T> inline bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
+    template <typename _T> inline bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T>  vex2<T>& operator*=(_T v) { x *= T(v);    y *= T(v);      return *this; };
-    template <typename _T>  vex2<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
-
-    template <typename _T>  vex2<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      return *this; };
-    template <typename _T>  vex2<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
-
-    template <typename _T>  vex2<T> operator+(_T v) const { return vex2<T>(this->x + T(v), this->y + T(v)); };
-    template <typename _T>  vex2<T> operator+(vex2<_T> v) const { return vex2<T>(this->x + T(v.x), this->y + T(v.y)); };
-
-    template <typename _T>  vex2<T> operator-(_T v) const { return vex2<T>(this->x - T(v), this->y - T(v)); };
-    template <typename _T>  vex2<T> operator-(vex2<_T> v) const { return vex2<T>(this->x - T(v.x), this->y - T(v.y)); };
-
-    template <typename _T>  vex2<T> operator*(_T v) const { return vex2<T>(this->x * T(v), this->y * T(v)); };
-    template <typename _T>  vex2<T> operator*(vex2<_T> v) const { return vex2<T>(this->x * T(v.x), this->y * T(v.y)); };
-
-    template <typename _T>  vex2<T> operator/(_T v) const { return vex2<T>(this->x / T(v), this->y / T(v)); };
-    template <typename _T>  vex2<T> operator/(vex2<_T> v) const { return vex2<T>(this->x / T(v.x), this->y / T(v.y)); };
-
-    template <typename _T>  vex2<T> operator^(_T v) const { return vex2<T>(std::pow(this->x, T(v)), std::pow(this->y / T(v))); };
-    template <typename _T>  vex2<T> operator^(vex2<_T> v) const { return vex2<T>(std::pow(this->x / T(v.x)), std::pow(this->y / T(v.y))); };
-
-    template <typename _T>  bool operator==(_T v) const { return this->x == T(v) && this->y == T(v); };
-    template <typename _T>  bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
-
-    template <typename _T>  bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v); };
-    template <typename _T>  bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
-
-    template <typename _T>  bool operator>(_T v) const { return this->x > T(v) && this->y > T(v); };
-    template <typename _T>  bool operator>(vex2<_T> v) const { return this->x > T(v.x) && this->y > T(v.y); };
-
-    template <typename _T>  bool operator<(_T v) const { return this->x < T(v) && this->y < T(v); };
-    template <typename _T>  bool operator<(vex2<_T> v) const { return this->x < T(v.x) && this->y < T(v.y); };
-
-    template <typename _T>  bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v); };
-    template <typename _T>  bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
-
-    template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v); };
-    template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
-
-    template <typename _T> vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
-
-    vex2<T>& normalize() { *this /= (x > y ? x : y); return *this; };
-    vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
-
-    template <typename _T> vex2<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex2<T> operator+(vex3<_T> v) const { return vex2<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex2<T> operator-(vex3<_T> v) const { return vex2<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex2<T> operator*(vex3<_T> v) const { return vex2<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex2<T> operator/(vex3<_T> v) const { return vex2<T>(x / T(v.x), y / T(v.y)); };
-    template <typename _T>  bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
-    template <typename _T>  bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
-    template <typename _T>  bool operator>(vex3<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
-    template <typename _T>  bool operator<(vex3<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
-    template <typename _T>  bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
-    template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
-
-    template <typename _T> vex2<T>& operator=(vex4<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex2<T>& operator+(vex4<_T> v)  const { return vex2<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex2<T>& operator-(vex4<_T> v)  const { return vex2<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex2<T>& operator*(vex4<_T> v)  const { return vex2<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex2<T>& operator/(vex4<_T> v)  const { return vex2<T>(x / T(v.x), y / T(v.y)); };
-    template <typename _T>  bool operator==(vex4<_T> v)  const { return this->x == T(v.x) && this->y == T(v.y); };
-    template <typename _T>  bool operator!=(vex4<_T> v)  const { return this->x != T(v.x) && this->y != T(v.y); };
-    template <typename _T>  bool operator>(vex4<_T> v)   const { return this->x > T(v.x) && this->y > T(v.y); };
-    template <typename _T>  bool operator<(vex4<_T> v)   const { return this->x < T(v.x) && this->y < T(v.y); };
-    template <typename _T>  bool operator>=(vex4<_T> v)  const { return this->x >= T(v.x) && this->y >= T(v.y); };
-    template <typename _T>  bool operator<=(vex4<_T> v)  const { return this->x <= T(v.x) && this->y <= T(v.y); };
+    template <typename _T> inline vex2<T>& operator=(vex4<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> inline vex2<T>& operator+(vex4<_T> v)  const { return vex2<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> inline vex2<T>& operator-(vex4<_T> v)  const { return vex2<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> inline vex2<T>& operator*(vex4<_T> v)  const { return vex2<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> inline vex2<T>& operator/(vex4<_T> v)  const { return vex2<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> inline bool operator==(vex4<_T> v)  const { return this->x == T(v.x) && this->y == T(v.y); };
+    template <typename _T> inline bool operator!=(vex4<_T> v)  const { return this->x != T(v.x) && this->y != T(v.y); };
+    template <typename _T> inline bool operator>(vex4<_T> v)   const { return this->x > T(v.x) && this->y > T(v.y); };
+    template <typename _T> inline bool operator<(vex4<_T> v)   const { return this->x < T(v.x) && this->y < T(v.y); };
+    template <typename _T> inline bool operator>=(vex4<_T> v)  const { return this->x >= T(v.x) && this->y >= T(v.y); };
+    template <typename _T> inline bool operator<=(vex4<_T> v)  const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex2<T>& v) { os << v.x << ' ' << v.y; return os; };
     friend std::istream& operator>>(std::istream& is, vex2<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; return is; };
@@ -170,12 +154,12 @@ struct vex2 {
 template <typename T>
 struct vex3 {
     T x, y, z;
-    operator T* () { return arr(); };
-    operator T* () const { return arr(); };
-    operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
-    operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
+    inline operator T* () { return arr(); };
+    inline operator T* () const { return arr(); };
+    inline operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)); };
+    inline operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z); };
+    inline operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z); };
 #endif
 #ifdef __VEX3GLM_FUNCS__
     __VEX3GLM_FUNCS__
@@ -183,40 +167,40 @@ struct vex3 {
 #ifdef __VEX3IM_FUNCS__
         __VEX3IM_FUNCS__
 #endif
-    T* data() { return &x; };
-    T* data() const { return &x; };
-    T* arr() const { return new T[3]{ x, y, z }; };
-    std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
+    inline T* data() { return &x; };
+    inline T* data() const { return &x; };
+    inline T* arr() const { return new T[3]{ x, y, z }; };
+    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
     vex3() = default;
     vex3(const vex3<T>&) = default;
-    template <typename _T> vex3(_T v) { x = y = z = T(v); };
-    template <typename _T> vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T> vex3(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
-    template <typename _T> vex3(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
-    template <typename _T1, typename _T2> vex3(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
-    template <typename _T1, typename _T2, typename _T3> vex3(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
+    template <typename _T> inline vex3(_T v) { x = y = z = T(v); };
+    template <typename _T> inline vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> inline vex3(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
+    template <typename _T> inline vex3(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
+    template <typename _T1, typename _T2> inline vex3(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
+    template <typename _T1, typename _T2, typename _T3> inline vex3(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
 
-    template <typename _T1, typename _T2> vex3(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
-    template <typename _T1, typename _T2> vex3(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
+    template <typename _T1, typename _T2> inline vex3(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
+    template <typename _T1, typename _T2> inline vex3(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
 
-    template <typename _T>  vex3<T>& operator=(_T v) { x = y = z = T(v); return *this; };
-    template <typename _T>  vex3<T>& operator=(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); return *this; };
+    template <typename _T> inline vex3<T>& operator=(_T v) { x = y = z = T(v); return *this; };
+    template <typename _T> inline vex3<T>& operator=(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); return *this; };
 
     template <> vex3(std::string v);
     template <> vex3(std::string v1, std::string v2);
     template <> vex3(std::string v1, std::string v2, std::string v3);
     template <> vex3<T>& operator=(std::string v);
 
-    bool isEmpty()  const { return (x && y && z) ? false : true; };
-    operator bool() const { return isEmpty(); };
+    inline bool isEmpty()  const { return (x && y && z) ? false : true; };
+    inline operator bool() const { return isEmpty(); };
 
-    vex3<T>& operator~() { x = T(); y = T(); z = T(); return *this; };
-    bool operator!() const { return !isEmpty(); };
-    vex3<T>& swap() { *this = vex3<T>(z, y, x); return *this; };
-    vex3<T> swap() const { return vex3<T>(z, y, x); };
+    inline vex3<T>& operator~() { x = T(); y = T(); z = T(); return *this; };
+    inline bool operator!() const { return !isEmpty(); };
+    inline vex3<T>& swap() { *this = vex3<T>(z, y, x); return *this; };
+    inline vex3<T> swap() const { return vex3<T>(z, y, x); };
 
     template <typename _T>
-    vex3<T>& operator,(vex3<_T>& v) {
+    inline vex3<T>& operator,(vex3<_T>& v) {
         const vex3<T> c = *this;
         *this = v;
         v = c;
@@ -227,106 +211,93 @@ struct vex3 {
     inline vex3<T> operator()() const { return *this; };
     inline vex3<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
-    T operator[](const int& v) const { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
+    inline T& operator[](const int& v) { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
+    inline T operator[](const int& v) const { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
 
-    template <typename _T>  vex3<T> operator%(_T v) const { return vex3<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
-    template <typename _T>  vex3<T> operator%(vex3<_T> v) const { return vex3<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z)); };
+    template <typename _T> inline vex3<T> operator%(_T v) const { return vex3<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
+    template <typename _T> inline vex3<T> operator%(vex3<_T> v) const { return vex3<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z)); };
+    template <typename _T> inline vex3<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   return *this; };
+    template <typename _T> inline vex3<T>& operator%=(vex3<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); return *this; };
 
-    template <typename _T>  vex3<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   return *this; };
-    template <typename _T>  vex3<T>& operator%=(vex3<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); return *this; };
+    template <typename _T> inline vex3<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
 
-    template <typename _T>  vex3<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
-    template <typename _T>  vex3<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
-    template <typename _T>  vex3<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    inline vex3<T>& operator++() { x++; y++; z++; return *this; };
+    inline vex3<T>& operator--() { x--; y--; z--; return *this; };
 
-    template <typename _T>  vex3<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
-    template <typename _T>  vex3<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline vex3<T>& operator+=(_T v) { x += T(v);    y += T(v);      z += T(v);      return *this; };
+    template <typename _T> inline vex3<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);    z += T(v.z);    return *this; };
+    template <typename _T> inline vex3<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      z -= T(v);      return *this; };
+    template <typename _T> inline vex3<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);    z -= T(v.z);    return *this; };
+    template <typename _T> inline vex3<T>& operator*=(_T v) { x *= T(v);    y *= T(v);      z *= T(v);      return *this; };
+    template <typename _T> inline vex3<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);    z *= T(v.z);    return *this; };
+    template <typename _T> inline vex3<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      z /= T(v);      return *this; };
+    template <typename _T> inline vex3<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);    z /= T(v.z);    return *this; };
+    template <typename _T> inline vex3<T> operator+(_T v) const { return vex3<T>(this->x + T(v), this->y + T(v), this->z + T(v)); };
+    template <typename _T> inline vex3<T> operator+(vex3<_T> v) const { return vex3<T>(this->x + T(v.x), this->y + T(v.y), this->z + T(v.z)); };
+    template <typename _T> inline vex3<T> operator-(_T v) const { return vex3<T>(this->x - T(v), this->y - T(v), this->z - T(v)); };
+    template <typename _T> inline vex3<T> operator-(vex3<_T> v) const { return vex3<T>(this->x - T(v.x), this->y - T(v.y), this->z - T(v.z)); };
+    template <typename _T> inline vex3<T> operator*(_T v) const { return vex3<T>(this->x * T(v), this->y * T(v), this->z * T(v)); };
+    template <typename _T> inline vex3<T> operator*(vex3<_T> v) const { return vex3<T>(this->x * T(v.x), this->y * T(v.y), this->z * T(v.z)); };
+    template <typename _T> inline vex3<T> operator/(_T v) const { return vex3<T>(this->x / T(v), this->y / T(v), this->z / T(v)); };
+    template <typename _T> inline vex3<T> operator/(vex3<_T> v) const { return vex3<T>(this->x / T(v.x), this->y / T(v.y), this->z / T(v.z)); };
+    template <typename _T> inline vex3<T> operator^(_T v) const { return vex3<T>(std::pow(this->x, v), std::pow(this->y, v), std::pow(this->z, v)); };
+    template <typename _T> inline vex3<T> operator^(vex3<_T> v) const { return vex3<T>(std::pow(this->x, v.x), std::pow(this->y, v.y), std::pow(this->z, v.z)); };
 
-    template <typename _T>  vex3<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
-    template <typename _T>  vex3<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex3<T>(v) : *this; };
+    template <typename _T> inline bool operator==(_T v) const { return this->x == T(v) && this->y == T(v) && this->z == T(v); };
+    template <typename _T> inline bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
+    template <typename _T> inline bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v) && this->z != T(v); };
+    template <typename _T> inline bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
+    template <typename _T> inline bool operator>(_T v) const { return this->x > T(v) && this->y > T(v) && this->z > T(v); };
+    template <typename _T> inline bool operator>(vex3<_T> v) const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
+    template <typename _T> inline bool operator<(_T v) const { return this->x < T(v) && this->y < T(v) && this->z < T(v); };
+    template <typename _T> inline bool operator<(vex3<_T> v) const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
+    template <typename _T> inline bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v) && this->z >= T(v); };
+    template <typename _T> inline bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
+    template <typename _T> inline bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v); };
+    template <typename _T> inline bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
-    vex3<T>& operator++() { x++; y++; z++; return *this; };
-    vex3<T>& operator--() { x--; y--; z--; return *this; };
+    template <typename _T> inline vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
 
-    template <typename _T>  vex3<T>& operator+=(_T v) { x += T(v);    y += T(v);      z += T(v);      return *this; };
-    template <typename _T>  vex3<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);    z += T(v.z);    return *this; };
+    inline vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
+    inline vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
 
-    template <typename _T>  vex3<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      z -= T(v);      return *this; };
-    template <typename _T>  vex3<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);    z -= T(v.z);    return *this; };
+    template <typename _T> inline vex3<T>& operator=(vex2<_T> v)  { x =  T(v.x);   y = T(v.y);    return *this; };
+    template <typename _T> inline vex3<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> inline vex3<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex3<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> inline vex3<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> inline vex3<T> operator+(vex2<_T> v) const { return vex3<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> inline vex3<T> operator-(vex2<_T> v) const { return vex3<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> inline vex3<T> operator*(vex2<_T> v) const { return vex3<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> inline vex3<T> operator/(vex2<_T> v) const { return vex3<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> inline bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
+    template <typename _T> inline bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
+    template <typename _T> inline bool operator>(vex2<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
+    template <typename _T> inline bool operator<(vex2<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
+    template <typename _T> inline bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
+    template <typename _T> inline bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T>  vex3<T>& operator*=(_T v) { x *= T(v);    y *= T(v);      z *= T(v);      return *this; };
-    template <typename _T>  vex3<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);    z *= T(v.z);    return *this; };
-
-    template <typename _T>  vex3<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      z /= T(v);      return *this; };
-    template <typename _T>  vex3<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);    z /= T(v.z);    return *this; };
-
-    template <typename _T>  vex3<T> operator+(_T v) const { return vex3<T>(this->x + T(v), this->y + T(v), this->z + T(v)); };
-    template <typename _T>  vex3<T> operator+(vex3<_T> v) const { return vex3<T>(this->x + T(v.x), this->y + T(v.y), this->z + T(v.z)); };
-
-    template <typename _T>  vex3<T> operator-(_T v) const { return vex3<T>(this->x - T(v), this->y - T(v), this->z - T(v)); };
-    template <typename _T>  vex3<T> operator-(vex3<_T> v) const { return vex3<T>(this->x - T(v.x), this->y - T(v.y), this->z - T(v.z)); };
-
-    template <typename _T>  vex3<T> operator*(_T v) const { return vex3<T>(this->x * T(v), this->y * T(v), this->z * T(v)); };
-    template <typename _T>  vex3<T> operator*(vex3<_T> v) const { return vex3<T>(this->x * T(v.x), this->y * T(v.y), this->z * T(v.z)); };
-
-    template <typename _T>  vex3<T> operator/(_T v) const { return vex3<T>(this->x / T(v), this->y / T(v), this->z / T(v)); };
-    template <typename _T>  vex3<T> operator/(vex3<_T> v) const { return vex3<T>(this->x / T(v.x), this->y / T(v.y), this->z / T(v.z)); };
-
-    template <typename _T>  bool operator==(_T v) const { return this->x == T(v) && this->y == T(v) && this->z == T(v); };
-    template <typename _T>  bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
-
-    template <typename _T>  bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v) && this->z != T(v); };
-    template <typename _T>  bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
-
-    template <typename _T>  bool operator>(_T v) const { return this->x > T(v) && this->y > T(v) && this->z > T(v); };
-    template <typename _T>  bool operator>(vex3<_T> v) const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
-
-    template <typename _T>  bool operator<(_T v) const { return this->x < T(v) && this->y < T(v) && this->z < T(v); };
-    template <typename _T>  bool operator<(vex3<_T> v) const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
-
-    template <typename _T>  bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v) && this->z >= T(v); };
-    template <typename _T>  bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
-
-    template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v); };
-    template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
-
-    template <typename _T> vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
-
-    vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
-    vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
-
-    template <typename _T> vex3<T>& operator=(vex2<_T> v)  { x =  T(v.x);   y = T(v.y);    return *this; };
-    template <typename _T> vex3<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
-    template <typename _T> vex3<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
-    template <typename _T> vex3<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
-    template <typename _T> vex3<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex3<T> operator+(vex2<_T> v) const { return vex3<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex3<T> operator-(vex2<_T> v) const { return vex3<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex3<T> operator*(vex2<_T> v) const { return vex3<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex3<T> operator/(vex2<_T> v) const { return vex3<T>(x / T(v.x), y / T(v.y)); };
-    template <typename _T>  bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
-    template <typename _T>  bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
-    template <typename _T>  bool operator>(vex2<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
-    template <typename _T>  bool operator<(vex2<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
-    template <typename _T>  bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
-    template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
-
-    template <typename _T> vex3<T>& operator=(vex4<_T> v)  { x =  T(v.x);  y =  T(v.y);  z =  T(v.z);  return *this; };
-    template <typename _T> vex3<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);  z += T(v.z);  return *this; };
-    template <typename _T> vex3<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);  z -= T(v.z);  return *this; };
-    template <typename _T> vex3<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);  z *= T(v.z);  return *this; };
-    template <typename _T> vex3<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);  z /= T(v.z);  return *this; };
-    template <typename _T> vex3<T>& operator+(vex4<_T> v) const { return vex3<T>(x + T(v.x), y + T(v.y), z + T(v.z)); };
-    template <typename _T> vex3<T>& operator-(vex4<_T> v) const { return vex3<T>(x - T(v.x), y - T(v.y), z - T(v.z)); };
-    template <typename _T> vex3<T>& operator*(vex4<_T> v) const { return vex3<T>(x * T(v.x), y * T(v.y), z * T(v.z)); };
-    template <typename _T> vex3<T>& operator/(vex4<_T> v) const { return vex3<T>(x / T(v.x), y / T(v.y), z / T(v.z)); };
-    template <typename _T>  bool operator==(vex4<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
-    template <typename _T>  bool operator!=(vex4<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
-    template <typename _T>  bool operator>(vex4<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
-    template <typename _T>  bool operator<(vex4<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
-    template <typename _T>  bool operator>=(vex4<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
-    template <typename _T>  bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
+    template <typename _T> inline vex3<T>& operator=(vex4<_T> v)  { x =  T(v.x);  y =  T(v.y);  z =  T(v.z);  return *this; };
+    template <typename _T> inline vex3<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);  z += T(v.z);  return *this; };
+    template <typename _T> inline vex3<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);  z -= T(v.z);  return *this; };
+    template <typename _T> inline vex3<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);  z *= T(v.z);  return *this; };
+    template <typename _T> inline vex3<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);  z /= T(v.z);  return *this; };
+    template <typename _T> inline vex3<T>& operator+(vex4<_T> v) const { return vex3<T>(x + T(v.x), y + T(v.y), z + T(v.z)); };
+    template <typename _T> inline vex3<T>& operator-(vex4<_T> v) const { return vex3<T>(x - T(v.x), y - T(v.y), z - T(v.z)); };
+    template <typename _T> inline vex3<T>& operator*(vex4<_T> v) const { return vex3<T>(x * T(v.x), y * T(v.y), z * T(v.z)); };
+    template <typename _T> inline vex3<T>& operator/(vex4<_T> v) const { return vex3<T>(x / T(v.x), y / T(v.y), z / T(v.z)); };
+    template <typename _T> inline bool operator==(vex4<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
+    template <typename _T> inline bool operator!=(vex4<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
+    template <typename _T> inline bool operator>(vex4<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
+    template <typename _T> inline bool operator<(vex4<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
+    template <typename _T> inline bool operator>=(vex4<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
+    template <typename _T> inline bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex3<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z; return os; };
     friend std::istream& operator>>(std::istream& is, vex3<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; return is; };
@@ -335,12 +306,12 @@ struct vex3 {
 template <typename T>
 struct vex4 {
     T x, y, z, w;
-    operator T* () { return arr(); };
-    operator T* () const { return arr(); };
-    operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
-    operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
+    inline operator T* () { return arr(); };
+    inline operator T* () const { return arr(); };
+    inline operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
+    inline operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
-    operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
+    inline operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
 #endif
 #ifdef __VEX4GLM_FUNCS__
     __VEX4GLM_FUNCS__
@@ -348,32 +319,32 @@ struct vex4 {
 #ifdef __VEX4IM_FUNCS__
         __VEX4IM_FUNCS__
 #endif
-    T* data() { return &x; };
-    T* data() const { return &x; };
-    T* arr() const { return new T[4]{ x, y, z, w }; };
-    std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
+    inline T* data() { return &x; };
+    inline T* data() const { return &x; };
+    inline T* arr() const { return new T[4]{ x, y, z, w }; };
+    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
-    template <typename _T> vex4(_T v) { x = y = z = w = T(v); };
-    template <typename _T> vex4(vex2<_T> v) { x = T(v.x); y = T(v.y); };
-    template <typename _T> vex4(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
-    template <typename _T> vex4(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); };
-    template <typename _T1, typename _T2> vex4(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
-    template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
-    template <typename _T1, typename _T2, typename _T3, typename _T4> vex4(_T1 v1, _T2 v2, _T3 v3, _T4 v4) { x = T(v1); y = T(v2); z = T(v3); w = T(v4); };
+    template <typename _T> inline vex4(_T v) { x = y = z = w = T(v); };
+    template <typename _T> inline vex4(vex2<_T> v) { x = T(v.x); y = T(v.y); };
+    template <typename _T> inline vex4(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
+    template <typename _T> inline vex4(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); };
+    template <typename _T1, typename _T2> inline vex4(_T1 v1, _T2 v2) { x = T(v1); y = T(v2); };
+    template <typename _T1, typename _T2, typename _T3> inline vex4(_T1 v1, _T2 v2, _T3 v3) { x = T(v1); y = T(v2); z = T(v3); };
+    template <typename _T1, typename _T2, typename _T3, typename _T4> inline vex4(_T1 v1, _T2 v2, _T3 v3, _T4 v4) { x = T(v1); y = T(v2); z = T(v3); w = T(v4); };
 
-    template <typename _T1, typename _T2> vex4(_T1 v1, vex3<_T2> v2_3_4) { x = T(v1); y = T(v2_3_4.x); z = T(v2_3_4.y); w = T(v2_3_4.z); };
-    template <typename _T1, typename _T2> vex4(vex3<_T1> v1_2_3, _T2 v4) { x = T(v1_2_3.x); y = T(v1_2_3.y); z = T(v1_2_3.z); w = T(v4); };
+    template <typename _T1, typename _T2> inline vex4(_T1 v1, vex3<_T2> v2_3_4) { x = T(v1); y = T(v2_3_4.x); z = T(v2_3_4.y); w = T(v2_3_4.z); };
+    template <typename _T1, typename _T2> inline vex4(vex3<_T1> v1_2_3, _T2 v4) { x = T(v1_2_3.x); y = T(v1_2_3.y); z = T(v1_2_3.z); w = T(v4); };
 
-    template <typename _T1, typename _T2> vex4(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
-    template <typename _T1, typename _T2> vex4(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
-    template <typename _T1, typename _T2> vex4(vex2<_T1> v1_2, vex2<_T2> v3_4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3_4.x); w = T(v3_4.y); };
-    template <typename _T1, typename _T2, typename _T3> vex4(vex2<_T1> v1_2, _T2 v3, _T3 v4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); w = T(v4); };
-    template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, vex2<_T2> v2_3, _T3 v4) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); w = T(v4); };
-    template <typename _T1, typename _T2, typename _T3> vex4(_T1 v1, _T2 v2, vex2<_T3> v3_4) { x = T(v1); y = T(v2); z = T(v3_4.x); w = T(v3_4.y); };
+    template <typename _T1, typename _T2> inline vex4(vex2<_T1> v1_2, _T2 v3) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); };
+    template <typename _T1, typename _T2> inline vex4(_T1 v1, vex2<_T2> v2_3) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); };
+    template <typename _T1, typename _T2> inline vex4(vex2<_T1> v1_2, vex2<_T2> v3_4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3_4.x); w = T(v3_4.y); };
+    template <typename _T1, typename _T2, typename _T3> inline vex4(vex2<_T1> v1_2, _T2 v3, _T3 v4) { x = T(v1_2.x); y = T(v1_2.y); z = T(v3); w = T(v4); };
+    template <typename _T1, typename _T2, typename _T3> inline vex4(_T1 v1, vex2<_T2> v2_3, _T3 v4) { x = T(v1); y = T(v2_3.x); z = T(v2_3.y); w = T(v4); };
+    template <typename _T1, typename _T2, typename _T3> inline vex4(_T1 v1, _T2 v2, vex2<_T3> v3_4) { x = T(v1); y = T(v2); z = T(v3_4.x); w = T(v3_4.y); };
 
-    template <typename _T>  vex4<T>& operator=(_T v) { x = y = z = T(v); return *this; };
-    template <typename _T>  vex4<T>& operator=(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); return *this; };
+    template <typename _T> inline vex4<T>& operator=(_T v) { x = y = z = T(v); return *this; };
+    template <typename _T> inline vex4<T>& operator=(vex4<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); w = T(v.w); return *this; };
 
     template <> vex4(std::string v);
     template <> vex4(std::string v1, std::string v2);
@@ -381,16 +352,15 @@ struct vex4 {
     template <> vex4(std::string v1, std::string v2, std::string v3, std::string v4);
     template <> vex4<T>& operator=(std::string v);
 
-    bool isEmpty() const { return (x && y && z && w) ? false : true; };
-    operator bool() const { return isEmpty(); };
+    inline bool isEmpty() const { return (x && y && z && w) ? false : true; };
+    inline operator bool() const { return isEmpty(); };
 
-    vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
-    bool operator!() const { return !isEmpty(); };
-    vex4<T>& swap() { *this = vex4<T>(w, z, y, x); return *this; };
-    vex4<T> swap() const { return vex4<T>(w, z, y, x); };
-
+    inline vex4<T>& operator~() { x = T(); y = T(); z = T(); w = T(); return *this; };
+    inline bool operator!() const { return !isEmpty(); };
+    inline vex4<T>& swap() { *this = vex4<T>(w, z, y, x); return *this; };
+    inline vex4<T> swap() const { return vex4<T>(w, z, y, x); };
     template <typename _T>
-    vex4<T>& operator,(vex4<_T>& v) {
+    inline vex4<T>& operator,(vex4<_T>& v) {
         const vex4<T> c = *this;
         *this = v;
         v = c;
@@ -401,106 +371,93 @@ struct vex4 {
     inline vex4<T> operator()() const { return *this; };
     inline vex4<T> copy() const { return *this; };
 
-    T& operator[](const int& v) { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
-    T operator[](const int& v) const { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
+    inline T& operator[](const int& v) { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
+    inline T operator[](const int& v) const { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
 
-    template <typename _T>  vex4<T> operator%(_T v) const { return vex4<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
-    template <typename _T>  vex4<T> operator%(vex4<_T> v) const { return vex4<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z), std::rand() % int(v.w)); };
+    template <typename _T> inline vex4<T> operator%(_T v) const { return vex4<T>(std::rand() % int(v), std::rand() % int(v), std::rand() % int(v), std::rand() % int(v)); };
+    template <typename _T> inline vex4<T> operator%(vex4<_T> v) const { return vex4<T>(std::rand() % int(v.x), std::rand() % int(v.y), std::rand() % int(v.z), std::rand() % int(v.w)); };
+    template <typename _T> inline vex4<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   w = std::rand() % int(v);  return *this; };
+    template <typename _T> inline vex4<T>& operator%=(vex4<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); w = std::rand() % int(v.w); return *this; };
 
-    template <typename _T>  vex4<T>& operator%=(_T v) { x = std::rand() % int(v);     y = std::rand() % int(v);   z = std::rand() % int(v);   w = std::rand() % int(v);  return *this; };
-    template <typename _T>  vex4<T>& operator%=(vex4<_T> v) { x = std::rand() % int(v.x);   y = std::rand() % int(v.y); z = std::rand() % int(v.z); w = std::rand() % int(v.w); return *this; };
+    template <typename _T> inline vex4<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
 
-    template <typename _T>  vex4<T> operator|(_T v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
-    template <typename _T>  vex4<T> operator|(vex4<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
-    template <typename _T>  vex4<T>& operator|=(vex4<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    inline vex4<T>& operator++() { x++; y++; z++; w++; return *this; };
+    inline vex4<T>& operator--() { x--; y--; z--; w--; return *this; };
 
-    template <typename _T>  vex4<T> operator|(vex3<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
-    template <typename _T>  vex4<T>& operator|=(vex3<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline vex4<T>& operator+=(_T v) { x += T(v);    y += T(v);      z += T(v);    w += T(v);    return *this; };
+    template <typename _T> inline vex4<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);    z += T(v.z);  w += T(v.w);  return *this; };
+    template <typename _T> inline vex4<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      z -= T(v);   w -= T(v);     return *this; };
+    template <typename _T> inline vex4<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);    z -= T(v.z); w -= T(v.w);   return *this; };
+    template <typename _T> inline vex4<T>& operator*=(_T v) { x *= T(v);    y *= T(v);      z *= T(v);   w *= T(v);     return *this; };
+    template <typename _T> inline vex4<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);    z *= T(v.z); w *= T(v.w);   return *this; };
+    template <typename _T> inline vex4<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      z /= T(v);   w /= T(v);     return *this; };
+    template <typename _T> inline vex4<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);    z /= T(v.z); w /= T(v.w);   return *this; };
+    template <typename _T> inline vex4<T> operator+(_T v) const { return vex4<T>(this->x + T(v), this->y + T(v), this->z + T(v), this->w + T(v)); };
+    template <typename _T> inline vex4<T> operator+(vex4<_T> v) const { return vex4<T>(this->x + T(v.x), this->y + T(v.y), this->z + T(v.z), this->w + T(v.w)); };
+    template <typename _T> inline vex4<T> operator-(_T v) const { return vex4<T>(this->x - T(v), this->y - T(v), this->z - T(v), this->w - T(v)); };
+    template <typename _T> inline vex4<T> operator-(vex4<_T> v) const { return vex4<T>(this->x - T(v.x), this->y - T(v.y), this->z - T(v.z), this->w - T(v.w)); };
+    template <typename _T> inline vex4<T> operator*(_T v) const { return vex4<T>(this->x * T(v), this->y * T(v), this->z * T(v), this->w * T(v)); };
+    template <typename _T> inline vex4<T> operator*(vex4<_T> v) const { return vex4<T>(this->x * T(v.x), this->y * T(v.y), this->z * T(v.z), this->w * T(v.w)); };
+    template <typename _T> inline vex4<T> operator/(_T v) const { return vex4<T>(this->x / T(v), this->y / T(v), this->z / T(v), this->w / T(v)); };
+    template <typename _T> inline vex4<T> operator/(vex4<_T> v) const { return vex4<T>(this->x / T(v.x), this->y / T(v.y), this->z / T(v.z), this->w / T(v.w)); };
+    template <typename _T> inline vex4<T> operator^(_T v) const { return vex4<T>(std::pow(this->x, v), std::pow(this->y, v), std::pow(this->z, v), std::pow(this->w, v)); };
+    template <typename _T> inline vex4<T> operator^(vex4<_T> v) const { return vex4<T>(std::pow(this->x, v.x), std::pow(this->y, v.y), std::pow(this->z, v.z), std::pow(this->w, w)); };
 
-    template <typename _T>  vex4<T> operator|(vex2<_T> v) const { return std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
-    template <typename _T>  vex4<T>& operator|=(vex2<_T> v) { *this = std::rand() % 2 == 0 ? vex4<T>(v) : *this; };
+    template <typename _T> inline bool operator==(_T v) const { return this->x == T(v) && this->y == T(v) && this->z == T(v) && this->w == T(v); };
+    template <typename _T> inline bool operator==(vex4<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z) && this->w == T(v.w); };
+    template <typename _T> inline bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v) && this->z != T(v) && this->w != T(v); };
+    template <typename _T> inline bool operator!=(vex4<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z) && this->w != T(v.w); };
+    template <typename _T> inline bool operator>(_T v) const { return this->x > T(v) && this->y > T(v) && this->z > T(v) && this->w > T(v); };
+    template <typename _T> inline bool operator>(vex4<_T> v) const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z) && this->w > T(v.w); };
+    template <typename _T> inline bool operator<(_T v) const { return this->x < T(v) && this->y < T(v) && this->z < T(v) && this->w < T(v); };
+    template <typename _T> inline bool operator<(vex4<_T> v) const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z) && this->w < T(v.w); };
+    template <typename _T> inline bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v) && this->z >= T(v) && this->w >= T(v); };
+    template <typename _T> inline bool operator>=(vex4<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z) && this->w >= T(v.w); };
+    template <typename _T> inline bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v) && this->w <= T(v); };
+    template <typename _T> inline bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
 
-    vex4<T>& operator++() { x++; y++; z++; w++; return *this; };
-    vex4<T>& operator--() { x--; y--; z--; w--; return *this; };
+    template <typename _T> inline vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
 
-    template <typename _T>  vex4<T>& operator+=(_T v) { x += T(v);    y += T(v);      z += T(v);    w += T(v);    return *this; };
-    template <typename _T>  vex4<T>& operator+=(vex4<_T> v) { x += T(v.x);  y += T(v.y);    z += T(v.z);  w += T(v.w);  return *this; };
+    inline vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
+    inline vex4<T> normalize() const { return (*this) / (x > y) ? x : y; };
 
-    template <typename _T>  vex4<T>& operator-=(_T v) { x -= T(v);    y -= T(v);      z -= T(v);   w -= T(v);     return *this; };
-    template <typename _T>  vex4<T>& operator-=(vex4<_T> v) { x -= T(v.x);  y -= T(v.y);    z -= T(v.z); w -= T(v.w);   return *this; };
+    template <typename _T> inline vex4<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
+    template <typename _T> inline vex4<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
+    template <typename _T> inline vex4<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
+    template <typename _T> inline vex4<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
+    template <typename _T> inline vex4<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
+    template <typename _T> inline vex4<T> operator+(vex2<_T> v) const { return vex4<T>(x + T(v.x), y + T(v.y)); };
+    template <typename _T> inline vex4<T> operator-(vex2<_T> v) const { return vex4<T>(x - T(v.x), y - T(v.y)); };
+    template <typename _T> inline vex4<T> operator*(vex2<_T> v) const { return vex4<T>(x * T(v.x), y * T(v.y)); };
+    template <typename _T> inline vex4<T> operator/(vex2<_T> v) const { return vex4<T>(x / T(v.x), y / T(v.y)); };
+    template <typename _T> inline bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
+    template <typename _T> inline bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
+    template <typename _T> inline bool operator>(vex2<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
+    template <typename _T> inline bool operator<(vex2<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
+    template <typename _T> inline bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
+    template <typename _T> inline bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T>  vex4<T>& operator*=(_T v) { x *= T(v);    y *= T(v);      z *= T(v);   w *= T(v);     return *this; };
-    template <typename _T>  vex4<T>& operator*=(vex4<_T> v) { x *= T(v.x);  y *= T(v.y);    z *= T(v.z); w *= T(v.w);   return *this; };
-
-    template <typename _T>  vex4<T>& operator/=(_T v) { x /= T(v);    y /= T(v);      z /= T(v);   w /= T(v);     return *this; };
-    template <typename _T>  vex4<T>& operator/=(vex4<_T> v) { x /= T(v.x);  y /= T(v.y);    z /= T(v.z); w /= T(v.w);   return *this; };
-
-    template <typename _T>  vex4<T> operator+(_T v) const { return vex4<T>(this->x + T(v), this->y + T(v), this->z + T(v), this->w + T(v)); };
-    template <typename _T>  vex4<T> operator+(vex4<_T> v) const { return vex4<T>(this->x + T(v.x), this->y + T(v.y), this->z + T(v.z), this->w + T(v.w)); };
-
-    template <typename _T>  vex4<T> operator-(_T v) const { return vex4<T>(this->x - T(v), this->y - T(v), this->z - T(v), this->w - T(v)); };
-    template <typename _T>  vex4<T> operator-(vex4<_T> v) const { return vex4<T>(this->x - T(v.x), this->y - T(v.y), this->z - T(v.z), this->w - T(v.w)); };
-
-    template <typename _T>  vex4<T> operator*(_T v) const { return vex4<T>(this->x * T(v), this->y * T(v), this->z * T(v), this->w * T(v)); };
-    template <typename _T>  vex4<T> operator*(vex4<_T> v) const { return vex4<T>(this->x * T(v.x), this->y * T(v.y), this->z * T(v.z), this->w * T(v.w)); };
-
-    template <typename _T>  vex4<T> operator/(_T v) const { return vex4<T>(this->x / T(v), this->y / T(v), this->z / T(v), this->w / T(v)); };
-    template <typename _T>  vex4<T> operator/(vex4<_T> v) const { return vex4<T>(this->x / T(v.x), this->y / T(v.y), this->z / T(v.z), this->w / T(v.w)); };
-
-    template <typename _T>  bool operator==(_T v) const { return this->x == T(v) && this->y == T(v) && this->z == T(v) && this->w == T(v); };
-    template <typename _T>  bool operator==(vex4<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z) && this->w == T(v.w); };
-
-    template <typename _T>  bool operator!=(_T v) const { return this->x != T(v) && this->y != T(v) && this->z != T(v) && this->w != T(v); };
-    template <typename _T>  bool operator!=(vex4<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z) && this->w != T(v.w); };
-
-    template <typename _T>  bool operator>(_T v) const { return this->x > T(v) && this->y > T(v) && this->z > T(v) && this->w > T(v); };
-    template <typename _T>  bool operator>(vex4<_T> v) const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z) && this->w > T(v.w); };
-
-    template <typename _T>  bool operator<(_T v) const { return this->x < T(v) && this->y < T(v) && this->z < T(v) && this->w < T(v); };
-    template <typename _T>  bool operator<(vex4<_T> v) const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z) && this->w < T(v.w); };
-
-    template <typename _T>  bool operator>=(_T v) const { return this->x >= T(v) && this->y >= T(v) && this->z >= T(v) && this->w >= T(v); };
-    template <typename _T>  bool operator>=(vex4<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z) && this->w >= T(v.w); };
-
-    template <typename _T>  bool operator<=(_T v) const { return this->x <= T(v) && this->y <= T(v) && this->z <= T(v) && this->w <= T(v); };
-    template <typename _T>  bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
-
-    template <typename _T> vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
-
-    vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
-    vex4<T> normalize() const { return (*this) / (x > y) ? x : y; };
-
-    template <typename _T> vex4<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
-    template <typename _T> vex4<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
-    template <typename _T> vex4<T>& operator-=(vex2<_T> v) { x -= T(v.x);  y -= T(v.y);    return *this; };
-    template <typename _T> vex4<T>& operator*=(vex2<_T> v) { x *= T(v.x);  y *= T(v.y);    return *this; };
-    template <typename _T> vex4<T>& operator/=(vex2<_T> v) { x /= T(v.x);  y /= T(v.y);    return *this; };
-    template <typename _T> vex4<T> operator+(vex2<_T> v) const { return vex4<T>(x + T(v.x), y + T(v.y)); };
-    template <typename _T> vex4<T> operator-(vex2<_T> v) const { return vex4<T>(x - T(v.x), y - T(v.y)); };
-    template <typename _T> vex4<T> operator*(vex2<_T> v) const { return vex4<T>(x * T(v.x), y * T(v.y)); };
-    template <typename _T> vex4<T> operator/(vex2<_T> v) const { return vex4<T>(x / T(v.x), y / T(v.y)); };
-    template <typename _T>  bool operator==(vex2<_T> v) const { return this->x == T(v.x) && this->y == T(v.y); };
-    template <typename _T>  bool operator!=(vex2<_T> v) const { return this->x != T(v.x) && this->y != T(v.y); };
-    template <typename _T>  bool operator>(vex2<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y); };
-    template <typename _T>  bool operator<(vex2<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y); };
-    template <typename _T>  bool operator>=(vex2<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y); };
-    template <typename _T>  bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
-
-    template <typename _T> vex4<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);  z = T(v.z);  return *this; };
-    template <typename _T> vex4<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);  z += T(v.z);  return *this; };
-    template <typename _T> vex4<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);  z -= T(v.z);  return *this; };
-    template <typename _T> vex4<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);  z *= T(v.z);  return *this; };
-    template <typename _T> vex4<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);  z /= T(v.z);  return *this; };
-    template <typename _T> vex4<T>& operator+(vex3<_T> v) const { return vex4<T>(x + T(v.x), y + T(v.y), z + T(v.z)); };
-    template <typename _T> vex4<T>& operator-(vex3<_T> v) const { return vex4<T>(x - T(v.x), y - T(v.y), z - T(v.z)); };
-    template <typename _T> vex4<T>& operator*(vex3<_T> v) const { return vex4<T>(x * T(v.x), y * T(v.y), z * T(v.z)); };
-    template <typename _T> vex4<T>& operator/(vex3<_T> v) const { return vex4<T>(x / T(v.x), y / T(v.y), z / T(v.z)); };
-    template <typename _T>  bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
-    template <typename _T>  bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
-    template <typename _T>  bool operator>(vex3<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
-    template <typename _T>  bool operator<(vex3<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
-    template <typename _T>  bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
-    template <typename _T>  bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
+    template <typename _T> inline vex4<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);  z = T(v.z);  return *this; };
+    template <typename _T> inline vex4<T>& operator+=(vex3<_T> v) { x += T(v.x);  y += T(v.y);  z += T(v.z);  return *this; };
+    template <typename _T> inline vex4<T>& operator-=(vex3<_T> v) { x -= T(v.x);  y -= T(v.y);  z -= T(v.z);  return *this; };
+    template <typename _T> inline vex4<T>& operator*=(vex3<_T> v) { x *= T(v.x);  y *= T(v.y);  z *= T(v.z);  return *this; };
+    template <typename _T> inline vex4<T>& operator/=(vex3<_T> v) { x /= T(v.x);  y /= T(v.y);  z /= T(v.z);  return *this; };
+    template <typename _T> inline vex4<T>& operator+(vex3<_T> v) const { return vex4<T>(x + T(v.x), y + T(v.y), z + T(v.z)); };
+    template <typename _T> inline vex4<T>& operator-(vex3<_T> v) const { return vex4<T>(x - T(v.x), y - T(v.y), z - T(v.z)); };
+    template <typename _T> inline vex4<T>& operator*(vex3<_T> v) const { return vex4<T>(x * T(v.x), y * T(v.y), z * T(v.z)); };
+    template <typename _T> inline vex4<T>& operator/(vex3<_T> v) const { return vex4<T>(x / T(v.x), y / T(v.y), z / T(v.z)); };
+    template <typename _T> inline bool operator==(vex3<_T> v) const { return this->x == T(v.x) && this->y == T(v.y) && this->z == T(v.z); };
+    template <typename _T> inline bool operator!=(vex3<_T> v) const { return this->x != T(v.x) && this->y != T(v.y) && this->z != T(v.z); };
+    template <typename _T> inline bool operator>(vex3<_T> v)  const { return this->x > T(v.x) && this->y > T(v.y) && this->z > T(v.z); };
+    template <typename _T> inline bool operator<(vex3<_T> v)  const { return this->x < T(v.x) && this->y < T(v.y) && this->z < T(v.z); };
+    template <typename _T> inline bool operator>=(vex3<_T> v) const { return this->x >= T(v.x) && this->y >= T(v.y) && this->z >= T(v.z); };
+    template <typename _T> inline bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
     friend std::ostream& operator<<(std::ostream& os, const vex4<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w; return os; };
     friend std::istream& operator>>(std::istream& is, vex4<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; std::cout << "w: "; is >> v.w; return is; };
