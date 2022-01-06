@@ -65,6 +65,31 @@ struct vex2 {
 
     inline vex2<T> operator()() const { return *this; };
     inline vex2<T> copy() const { return *this; };
+    std::vector<T> operator()(std::initializer_list<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(std::vector<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(const std::string& v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            switch (i) {
+            case 'x': case 'X':
+                t.push_back(x);
+                break;
+            case 'y': case 'Y':
+                t.push_back(y);
+                break;
+            };
+        return t;
+    };
 
     inline T& operator[](const int& v) { return (v % 2) == 0 ? x : y; };
     inline T operator[](const int& v) const { return (v % 2) == 0 ? x : y; };
@@ -241,6 +266,34 @@ struct vex3 {
 
     inline vex3<T> operator()() const { return *this; };
     inline vex3<T> copy() const { return *this; };
+    std::vector<T> operator()(std::initializer_list<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(std::vector<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(const std::string& v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            switch (i) {
+            case 'x': case 'X':
+                t.push_back(x);
+                break;
+            case 'y': case 'Y':
+                t.push_back(y);
+                break;
+            case 'z': case 'Z':
+                t.push_back(z);
+                break;
+            };
+        return t;
+    };
 
     inline T& operator[](const int& v) { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
     inline T operator[](const int& v) const { return (v % 3) == 0 ? x : (v % 3) == 1 ? y : z; };
@@ -425,6 +478,37 @@ struct vex4 {
 
     inline vex4<T> operator()() const { return *this; };
     inline vex4<T> copy() const { return *this; };
+    std::vector<T> operator()(std::initializer_list<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(std::vector<int> v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            t.push_back(operator[](i));
+        return t;
+    };
+    std::vector<T> operator()(const std::string& v) {
+        std::vector<T> t;
+        for (const auto& i : v)
+            switch (i) {
+            case 'x': case 'X':
+                t.push_back(x);
+                break;
+            case 'y': case 'Y':
+                t.push_back(y);
+                break;
+            case 'z': case 'Z':
+                t.push_back(z);
+                break;
+            case 'w': case 'W':
+                t.push_back(w);
+                break;
+            };
+        return t;
+    };
 
     inline T& operator[](const int& v) { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
     inline T operator[](const int& v) const { return (v % 4) == 0 ? x : (v % 4) == 1 ? y : (v % 4) == 2 ? z : w; };
