@@ -23,7 +23,6 @@ int main() {
 ### Supported Types
 - float
 - double
-- long double
 - bool
 - int
 - unsigned int
@@ -39,23 +38,28 @@ int main() {
 ## Docs
 ### Consturactors
 ```cpp
+float arr[] { 31,69,42 };
 vex2f vec = 0.f; // set all element.
+vex2f vec = arr; // set x = arr[0], y = arr[1].
 vex2f vec = vex3f(1,5,7); // set x and y, works any vex type.
 vex4f vec = vex2f(34,567); // set x and y.
 vex3f(vex2f(), float()); // ok.
-vex3f(float(), vex2f()); // ok.
-vex4f(float(), vex2f(), float()); // ok.
-vex4f(float(), vex3f()); // like these all ok.
+vex3f(0u, vex2f()); // ok.
+vex4f(0.f, vex2f(), 0.0); // ok.
+vex4f(vex2i(), vex2d()); // like these all ok.
 ```
 ### Arithmetic Operators (+, -, /, *, ^, ++, --)
 ```cpp
 vex3f vec = 0.f;
-vec += 5.f; // x + 5.f, y + 5.f and z + 5.f.
-vec -= vex2f(3); // x - 3.f and y - 5.f.
-vec *= vex4f(17.f, 19.f, 0.f); // x * 17.f, y * 19.f and z * 0.f.
-vec /= 255; // x / 255, y / 255 and z / 255.
+vec += 5.f; // x + 5, y + 5 and z + 5.
+vec -= vex2f(3); // x - 3 and y - 5.
+vec *= vex4f(17.f, 19.f, 0.f); // x * 17, y * 19 and z * 0.f.
+vec /= 255; // x, y and z divide 255.
 vec = vec^5; // x, y and z pow 5.
 vec = vec - vex4f(6.f, 89ui);
+vec = -vec; // x = -x, y = -y and z = -z;
+int arr[] { 21,16,48 };
+vec += arr; // x += arr[0]...
 ```
 ### Boolean Operators (==, !=, <, <=, >, >=)
 ```cpp
@@ -85,25 +89,31 @@ vec() += 10; // copy of vec.
 vex4f vec = 5.f;
 std::cout << (char*)vec << '\n';
 std::cout << (std::string)vec << '\n';
+float* arr = (float*)vec;
 if (vec); // bool cast
 ```
 ### Usefull Functions
 ```cpp
 vex3f vec = 0.f;
 float* v_array = vec.arr(); // float[3] { x, y, z };
-std::string str = vec.str(", ", "\n"); // ", " is seperate, "\n" is end.
+std::vector<float> list = vec;
+std::cout << vec.str(", ", "\n"); // ", " is seperate, "\n" is end.
 bool b = vec.isEmpty(); // check (x && y) ? false : true.
 vex2f vec = 0.f;
 vec.swap(); // x = y, y = x.
 vec.copy(); // copy.
 vec.normalize(); // normalize vec. just float and double vex's.
+float* ptr = *vec; // or vec.data() return &x;
+ptr[0] = 25; // set x = 25;
 ```
 ## Another Features
 *  All vex's work integrated with each other.
 *  Copyable any vectors
 ```cpp
 //vex4f vec << sf::Vector2f(23,234); // error, z and w not element of sf::Vector2f.
-vex2f vec << sf::Vector3f(23,234,543); // copy x and y.
+vex2f vec << sf::Vector3f(23,234,543); // set x and y.
+MyVector2 vec2;
+vec >> vec2; // sets x and y of vec2
 ```
 * All functions return a value. (returns a copy or self address)
 ```cpp
@@ -120,8 +130,23 @@ std::cin >> vec;
 ```cpp
 vex2i vec = glm::vec3(345,435,354); // works.
 ImGui::SliderFloat2("Slider", vec, 0, 100); // works.
+abs(vec);
 ```
 * User Defined Literals.
 ```cpp
 std::cout << 87.0_vex4f + 5 << '\n'; // works.
+```
+* Extra overloaded operators.
+```cpp
+vex3f vec1 = "12 15 18" + vex3f(8,5,2);
+vex2i vec2 = 15 * vex2i(2,3);
+std::vector<float> vec;
+vec << vex2f(1,2); // or vec += vex4d(12,3,21,5)
+```
+* Advanced math functions
+```cpp
+vex3f rot = 0.f, pos = 0.f;
+limit(rot, 0 /*min value*/, 360 /*max value*/, true /*start over when exceeding the limit*/);
+limit(pos, vex3f(-256,0,-256) /*advanced min*/, vex3f(256, 256, 256) /*advaced max*/, false);
+cout << max(pos); // return bigger member
 ```
