@@ -135,8 +135,9 @@ struct vex2 {
     template <typename _T> inline bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
     template <typename _T> inline vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
+    template <typename _T> inline vex2<T>& operator>>(_T v) const { v.x = x; v.y = y; return *this; };
 
-    inline vex2<T>& normalize() { *this /= (x > y ? x : y); return *this; };
+    inline vex2<T>& normalize() { return *this /= (x > y ? x : y); };
     inline vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
 
     template <typename _T> inline vex2<T>& operator=(vex3<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
@@ -310,8 +311,9 @@ struct vex3 {
     template <typename _T> inline bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
     template <typename _T> inline vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
+    template <typename _T> inline vex3<T>& operator>>(_T v) const { v.x = x; v.y = y; v.z = z; return *this; };
 
-    inline vex3<T>& normalize() { *this /= x > y ? x : y > z ? y : z; return *this; };
+    inline vex3<T>& normalize() { return *this /= (x > y ? x : y > z ? y : z); };
     inline vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
 
     template <typename _T> inline vex3<T>& operator=(vex2<_T> v)  { x =  T(v.x);   y = T(v.y);    return *this; };
@@ -493,9 +495,10 @@ struct vex4 {
     template <typename _T> inline bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
 
     template <typename _T> inline vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
+    template <typename _T> inline vex4<T>& operator>>(_T v) const { v.x = x; v.y = y; v.z = z; v.w = w; return *this; };
 
-    inline vex4<T>& normalize() { *this /= x > y ? x : y; return *this; };
-    inline vex4<T> normalize() const { return (*this) / (x > y) ? x : y; };
+    inline vex4<T>& normalize() { return *this /= ((x > y && x > z && x > w) ? x : (y > z && y > w) ? y : (z > w) ? z : w); };
+    inline vex4<T> normalize() const { return *this / ((x > y && x > z && x > w) ? x : (y > z && y > w) ? y : (z > w) ? z : w); };
 
     template <typename _T> inline vex4<T>& operator=(vex2<_T> v) { x = T(v.x);  y = T(v.y);    return *this; };
     template <typename _T> inline vex4<T>& operator+=(vex2<_T> v) { x += T(v.x);  y += T(v.y);    return *this; };
@@ -871,6 +874,9 @@ namespace std {
     inline vex2d    floor(vex2d v) { return vex2d(std::floor(v.x), std::floor(v.y)); };
     inline vex2f    abs(vex2f v) { return vex2f(std::abs(v.x), std::abs(v.y)); };
     inline vex2d    abs(vex2d v) { return vex2d(std::abs(v.x), std::abs(v.y)); };
+    inline vex2i    abs(vex2i v) { return vex2i(std::abs(v.x), std::abs(v.y)); };
+    inline vex2li   abs(vex2li v) { return vex2li(std::abs(v.x), std::abs(v.y)); };
+    inline vex2lli  abs(vex2lli v) { return vex2lli(std::abs(v.x), std::abs(v.y)); };
     inline vex2f    round(vex2f v) { return vex2f(std::round(v.x), std::round(v.y)); };
     inline vex2d    round(vex2d v) { return vex2d(std::round(v.x), std::round(v.y)); };
     inline vex2f    trunc(vex2f v) { return vex2f(std::trunc(v.x), std::trunc(v.y)); };
@@ -1226,5 +1232,5 @@ template <typename T> const T& max(const vex4<T>& v) { return (v.x > v.y && v.x 
 
 template <typename T> const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
 template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y&& v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
-template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z&& v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
+template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
 #endif
