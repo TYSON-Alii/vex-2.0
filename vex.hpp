@@ -1,4 +1,5 @@
 #define _XS_VEX2_
+#include <vector>
 #include <string>
 #include <sstream>
 template <typename T> struct vex2;
@@ -24,9 +25,11 @@ struct vex2 {
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[2]{ x, y }; };
+    inline std::vector<T> vec() const { return { x, y }; };
     inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
     vex2(const vex2<T>&) = default;
+    inline vex2(T* v) { x = v[0]; y = v[1]; };
     template <typename _T> inline vex2(_T v) { x = y = T(v); };
     template <typename _T> inline vex2(vex2<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T> inline vex2(vex3<_T> v) { x = T(v.x); y = T(v.y); };
@@ -170,9 +173,11 @@ struct vex3 {
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[3]{ x, y, z }; };
+    inline std::vector<T> vec() const { return { x, y, z }; };
     inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
     vex3() = default;
     vex3(const vex3<T>&) = default;
+    inline vex3(T* v) { x = v[0]; y = v[1]; z = v[2]; };
     template <typename _T> inline vex3(_T v) { x = y = z = T(v); };
     template <typename _T> inline vex3(vex2<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T> inline vex3(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
@@ -322,9 +327,11 @@ struct vex4 {
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[4]{ x, y, z, w }; };
+    inline std::vector<T> vec() const { return { x, y, z, w }; };
     inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
+    inline vex4(T* v) { x = v[0]; y = v[1]; z = v[2]; w = v[3]; };
     template <typename _T> inline vex4(_T v) { x = y = z = w = T(v); };
     template <typename _T> inline vex4(vex2<_T> v) { x = T(v.x); y = T(v.y); };
     template <typename _T> inline vex4(vex3<_T> v) { x = T(v.x); y = T(v.y); z = T(v.z); };
@@ -695,53 +702,53 @@ typedef vex4<long int>      vex4li;
 typedef vex4<long long int> vex4lli;
 typedef vex4<std::string>   vex4s;
 
-vex2f operator""_vex2f(unsigned long long v) { return vex2f(v); };
-vex2i operator""_vex2i(unsigned long long v) { return vex2i(v); };
-vex2ui operator""_vex2ui(unsigned long long v) { return vex2ui(v); };
-vex2d operator""_vex2d(unsigned long long v) { return vex2d(v); };
-vex2ld operator""_vex2ld(unsigned long long v) { return vex2ld(v); };
-vex2li operator""_vex2li(unsigned long long v) { return vex2li(v); };
-vex2lli operator""_vex2lli(unsigned long long v) { return vex2lli(v); };
+inline vex2f operator""_vex2f(unsigned long long v) { return vex2f(v); };
+inline vex2i operator""_vex2i(unsigned long long v) { return vex2i(v); };
+inline vex2ui operator""_vex2ui(unsigned long long v) { return vex2ui(v); };
+inline vex2d operator""_vex2d(unsigned long long v) { return vex2d(v); };
+inline vex2ld operator""_vex2ld(unsigned long long v) { return vex2ld(v); };
+inline vex2li operator""_vex2li(unsigned long long v) { return vex2li(v); };
+inline vex2lli operator""_vex2lli(unsigned long long v) { return vex2lli(v); };
 
-vex3f operator""_vex3f(unsigned long long v) { return vex3f(v); };
-vex3i operator""_vex3i(unsigned long long v) { return vex3i(v); };
-vex3ui operator""_vex3ui(unsigned long long v) { return vex3ui(v); };
-vex3d operator""_vex3d(unsigned long long v) { return vex3d(v); };
-vex3ld operator""_vex3ld(unsigned long long v) { return vex3ld(v); };
-vex3li operator""_vex3li(unsigned long long v) { return vex3li(v); };
-vex3lli operator""_vex3lli(unsigned long long v) { return vex3lli(v); };
+inline vex3f operator""_vex3f(unsigned long long v) { return vex3f(v); };
+inline vex3i operator""_vex3i(unsigned long long v) { return vex3i(v); };
+inline vex3ui operator""_vex3ui(unsigned long long v) { return vex3ui(v); };
+inline vex3d operator""_vex3d(unsigned long long v) { return vex3d(v); };
+inline vex3ld operator""_vex3ld(unsigned long long v) { return vex3ld(v); };
+inline vex3li operator""_vex3li(unsigned long long v) { return vex3li(v); };
+inline vex3lli operator""_vex3lli(unsigned long long v) { return vex3lli(v); };
 
-vex4f operator""_vex4f(unsigned long long v) { return vex4f(v); };
-vex4i operator""_vex4i(unsigned long long v) { return vex4i(v); };
-vex4ui operator""_vex4ui(unsigned long long v) { return vex4ui(v); };
-vex4d operator""_vex4d(unsigned long long v) { return vex4d(v); };
-vex4ld operator""_vex4ld(unsigned long long v) { return vex4ld(v); };
-vex4li operator""_vex4li(unsigned long long v) { return vex4li(v); };
-vex4lli operator""_vex4lli(unsigned long long v) { return vex4lli(v); };
+inline vex4f operator""_vex4f(unsigned long long v) { return vex4f(v); };
+inline vex4i operator""_vex4i(unsigned long long v) { return vex4i(v); };
+inline vex4ui operator""_vex4ui(unsigned long long v) { return vex4ui(v); };
+inline vex4d operator""_vex4d(unsigned long long v) { return vex4d(v); };
+inline vex4ld operator""_vex4ld(unsigned long long v) { return vex4ld(v); };
+inline vex4li operator""_vex4li(unsigned long long v) { return vex4li(v); };
+inline vex4lli operator""_vex4lli(unsigned long long v) { return vex4lli(v); };
 
-vex2f operator""_vex2f(long double v) { return vex2f(v); };
-vex2i operator""_vex2i(long double v) { return vex2i(v); };
-vex2ui operator""_vex2ui(long double v) { return vex2ui(v); };
-vex2d operator""_vex2d(long double v) { return vex2d(v); };
-vex2ld operator""_vex2ld(long double v) { return vex2ld(v); };
-vex2li operator""_vex2li(long double v) { return vex2li(v); };
-vex2lli operator""_vex2lli(long double v) { return vex2lli(v); };
+inline vex2f operator""_vex2f(long double v) { return vex2f(v); };
+inline vex2i operator""_vex2i(long double v) { return vex2i(v); };
+inline vex2ui operator""_vex2ui(long double v) { return vex2ui(v); };
+inline vex2d operator""_vex2d(long double v) { return vex2d(v); };
+inline vex2ld operator""_vex2ld(long double v) { return vex2ld(v); };
+inline vex2li operator""_vex2li(long double v) { return vex2li(v); };
+inline vex2lli operator""_vex2lli(long double v) { return vex2lli(v); };
 
-vex3f operator""_vex3f(long double v) { return vex3f(v); };
-vex3i operator""_vex3i(long double v) { return vex3i(v); };
-vex3ui operator""_vex3ui(long double v) { return vex3ui(v); };
-vex3d operator""_vex3d(long double v) { return vex3d(v); };
-vex3ld operator""_vex3ld(long double v) { return vex3ld(v); };
-vex3li operator""_vex3li(long double v) { return vex3li(v); };
-vex3lli operator""_vex3lli(long double v) { return vex3lli(v); };
+inline vex3f operator""_vex3f(long double v) { return vex3f(v); };
+inline vex3i operator""_vex3i(long double v) { return vex3i(v); };
+inline vex3ui operator""_vex3ui(long double v) { return vex3ui(v); };
+inline vex3d operator""_vex3d(long double v) { return vex3d(v); };
+inline vex3ld operator""_vex3ld(long double v) { return vex3ld(v); };
+inline vex3li operator""_vex3li(long double v) { return vex3li(v); };
+inline vex3lli operator""_vex3lli(long double v) { return vex3lli(v); };
 
-vex4f operator""_vex4f(long double v) { return vex4f(v); };
-vex4i operator""_vex4i(long double v) { return vex4i(v); };
-vex4ui operator""_vex4ui(long double v) { return vex4ui(v); };
-vex4d operator""_vex4d(long double v) { return vex4d(v); };
-vex4ld operator""_vex4ld(long double v) { return vex4ld(v); };
-vex4li operator""_vex4li(long double v) { return vex4li(v); };
-vex4lli operator""_vex4lli(long double v) { return vex4lli(v); };
+inline vex4f operator""_vex4f(long double v) { return vex4f(v); };
+inline vex4i operator""_vex4i(long double v) { return vex4i(v); };
+inline vex4ui operator""_vex4ui(long double v) { return vex4ui(v); };
+inline vex4d operator""_vex4d(long double v) { return vex4d(v); };
+inline vex4ld operator""_vex4ld(long double v) { return vex4ld(v); };
+inline vex4li operator""_vex4li(long double v) { return vex4li(v); };
+inline vex4lli operator""_vex4lli(long double v) { return vex4lli(v); };
 
 #ifdef __XSIMFUNCS__
 __XSIMFUNCS__
@@ -981,6 +988,16 @@ namespace std {
     template <typename T> std::string to_string(vex3<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
     template <typename T> std::string to_string(vex4<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
 };
+
+template <typename T> std::vector<T>& operator+=(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
+template <typename T> std::vector<T>& operator<<(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
+template <typename T> std::vector<T> operator+(std::vector<T> v, const vex2<T>& i) { std::vector<T> t = v; t.emplace_back({ i.x, i.y }); return t; };
+template <typename T> std::vector<T>& operator+=(std::vector<T>& v, const vex3<T>& i) { v.emplace_back({ i.x, i.y, i.z }); return v; };
+template <typename T> std::vector<T>& operator<<(std::vector<T>& v, const vex3<T>& i) { v.emplace_back({ i.x, i.y, i.z }); return v; };
+template <typename T> std::vector<T> operator+(std::vector<T> v, const vex3<T>& i) { std::vector<T> t = v; t.emplace_back({ i.x, i.y, i.z }); return t; };
+template <typename T> std::vector<T>& operator+=(std::vector<T>& v, const vex4<T>& i) { v.emplace_back({ i.x, i.y, i.z, i.w }); return v; };
+template <typename T> std::vector<T>& operator<<(std::vector<T>& v, const vex4<T>& i) { v.emplace_back({ i.x, i.y, i.z, i.w }); return v; };
+template <typename T> std::vector<T> operator+(std::vector<T> v, const vex4<T>& i) { std::vector<T> t = v; t.emplace_back({ i.x, i.y, i.z, i.w }); return t; };
 
 inline vex2f operator+(const char* l, const vex2f& r) { return std::strtov2f(l) + r; };
 inline vex2f operator-(const char* l, const vex2f& r) { return std::strtov2f(l) - r; };
