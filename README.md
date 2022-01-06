@@ -160,3 +160,17 @@ limit(rot, 0 /*min value*/, 360 /*max value*/, true /*start over when exceeding 
 limit(pos, vex3f(-256,0,-256) /*advanced min*/, vex3f(256, 256, 256) /*advaced max*/, false);
 cout << max(pos); // return bigger member
 ```
+* Convertable
+```cpp
+vex3f vec = 0;
+string str;
+str = vec.str(", ");
+str = string(vec);
+str = to_string(vec);
+char* cstr = (char*)vec;
+vex3f vec2 = std::strtov3f(str); // support any vex.
+"12 24" / vex2f(2); // Convert string to vex2f and divide.
+5 * vex2f(2); // Convert to vex2f and multiply.
+vec.arr(); // array of vec
+vec.vec(); // std::vector of vec
+```
