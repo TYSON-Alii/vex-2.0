@@ -108,6 +108,16 @@ ptr[0] = 25; // set x = 25;
 ```
 ## Another Features
 *  All vex's work integrated with each other.
+*  Most functional vector's
+```cpp
+vex3f vec(135,212,255);
+vex3f norm = vec / max(vec); // normalize vec
+vex2f wtf = vex2f(-FLT_MAX,FLT_MAX)[13576839];
+for (vex2i i = 0; i < 10; i++)
+    cout << i << '\n'; // works
+vex2b vec2(false,true);
+std::vector list = vec("xyxyxyxyxyxyyyxyxxyxyxyyxyxyxxyy");
+```
 *  Copyable any vectors
 ```cpp
 //vex4f vec << sf::Vector2f(23,234); // error, z and w not element of sf::Vector2f.
