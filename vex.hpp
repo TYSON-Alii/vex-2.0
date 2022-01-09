@@ -65,6 +65,21 @@ struct vex2 {
 
     inline vex2<T> operator()() const { return *this; };
     inline vex2<T> copy() const { return *this; };
+    inline vex2<T>& operator()(bool b, const vex2<T>& make) {
+        if (b) *this = make;
+        return *this;
+    };
+    inline vex2<T>& operator()(vex2<bool> b, const vex2<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+        };
+        return *this;
+    };
     std::vector<T> operator()(std::initializer_list<int> v) {
         std::vector<T> t;
         for (const auto& i : v)
@@ -159,8 +174,8 @@ struct vex2 {
     template <typename _T> inline bool operator<=(_T* v) const { return this->x <= T(v[0]) && this->y <= T(v[1]); };
     template <typename _T> inline bool operator<=(vex2<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y); };
 
-    template <typename _T> inline vex2<T>& operator<<(_T v) const { x = v.x; y = v.y; return *this; };
-    template <typename _T> inline vex2<T>& operator>>(_T v) const { v.x = x; v.y = y; return *this; };
+    template <typename _T> inline vex2<T>& operator<<(_T v) { x = v.x; y = v.y; return *this; };
+    template <typename _T> inline vex2<T>& operator>>(_T& v) { v.x = x; v.y = y; return *this; };
 
     inline vex2<T>& normalize() { return *this /= (x > y ? x : y); };
     inline vex2<T> normalize() const { return (*this) / (x > y ? x : y); };
@@ -266,6 +281,34 @@ struct vex3 {
 
     inline vex3<T> operator()() const { return *this; };
     inline vex3<T> copy() const { return *this; };
+    inline vex3<T>& operator()(bool b, const vex3<T>& make) {
+        if (b) *this = make;
+        return *this;
+    };
+    inline vex3<T>& operator()(vex2<bool> b, const vex3<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+        };
+        return *this;
+    };
+    inline vex3<T>& operator()(vex3<bool> b, const vex3<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+            else if (b.z) z = make.z;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+            if (b.z) z = make.z;
+        };
+        return *this;
+    };
     std::vector<T> operator()(std::initializer_list<int> v) {
         std::vector<T> t;
         for (const auto& i : v)
@@ -363,8 +406,8 @@ struct vex3 {
     template <typename _T> inline bool operator<=(_T* v) const { return this->x <= T(v[0]) && this->y <= T(v[1]) && this->z <= T(v[2]); };
     template <typename _T> inline bool operator<=(vex3<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z); };
 
-    template <typename _T> inline vex3<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; return *this; };
-    template <typename _T> inline vex3<T>& operator>>(_T v) const { v.x = x; v.y = y; v.z = z; return *this; };
+    template <typename _T> inline vex3<T>& operator<<(const _T& v) { x = v.x; y = v.y; z = v.z; return *this; };
+    template <typename _T> inline vex3<T>& operator>>(_T& v) { v.x = x; v.y = y; v.z = z; return *this; };
 
     inline vex3<T>& normalize() { return *this /= (x > y ? x : y > z ? y : z); };
     inline vex3<T> normalize() const { return (*this) / (x > y ? x : y > z ? y : z); };
@@ -478,6 +521,49 @@ struct vex4 {
 
     inline vex4<T> operator()() const { return *this; };
     inline vex4<T> copy() const { return *this; };
+    inline vex4<T>& operator()(bool b, const vex4<T>& make) {
+        if (b) *this = make;
+        return *this;
+    };
+    inline vex4<T>& operator()(vex2<bool> b, const vex4<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+        };
+        return *this;
+    };
+    inline vex4<T>& operator()(vex3<bool> b, const vex4<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+            else if (b.z) z = make.z;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+            if (b.z) z = make.z;
+        };
+        return *this;
+    };
+    inline vex4<T>& operator()(vex4<bool> b, const vex4<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+            else if (b.z) z = make.z;
+            else if (b.w) w = make.w;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+            if (b.z) z = make.z;
+            if (b.w) w = make.w;
+        };
+        return *this;
+    };
     std::vector<T> operator()(std::initializer_list<int> v) {
         std::vector<T> t;
         for (const auto& i : v)
@@ -578,8 +664,8 @@ struct vex4 {
     template <typename _T> inline bool operator<=(_T* v) const { return this->x <= T(v[0]) && this->y <= T(v[1]) && this->z <= T(v[2]) && this->w <= T(v[3]); };
     template <typename _T> inline bool operator<=(vex4<_T> v) const { return this->x <= T(v.x) && this->y <= T(v.y) && this->z <= T(v.z) && this->w <= T(v.w); };
 
-    template <typename _T> inline vex4<T>& operator<<(_T v) const { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
-    template <typename _T> inline vex4<T>& operator>>(_T v) const { v.x = x; v.y = y; v.z = z; v.w = w; return *this; };
+    template <typename _T> inline vex4<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
+    template <typename _T> inline vex4<T>& operator>>(_T& v) { v.x = x; v.y = y; v.z = z; v.w = w; return *this; };
 
     inline vex4<T>& normalize() { return *this /= ((x > y && x > z && x > w) ? x : (y > z && y > w) ? y : (z > w) ? z : w); };
     inline vex4<T> normalize() const { return *this / ((x > y && x > z && x > w) ? x : (y > z && y > w) ? y : (z > w) ? z : w); };
@@ -1217,96 +1303,174 @@ template <typename T> inline vex2<T> operator/(const double& l, const vex2<T>& r
 template <typename T> inline vex2<T> operator*(const double& l, const vex2<T>& r) { return vex2<T>(l) * r; };
 
 #if !defined(_VEX_NO_MATH_FUNCS)
-template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
-    if (v.x < (T)min)
+template <typename T, typename T1, typename T2> vex2b limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    vex2b b = false;
+    if (v.x < (T)min) {
         v.x = _restart ? (T)max : (T)min;
-    else if (v.x > (T)max)
+        b.x = true;
+    }
+    else if (v.x > (T)max) {
         v.x = _restart ? (T)min : (T)max;
-    if (v.y < (T)min)
+        b.x = true;
+    };
+    if (v.y < (T)min) {
         v.y = _restart ? (T)max : (T)min;
-    else if (v.y > (T)max)
+        b.y = true;
+    }
+    else if (v.y > (T)max) {
         v.y = _restart ? (T)min : (T)max;
-    return v;
+        b.y = true;
+    };
+    return b;
 };
-template <typename T, typename T1, typename T2> vex2<T>& limit(vex2<T>& v, const vex2<T1> min, const vex2<T2> max, const bool& _restart = false) {
-    if (v.x < (T)min.x)
+template <typename T, typename T1, typename T2> vex2b limit(vex2<T>& v, const vex2<T1> min, const vex2<T2> max, const bool& _restart = false) {
+    vex2b b = false;
+    if (v.x < (T)min.x) {
         v.x = _restart ? (T)max.x : (T)min.x;
-    else if (v.x > (T)max.x)
+        b.x = true;
+    }
+    else if (v.x > (T)max.x) {
         v.x = _restart ? (T)min.x : (T)max.x;
-    if (v.y < (T)min.y)
+        b.x = true;
+    };
+    if (v.y < (T)min.y) {
         v.y = _restart ? (T)max.y : (T)min.y;
-    else if (v.y > (T)max.y)
+        b.y = true;
+    }
+    else if (v.y > (T)max.y) {
         v.y = _restart ? (T)min.y : (T)max.y;
-    return v;
+        b.y = true;
+    };
+    return b;
 };
 
-template <typename T, typename T1, typename T2> vex3<T>& limit(vex3<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
-    if (v.x < (T)min)
+template <typename T, typename T1, typename T2> vex3b limit(vex3<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    vex3b b = false;
+    if (v.x < (T)min) {
         v.x = _restart ? (T)max : (T)min;
-    else if (v.x > (T)max)
+        b.x = true;
+    }
+    else if (v.x > (T)max) {
         v.x = _restart ? (T)min : (T)max;
-    if (v.y < (T)min)
+        b.x = true;
+    };
+    if (v.y < (T)min) {
         v.y = _restart ? (T)max : (T)min;
-    else if (v.y > (T)max)
+        b.y = true;
+    }
+    else if (v.y > (T)max) {
         v.y = _restart ? (T)min : (T)max;
-    if (v.z < (T)min)
+        b.y = true;
+    };
+    if (v.z < (T)min) {
         v.z = _restart ? (T)max : (T)min;
-    else if (v.z > (T)max)
+        b.z = true;
+    }
+    else if (v.z > (T)max) {
         v.z = _restart ? (T)min : (T)max;
-    return v;
+        b.z = true;
+    };
+    return b;
 };
-template <typename T, typename T1, typename T2> vex3<T>& limit(vex3<T>& v, const vex3<T1> min, const vex3<T2> max, const bool& _restart = false) {
-    if (v.x < (T)min.x)
+template <typename T, typename T1, typename T2> vex3b limit(vex3<T>& v, const vex3<T1> min, const vex3<T2> max, const bool& _restart = false) {
+    vex3b b = false;
+    if (v.x < (T)min.x) {
         v.x = _restart ? (T)max.x : (T)min.x;
-    else if (v.x > (T)max.x)
+        b.x = true;
+    }
+    else if (v.x > (T)max.x) {
         v.x = _restart ? (T)min.x : (T)max.x;
-    if (v.y < (T)min.y)
+        b.x = true;
+    };
+    if (v.y < (T)min.y) {
         v.y = _restart ? (T)max.y : (T)min.y;
-    else if (v.y > (T)max.y)
+        b.y = true;
+    }
+    else if (v.y > (T)max.y) {
         v.y = _restart ? (T)min.y : (T)max.y;
-    if (v.z < (T)min.z)
+        b.y = true;
+    };
+    if (v.z < (T)min.z) {
         v.z = _restart ? (T)max.z : (T)min.z;
-    else if (v.z > (T)max.z)
+        b.z = true;
+    }
+    else if (v.z > (T)max.z) {
         v.z = _restart ? (T)min.z : (T)max.z;
-    return v;
+        b.z = true;
+    };
+    return b;
 };
 
-template <typename T, typename T1, typename T2> vex4<T>& limit(vex4<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
-    if (v.x < (T)min)
+template <typename T, typename T1, typename T2> vex4b limit(vex4<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+    vex4b b = false;
+    if (v.x < (T)min) {
         v.x = _restart ? (T)max : (T)min;
-    else if (v.x > (T)max)
+        b.x = true;
+    }
+    else if (v.x > (T)max) {
         v.x = _restart ? (T)min : (T)max;
-    if (v.y < (T)min)
+        b.x = true;
+    };
+    if (v.y < (T)min) {
         v.y = _restart ? (T)max : (T)min;
-    else if (v.y > (T)max)
+        b.y = true;
+    }
+    else if (v.y > (T)max) {
         v.y = _restart ? (T)min : (T)max;
-    if (v.z < (T)min)
+        b.y = true;
+    };
+    if (v.z < (T)min) {
         v.z = _restart ? (T)max : (T)min;
-    else if (v.z > (T)max)
+        b.z = true;
+    }
+    else if (v.z > (T)max) {
         v.z = _restart ? (T)min : (T)max;
-    if (v.w < (T)min)
+        b.z = true;
+    };
+    if (v.w < (T)min) {
         v.w = _restart ? (T)max : (T)min;
-    else if (v.w > (T)max)
+        b.w = true;
+    }
+    else if (v.w > (T)max) {
         v.w = _restart ? (T)min : (T)max;
-    return v;
+        b.w = true;
+    };
+    return b;
 };
-template <typename T, typename T1, typename T2> vex4<T>& limit(vex4<T>& v, const vex4<T1> min, const vex4<T2> max, const bool& _restart = false) {
-    if (v.x < (T)min.x)
+template <typename T, typename T1, typename T2> vex4b limit(vex4<T>& v, const vex4<T1> min, const vex4<T2> max, const bool& _restart = false) {
+    vex4b b = false;
+    if (v.x < (T)min.x) {
         v.x = _restart ? (T)max.x : (T)min.x;
-    else if (v.x > (T)max.x)
+        b.x = true;
+    }
+    else if (v.x > (T)max.x) {
         v.x = _restart ? (T)min.x : (T)max.x;
-    if (v.y < (T)min.y)
+        b.x = true;
+    };
+    if (v.y < (T)min.y) {
         v.y = _restart ? (T)max.y : (T)min.y;
-    else if (v.y > (T)max.y)
+        b.y = true;
+    }
+    else if (v.y > (T)max.y) {
         v.y = _restart ? (T)min.y : (T)max.y;
-    if (v.z < (T)min.z)
+        b.y = true;
+    };
+    if (v.z < (T)min.z) {
         v.z = _restart ? (T)max.z : (T)min.z;
-    else if (v.z > (T)max.z)
+        b.z = true;
+    }
+    else if (v.z > (T)max.z) {
         v.z = _restart ? (T)min.z : (T)max.z;
-    if (v.w < (T)min.w)
+        b.z = true;
+    };
+    if (v.w < (T)min.w) {
         v.w = _restart ? (T)max.w : (T)min.w;
-    else if (v.w > (T)max.w)
+        b.w = true;
+    }
+    else if (v.w > (T)max.w) {
         v.w = _restart ? (T)min.w : (T)max.w;
+        b.w = true;
+    };
     return v;
 };
 
