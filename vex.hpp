@@ -80,6 +80,29 @@ struct vex2 {
         };
         return *this;
     };
+    inline vex2<T>& operator()(vex3<bool> b, const vex2<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+        };
+        return *this;
+    };
+    inline vex2<T>& operator()(vex4<bool> b, const vex2<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+        };
+        return *this;
+    };
+
     std::vector<T> operator()(std::initializer_list<int> v) {
         std::vector<T> t;
         for (const auto& i : v)
@@ -297,6 +320,19 @@ struct vex3 {
         return *this;
     };
     inline vex3<T>& operator()(vex3<bool> b, const vex3<T>& make, const bool& _elif = false) {
+        if (_elif) {
+            if (b.x) x = make.x;
+            else if (b.y) y = make.y;
+            else if (b.z) z = make.z;
+        }
+        else {
+            if (b.x) x = make.x;
+            if (b.y) y = make.y;
+            if (b.z) z = make.z;
+        };
+        return *this;
+    };
+    inline vex3<T>& operator()(vex4<bool> b, const vex3<T>& make, const bool& _elif = false) {
         if (_elif) {
             if (b.x) x = make.x;
             else if (b.y) y = make.y;
