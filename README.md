@@ -32,7 +32,7 @@ int main() {
 - [strinx](https://github.com/TYSON-Alii/strinx)
 ### Integrations
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
-- [ImGui Vectors and Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
+- [ImGui Vectors ~~and Functions~~_(Design Feature)_](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
 - [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
 - Some STL Functions
 ## Docs
@@ -139,8 +139,9 @@ std::cin >> vec;
 * OpenGL Functions, GLM Vectors, ImGui Vectors/Functions integration.
 ```cpp
 vex2i vec = glm::vec3(345,435,354); // works.
-ImGui::SliderFloat2("Slider", vec, 0, 100); // works.
+ImGui::SliderFloat2("Slider", *vec/* unary '*' operator returning self adress*/, 0, 100); // works.
 abs(vec);
+ceil(vec);
 ```
 * User Defined Literals.
 ```cpp
@@ -152,6 +153,7 @@ vex3f vec1 = "12 15 18" + vex3f(8,5,2);
 vex2i vec2 = 15 * vex2i(2,3);
 std::vector<float> vec;
 vec << vex2f(1,2); // or vec += vex4d(12,3,21,5)
+vec(/*vex3<bool>*/{true, false, true}, vec + 0.1); // x = x + 0.1 and z = z + 0.1, y not change.
 ```
 * Advanced math functions
 ```cpp
