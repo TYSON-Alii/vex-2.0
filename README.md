@@ -32,7 +32,7 @@ int main() {
 - [strinx](https://github.com/TYSON-Alii/strinx)
 ### Integrations
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
-- [ImGui Vectors ~~and Functions~~_(Design Feature)_](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
+- [ImGui Vectors ~~and Functions~~ _(Design Feature)_](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
 - [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
 - Some STL Functions
 ## Docs
