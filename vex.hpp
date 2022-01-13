@@ -1304,172 +1304,172 @@ template <typename T> inline vex2<T> operator/(const double& l, const vex2<T>& r
 template <typename T> inline vex2<T> operator*(const double& l, const vex2<T>& r) { return vex2<T>(l) * r; };
 
 #if !defined(_VEX_NO_MATH_FUNCS)
-template <typename T, typename T1, typename T2> vex2b limit(vex2<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+template <typename T> vex2b limit(vex2<T>& v, const T& min, const T& max, const bool& _restart = false) {
     vex2b b = false;
-    if (v.x < (T)min) {
-        v.x = _restart ? (T)max : (T)min;
+    if (v.x < min) {
+        v.x = _restart ? max : min;
         b.x = true;
     }
-    else if (v.x > (T)max) {
-        v.x = _restart ? (T)min : (T)max;
+    else if (v.x > max) {
+        v.x = _restart ? min : max;
         b.x = true;
     };
-    if (v.y < (T)min) {
-        v.y = _restart ? (T)max : (T)min;
+    if (v.y < min) {
+        v.y = _restart ? max : min;
         b.y = true;
     }
-    else if (v.y > (T)max) {
-        v.y = _restart ? (T)min : (T)max;
+    else if (v.y > max) {
+        v.y = _restart ? min : max;
         b.y = true;
     };
     return b;
 };
-template <typename T, typename T1, typename T2> vex2b limit(vex2<T>& v, const vex2<T1> min, const vex2<T2> max, const bool& _restart = false) {
+template <typename T> vex2b limit(vex2<T>& v, const vex2<T>& min, const vex2<T>& max, const bool& _restart = false) {
     vex2b b = false;
-    if (v.x < (T)min.x) {
-        v.x = _restart ? (T)max.x : (T)min.x;
+    if (v.x < min.x) {
+        v.x = _restart ? max.x : min.x;
         b.x = true;
     }
-    else if (v.x > (T)max.x) {
-        v.x = _restart ? (T)min.x : (T)max.x;
+    else if (v.x > max.x) {
+        v.x = _restart ? min.x : max.x;
         b.x = true;
     };
-    if (v.y < (T)min.y) {
-        v.y = _restart ? (T)max.y : (T)min.y;
+    if (v.y < min.y) {
+        v.y = _restart ? max.y : min.y;
         b.y = true;
     }
-    else if (v.y > (T)max.y) {
-        v.y = _restart ? (T)min.y : (T)max.y;
+    else if (v.y > max.y) {
+        v.y = _restart ? min.y : max.y;
         b.y = true;
     };
     return b;
 };
 
-template <typename T, typename T1, typename T2> vex3b limit(vex3<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+template <typename T> vex3b limit(vex3<T>& v, const T& min, const T& max, const bool& _restart = false) {
     vex3b b = false;
-    if (v.x < (T)min) {
-        v.x = _restart ? (T)max : (T)min;
+    if (v.x < min) {
+        v.x = _restart ? max : min;
         b.x = true;
     }
-    else if (v.x > (T)max) {
-        v.x = _restart ? (T)min : (T)max;
+    else if (v.x > max) {
+        v.x = _restart ? min : max;
         b.x = true;
     };
-    if (v.y < (T)min) {
-        v.y = _restart ? (T)max : (T)min;
+    if (v.y < min) {
+        v.y = _restart ? max : min;
         b.y = true;
     }
-    else if (v.y > (T)max) {
-        v.y = _restart ? (T)min : (T)max;
+    else if (v.y > max) {
+        v.y = _restart ? min : max;
         b.y = true;
     };
-    if (v.z < (T)min) {
-        v.z = _restart ? (T)max : (T)min;
+    if (v.z < min) {
+        v.z = _restart ? max : min;
         b.z = true;
     }
-    else if (v.z > (T)max) {
-        v.z = _restart ? (T)min : (T)max;
+    else if (v.z > max) {
+        v.z = _restart ? min : max;
         b.z = true;
     };
     return b;
 };
-template <typename T, typename T1, typename T2> vex3b limit(vex3<T>& v, const vex3<T1> min, const vex3<T2> max, const bool& _restart = false) {
+template <typename T> vex3b limit(vex3<T>& v, const vex3<T>& min, const vex3<T>& max, const bool& _restart = false) {
     vex3b b = false;
-    if (v.x < (T)min.x) {
-        v.x = _restart ? (T)max.x : (T)min.x;
+    if (v.x < min.x) {
+        v.x = _restart ? max.x : min.x;
         b.x = true;
     }
-    else if (v.x > (T)max.x) {
-        v.x = _restart ? (T)min.x : (T)max.x;
+    else if (v.x > max.x) {
+        v.x = _restart ? min.x : max.x;
         b.x = true;
     };
-    if (v.y < (T)min.y) {
-        v.y = _restart ? (T)max.y : (T)min.y;
+    if (v.y < min.y) {
+        v.y = _restart ? max.y : min.y;
         b.y = true;
     }
-    else if (v.y > (T)max.y) {
-        v.y = _restart ? (T)min.y : (T)max.y;
+    else if (v.y > max.y) {
+        v.y = _restart ? min.y : max.y;
         b.y = true;
     };
-    if (v.z < (T)min.z) {
-        v.z = _restart ? (T)max.z : (T)min.z;
+    if (v.z < min.z) {
+        v.z = _restart ? max.z : min.z;
         b.z = true;
     }
-    else if (v.z > (T)max.z) {
-        v.z = _restart ? (T)min.z : (T)max.z;
+    else if (v.z > max.z) {
+        v.z = _restart ? min.z : max.z;
         b.z = true;
     };
     return b;
 };
 
-template <typename T, typename T1, typename T2> vex4b limit(vex4<T>& v, const T1 min, const T2 max, const bool& _restart = false) {
+template <typename T> vex4b limit(vex4<T>& v, const T& min, const T& max, const bool& _restart = false) {
     vex4b b = false;
-    if (v.x < (T)min) {
-        v.x = _restart ? (T)max : (T)min;
+    if (v.x < min) {
+        v.x = _restart ? max : min;
         b.x = true;
     }
-    else if (v.x > (T)max) {
-        v.x = _restart ? (T)min : (T)max;
+    else if (v.x > max) {
+        v.x = _restart ? min : max;
         b.x = true;
     };
-    if (v.y < (T)min) {
-        v.y = _restart ? (T)max : (T)min;
+    if (v.y < min) {
+        v.y = _restart ? max : min;
         b.y = true;
     }
-    else if (v.y > (T)max) {
-        v.y = _restart ? (T)min : (T)max;
+    else if (v.y > max) {
+        v.y = _restart ? min : max;
         b.y = true;
     };
-    if (v.z < (T)min) {
-        v.z = _restart ? (T)max : (T)min;
+    if (v.z < min) {
+        v.z = _restart ? max : min;
         b.z = true;
     }
-    else if (v.z > (T)max) {
-        v.z = _restart ? (T)min : (T)max;
+    else if (v.z > max) {
+        v.z = _restart ? min : max;
         b.z = true;
     };
-    if (v.w < (T)min) {
-        v.w = _restart ? (T)max : (T)min;
+    if (v.w < min) {
+        v.w = _restart ? max : min;
         b.w = true;
     }
-    else if (v.w > (T)max) {
-        v.w = _restart ? (T)min : (T)max;
+    else if (v.w > max) {
+        v.w = _restart ? min : max;
         b.w = true;
     };
-    return b;
+    return v;
 };
-template <typename T, typename T1, typename T2> vex4b limit(vex4<T>& v, const vex4<T1> min, const vex4<T2> max, const bool& _restart = false) {
+template <typename T> vex4b limit(vex4<T>& v, const vex4<T>& min, const vex4<T>& max, const bool& _restart = false) {
     vex4b b = false;
-    if (v.x < (T)min.x) {
-        v.x = _restart ? (T)max.x : (T)min.x;
+    if (v.x < min.x) {
+        v.x = _restart ? max.x : min.x;
         b.x = true;
     }
-    else if (v.x > (T)max.x) {
-        v.x = _restart ? (T)min.x : (T)max.x;
+    else if (v.x > max.x) {
+        v.x = _restart ? min.x : max.x;
         b.x = true;
     };
-    if (v.y < (T)min.y) {
-        v.y = _restart ? (T)max.y : (T)min.y;
+    if (v.y < min.y) {
+        v.y = _restart ? max.y : min.y;
         b.y = true;
     }
-    else if (v.y > (T)max.y) {
-        v.y = _restart ? (T)min.y : (T)max.y;
+    else if (v.y > max.y) {
+        v.y = _restart ? min.y : max.y;
         b.y = true;
     };
-    if (v.z < (T)min.z) {
-        v.z = _restart ? (T)max.z : (T)min.z;
+    if (v.z < min.z) {
+        v.z = _restart ? max.z : min.z;
         b.z = true;
     }
-    else if (v.z > (T)max.z) {
-        v.z = _restart ? (T)min.z : (T)max.z;
+    else if (v.z > max.z) {
+        v.z = _restart ? min.z : max.z;
         b.z = true;
     };
-    if (v.w < (T)min.w) {
-        v.w = _restart ? (T)max.w : (T)min.w;
+    if (v.w < min.w) {
+        v.w = _restart ? max.w : min.w;
         b.w = true;
     }
-    else if (v.w > (T)max.w) {
-        v.w = _restart ? (T)min.w : (T)max.w;
+    else if (v.w > max.w) {
+        v.w = _restart ? min.w : max.w;
         b.w = true;
     };
     return v;
