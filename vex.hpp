@@ -58,8 +58,8 @@ struct vex2 {
         v = c;
         return *this;
     };
-    inline vex2<T> operator-() { return vex2<T>(-x, -y); };
     inline vex2<T> operator-() const { return vex2<T>(-x, -y); };
+    inline vex2<T> operator+() const { return vex2<T>(std::abs(x), std::abs(y)); };
     inline T* operator*() { return &x; };
     inline T* operator*() const { return &x; };
 
@@ -275,8 +275,8 @@ struct vex3 {
         v = c;
         return *this;
     };
-    inline vex3<T> operator-() { return vex3<T>(-x, -y, -z); };
     inline vex3<T> operator-() const { return vex3<T>(-x, -y, -z); };
+    inline vex3<T> operator+() const { return vex3<T>(std::abs(x), std::abs(y), std::abs(z)); };
     inline T* operator*() { return &x; };
     inline T* operator*() const { return &x; };
 
@@ -515,8 +515,8 @@ struct vex4 {
         v = c;
         return *this;
     };
-    inline vex4<T> operator-() { return vex4<T>(-x, -y, -z, -w); };
     inline vex4<T> operator-() const { return vex4<T>(-x, -y, -z, -w); };
+    inline vex4<T> operator+() const { return vex4<T>(std::abs(x), std::abs(y), std::abs(z), std::abs(w)); };
     inline T* operator*() { return &x; };
     inline T* operator*() const { return &x; };
 
