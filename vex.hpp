@@ -8,6 +8,10 @@ template <typename T> struct vex4;
 
 template <typename T>
 struct vex2 {
+private:
+    static const vex2<T> X;
+    static const vex2<T> Y;
+public:
     T x, y;
     inline operator T* () { return arr(); };
     inline operator T* () const { return arr(); };
@@ -219,6 +223,11 @@ struct vex2 {
 
 template <typename T>
 struct vex3 {
+private:
+    static const vex3<T> X;
+    static const vex3<T> Y;
+    static const vex3<T> Z;
+public:
     T x, y, z;
     inline operator T* () { return arr(); };
     inline operator T* () const { return arr(); };
@@ -451,6 +460,12 @@ struct vex3 {
 
 template <typename T>
 struct vex4 {
+private:
+    static const vex4<T> X;
+    static const vex4<T> Y;
+    static const vex4<T> Z;
+    static const vex4<T> W;
+public:
     T x, y, z, w;
     inline operator T* () { return arr(); };
     inline operator T* () const { return arr(); };
@@ -706,7 +721,15 @@ struct vex4 {
     friend std::ostream& operator<<(std::ostream& os, const vex4<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w; return os; };
     friend std::istream& operator>>(std::istream& is, vex4<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; std::cout << "w: "; is >> v.w; return is; };
 };
-
+template <typename T> const vex2<T> vex2<T>::X = vex2<T>(1, 0);
+template <typename T> const vex2<T> vex2<T>::Y = vex2<T>(0, 1);
+template <typename T> const vex3<T> vex3<T>::X = vex3<T>(1, 0, 0);
+template <typename T> const vex3<T> vex3<T>::Y = vex3<T>(0, 1, 0);
+template <typename T> const vex3<T> vex3<T>::Z = vex3<T>(0, 0, 1);
+template <typename T> const vex4<T> vex4<T>::X = vex4<T>(1, 0, 0, 0);
+template <typename T> const vex4<T> vex4<T>::Y = vex4<T>(0, 1, 0, 0);
+template <typename T> const vex4<T> vex4<T>::Z = vex4<T>(0, 0, 1, 0);
+template <typename T> const vex4<T> vex4<T>::W = vex4<T>(0, 0, 0, 1);
 #define DelForIntVexs(_type) \
 template<> vex2<_type>& vex2<_type>::normalize() = delete;      \
 template<> vex2<_type> vex2<_type>::normalize() const = delete; \
