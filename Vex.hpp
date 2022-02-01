@@ -1,3 +1,4 @@
+#ifndef _XS_VEX2_
 #define _XS_VEX2_
 #include <vector>
 #include <string>
@@ -177,6 +178,8 @@ struct vex2 {
 
     template <typename _T> inline vex2<T>& operator<<(_T v) { x = v.x; y = v.y; return *this; };
     template <typename _T> inline vex2<T>& operator>>(_T& v) { v.x = x; v.y = y; return *this; };
+    template <typename _T> inline const vex2<T>& operator<<(_T v) const { vex2<T> t; t.x = v.x; t.y = v.y; return *this; };
+    template <typename _T> inline const vex2<T>& operator>>(_T& v) const { v.x = x; v.y = y; return *this; };
 
     inline vex2<T>& normalize() { return *this /= (std::abs(x) > std::abs(y) ? std::abs(x) : std::abs(y)); };
     inline vex2<T> normalize() const { return (*this) / (std::abs(x) > std::abs(y) ? std::abs(x) : std::abs(y)); };
@@ -409,6 +412,8 @@ struct vex3 {
 
     template <typename _T> inline vex3<T>& operator<<(const _T& v) { x = v.x; y = v.y; z = v.z; return *this; };
     template <typename _T> inline vex3<T>& operator>>(_T& v) { v.x = x; v.y = y; v.z = z; return *this; };
+    template <typename _T> inline const vex3<T>& operator<<(const _T& v) const { vex3<T> t; t.x = v.x; t.y = v.y; t.z = v.z; return *this; };
+    template <typename _T> inline const vex3<T>& operator>>(_T& v) const { v.x = x; v.y = y; v.z = z; return *this; };
 
     inline vex3<T>& normalize() { return *this /= (std::abs(x) > std::abs(y) ? std::abs(x) : std::abs(y) > std::abs(z) ? std::abs(y) : std::abs(z)); };
     inline vex3<T> normalize() const { return (*this) / (std::abs(x) > std::abs(y) ? std::abs(x) : std::abs(y) > std::abs(z) ? std::abs(y) : std::abs(z)); };
@@ -667,6 +672,8 @@ struct vex4 {
 
     template <typename _T> inline vex4<T>& operator<<(_T v) { x = v.x; y = v.y; z = v.z; w = v.w; return *this; };
     template <typename _T> inline vex4<T>& operator>>(_T& v) { v.x = x; v.y = y; v.z = z; v.w = w; return *this; };
+    template <typename _T> inline const vex4<T>& operator<<(_T v) const { vex4<T> t; t.x = v.x; t.y = v.y; t.z = v.z; t.w = v.w; return *this; };
+    template <typename _T> inline const vex4<T>& operator>>(_T& v) const { v.x = x; v.y = y; v.z = z; v.w = w; return *this; };
 
     inline vex4<T>& normalize() { return *this /= ((std::abs(x) > std::abs(y) && std::abs(x) > std::abs(z) && std::abs(x) > std::abs(w)) ? std::abs(x) : (std::abs(y) > std::abs(z) && std::abs(y) > std::abs(w)) ? std::abs(y) : (std::abs(z) > std::abs(w)) ? std::abs(z) : std::abs(w)); };
     inline vex4<T> normalize() const { return *this / ((std::abs(x) > std::abs(y) && std::abs(x) > std::abs(z) && std::abs(x) > std::abs(w)) ? std::abs(x) : (std::abs(y) > std::abs(z) && std::abs(y) > std::abs(w)) ? std::abs(y) : (std::abs(z) > std::abs(w)) ? std::abs(z) : std::abs(w)); };
@@ -706,6 +713,36 @@ struct vex4 {
     friend std::ostream& operator<<(std::ostream& os, const vex4<T>& v) { os << v.x << ' ' << v.y << ' ' << v.z << ' ' << v.w; return os; };
     friend std::istream& operator>>(std::istream& is, vex4<T>& v) { std::cout << "x: "; is >> v.x; std::cout << "y: "; is >> v.y; std::cout << "z: "; is >> v.z; std::cout << "w: "; is >> v.w; return is; };
 };
+typedef vex2<bool>          vex2b;
+typedef vex2<float>         vex2f;
+typedef vex2<int>           vex2i;
+typedef vex2<size_t>        vex2ui;
+typedef vex2<double>        vex2d;
+typedef vex2<long double>   vex2ld;
+typedef vex2<long int>      vex2li;
+typedef vex2<long long int> vex2lli;
+typedef vex2<std::string>   vex2s;
+
+typedef vex3<bool>          vex3b;
+typedef vex3<float>         vex3f;
+typedef vex3<int>           vex3i;
+typedef vex3<size_t>        vex3ui;
+typedef vex3<double>        vex3d;
+typedef vex3<long double>   vex3ld;
+typedef vex3<long int>      vex3li;
+typedef vex3<long long int> vex3lli;
+typedef vex3<std::string>   vex3s;
+
+typedef vex4<bool>          vex4b;
+typedef vex4<float>         vex4f;
+typedef vex4<int>           vex4i;
+typedef vex4<size_t>        vex4ui;
+typedef vex4<double>        vex4d;
+typedef vex4<long double>   vex4ld;
+typedef vex4<long int>      vex4li;
+typedef vex4<long long int> vex4lli;
+typedef vex4<std::string>   vex4s;
+
 #define DelForIntVexs(_type) \
 template<> vex2<_type>& vex2<_type>::normalize() = delete;      \
 template<> vex2<_type> vex2<_type>::normalize() const = delete; \
@@ -919,36 +956,6 @@ template<> template<> vex4<size_t>& vex4<size_t>::operator=(std::string v) { x =
 template<> template<> vex4<long int>& vex4<long int>::operator=(std::string v) { x = y = z = w = std::stoi(v.c_str()); return *this; };
 template<> template<> vex4<long long int>& vex4<long long int>::operator=(std::string v) { x = y = z = w = std::stoi(v.c_str()); return *this; };
 template<> template<> vex4<long double>& vex4<long double>::operator=(std::string v) { x = y = z = w = std::stof(v.c_str()); return *this; };
-
-typedef vex2<bool>          vex2b;
-typedef vex2<float>         vex2f;
-typedef vex2<int>           vex2i;
-typedef vex2<size_t>        vex2ui;
-typedef vex2<double>        vex2d;
-typedef vex2<long double>   vex2ld;
-typedef vex2<long int>      vex2li;
-typedef vex2<long long int> vex2lli;
-typedef vex2<std::string>   vex2s;
-
-typedef vex3<bool>          vex3b;
-typedef vex3<float>         vex3f;
-typedef vex3<int>           vex3i;
-typedef vex3<size_t>        vex3ui;
-typedef vex3<double>        vex3d;
-typedef vex3<long double>   vex3ld;
-typedef vex3<long int>      vex3li;
-typedef vex3<long long int> vex3lli;
-typedef vex3<std::string>   vex3s;
-
-typedef vex4<bool>          vex4b;
-typedef vex4<float>         vex4f;
-typedef vex4<int>           vex4i;
-typedef vex4<size_t>        vex4ui;
-typedef vex4<double>        vex4d;
-typedef vex4<long double>   vex4ld;
-typedef vex4<long int>      vex4li;
-typedef vex4<long long int> vex4lli;
-typedef vex4<std::string>   vex4s;
 
 inline vex2f operator""_vex2f(unsigned long long v) { return vex2f(v); };
 inline vex2i operator""_vex2i(unsigned long long v) { return vex2i(v); };
@@ -1481,4 +1488,5 @@ template <typename T> const T& max(const vex4<T>& v) { return (v.x > v.y && v.x 
 template <typename T> const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
 template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y&& v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
 template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
+#endif
 #endif
