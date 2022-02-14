@@ -18,10 +18,10 @@ struct vex2 {
     inline operator strinx() const { return strinx(x) + ' ' + strinx(y); };
 #endif
 #ifdef __VEX2GLM_FUNCS__ // in GLM-Vex.hpp
-    __VEX2GLM_FUNCS__
+    __VEX2GLM_FUNCS__;
 #endif
 #ifdef __VEX2IM_FUNCS__ // in ImGui-Vex.hpp
-        __VEX2IM_FUNCS__
+    __VEX2IM_FUNCS__;
 #endif
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
@@ -231,10 +231,10 @@ struct vex3 {
     inline operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z); };
 #endif
 #ifdef __VEX3GLM_FUNCS__
-    __VEX3GLM_FUNCS__
+    __VEX3GLM_FUNCS__;
 #endif
 #ifdef __VEX3IM_FUNCS__
-        __VEX3IM_FUNCS__
+    __VEX3IM_FUNCS__;
 #endif
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
@@ -460,15 +460,15 @@ struct vex4 {
     inline operator T* () { return arr(); };
     inline operator T* () const { return arr(); };
     inline operator std::string() const { return (std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)); };
-    inline operator char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
+    inline operator const char* () const { return _strdup((std::to_string(x) + ' ' + std::to_string(y) + ' ' + std::to_string(z) + ' ' + std::to_string(w)).c_str()); };
 #ifdef _XS_STRINX_
     inline operator strinx() const { return strinx(x) + ' ' + strinx(y) + ' ' + strinx(z) + ' ' + strinx(w); };
 #endif
 #ifdef __VEX4GLM_FUNCS__
-    __VEX4GLM_FUNCS__
+    __VEX4GLM_FUNCS__;
 #endif
 #ifdef __VEX4IM_FUNCS__
-        __VEX4IM_FUNCS__
+    __VEX4IM_FUNCS__;
 #endif
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
@@ -1049,11 +1049,8 @@ namespace std {
     inline vex2d    ceil(vex2d v) { return vex2d(std::ceil(v.x), std::ceil(v.y)); };
     inline vex2f    floor(vex2f v) { return vex2f(std::floor(v.x), std::floor(v.y)); };
     inline vex2d    floor(vex2d v) { return vex2d(std::floor(v.x), std::floor(v.y)); };
-    inline vex2f    abs(vex2f v) { return vex2f(std::abs(v.x), std::abs(v.y)); };
-    inline vex2d    abs(vex2d v) { return vex2d(std::abs(v.x), std::abs(v.y)); };
-    inline vex2i    abs(vex2i v) { return vex2i(std::abs(v.x), std::abs(v.y)); };
-    inline vex2li   abs(vex2li v) { return vex2li(std::abs(v.x), std::abs(v.y)); };
-    inline vex2lli  abs(vex2lli v) { return vex2lli(std::abs(v.x), std::abs(v.y)); };
+    template <typename T>
+    inline vex2<T>  abs(vex2<T> v) { return vex2<T>(std::abs(v.x), std::abs(v.y)); };
     inline vex2f    round(vex2f v) { return vex2f(std::round(v.x), std::round(v.y)); };
     inline vex2d    round(vex2d v) { return vex2d(std::round(v.x), std::round(v.y)); };
     inline vex2f    trunc(vex2f v) { return vex2f(std::trunc(v.x), std::trunc(v.y)); };
@@ -1090,8 +1087,8 @@ namespace std {
     inline vex3d   ceil(vex3d v) { return vex3f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z)); };
     inline vex3f   floor(vex3f v) { return vex3f(std::floor(v.x), std::floor(v.y), std::floor(v.z)); };
     inline vex3d   floor(vex3d v) { return vex3d(std::floor(v.x), std::floor(v.y), std::floor(v.z)); };
-    inline vex3f   abs(vex3f v) { return vex3f(std::abs(v.x), std::abs(v.y), std::abs(v.z)); };
-    inline vex3d   abs(vex3d v) { return vex3d(std::abs(v.x), std::abs(v.y), std::abs(v.z)); };
+    template <typename T>
+    inline vex3<T> abs(vex3<T> v) { return vex3<T>(std::abs(v.x), std::abs(v.y), std::abs(v.z)); };
     inline vex3f   round(vex3f v) { return vex3f(std::round(v.x), std::round(v.y), std::round(v.z)); };
     inline vex3d   round(vex3d v) { return vex3d(std::round(v.x), std::round(v.y), std::round(v.z)); };
     inline vex3f   trunc(vex3f v) { return vex3f(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z)); };
@@ -1128,8 +1125,8 @@ namespace std {
     inline vex4d   ceil(vex4d v) { return vex4f(std::ceil(v.x), std::ceil(v.y), std::ceil(v.z), std::ceil(v.w)); };
     inline vex4f   floor(vex4f v) { return vex4f(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w)); };
     inline vex4d   floor(vex4d v) { return vex4d(std::floor(v.x), std::floor(v.y), std::floor(v.z), std::floor(v.w)); };
-    inline vex4f   abs(vex4f v) { return vex4f(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); };
-    inline vex4d   abs(vex4d v) { return vex4d(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); };
+    template <typename T>
+    inline vex4<T> abs(vex4<T> v) { return vex4<T>(std::abs(v.x), std::abs(v.y), std::abs(v.z), std::abs(v.w)); };
     inline vex4f   round(vex4f v) { return vex4f(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w)); };
     inline vex4d   round(vex4d v) { return vex4d(std::round(v.x), std::round(v.y), std::round(v.z), std::round(v.w)); };
     inline vex4f   trunc(vex4f v) { return vex4f(std::trunc(v.x), std::trunc(v.y), std::trunc(v.z), std::trunc(v.w)); };
