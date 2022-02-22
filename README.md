@@ -36,7 +36,7 @@ int main() {
 - [Some OpenGL Functions](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GL-Vex.hpp)
 - Some STL Functions
 ## Docs
-### Consturactors
+### Constructors
 ```cpp
 float arr[] { 31,69,42 };
 vex2f vec = 0.f; // set all element.
