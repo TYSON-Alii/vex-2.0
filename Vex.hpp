@@ -750,10 +750,10 @@ template <> inline int sto<int>(const std::string& _str) { return std::stoi(_str
 template <> inline float sto<float>(const std::string& _str) { return std::stof(_str); };
 template <> inline double sto<double>(const std::string& _str) { return std::stod(_str); };
 template <> inline long double sto<long double>(const std::string& _str) { return std::stold(_str); };
-template <> inline size_t sto<size_t>(const std::string& _str) { return (size_t)std::stoi(_str); };
+template <> inline unsigned sto<unsigned>(const std::string& _str) { return (unsigned)std::stoi(_str); };
 template <> inline long sto<long>(const std::string& _str) { return std::stol(_str); };
 template <> inline long long sto<long long>(const std::string& _str) { return std::stoll(_str); };
-//template <> inline unsigned long long sto<unsigned long long>(const std::string& _str) { return std::stoull(_str); };
+template <> inline unsigned long long sto<unsigned long long>(const std::string& _str) { return std::stoull(_str); };
 #endif
 
 #define DelForIntVexs(_type) \
