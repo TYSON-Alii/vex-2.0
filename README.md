@@ -29,7 +29,7 @@ int main() {
 - long int
 - long long int
 - string
-- [strinx](https://github.com/TYSON-Alii/strinx)
+- ~~[strinx](https://github.com/TYSON-Alii/strinx)~~
 ### Integrations
 - [GLM Vectors](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/GLM-Vex.hpp)
 - [ImGui Vectors ~~and Functions~~ _(Design Feature)_](https://github.com/TYSON-Alii/vex-2.0/blob/main/extras/ImGui-Vex.hpp)
