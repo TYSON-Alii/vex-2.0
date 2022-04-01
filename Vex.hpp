@@ -28,7 +28,7 @@ struct vex2 {
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[2]{ x, y }; };
     inline std::vector<T> vec() const { return { x, y }; };
-    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
+    inline std::string str(const std::string& sep = " ", const std::string& end = "") const { return std::to_string(x) + sep + std::to_string(y) + end; };
     vex2() = default;
     vex2(const vex2<T>&) = default;
     template <typename _T> inline vex2(_T* v) { x = T(v[0]); y = T(v[1]); };
@@ -241,7 +241,7 @@ struct vex3 {
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[3]{ x, y, z }; };
     inline std::vector<T> vec() const { return { x, y, z }; };
-    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
+    inline std::string str(const std::string& sep = " ", const std::string& end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + end; };
     vex3() = default;
     vex3(const vex3<T>&) = default;
     template <typename _T> inline vex3(_T v) { x = y = z = T(v); };
@@ -475,7 +475,7 @@ struct vex4 {
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[4]{ x, y, z, w }; };
     inline std::vector<T> vec() const { return { x, y, z, w }; };
-    inline std::string str(const char* sep = " ", const char* end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
+    inline std::string str(const std::string& sep = " ", const std::string& end = "") const { return std::to_string(x) + sep + std::to_string(y) + sep + std::to_string(z) + sep + std::to_string(w) + end; };
     vex4() = default;
     vex4(const vex4<T>&) = default;
     template <typename _T> inline vex4(_T v) { x = y = z = w = T(v); };
