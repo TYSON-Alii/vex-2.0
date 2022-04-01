@@ -1266,12 +1266,12 @@ template <typename T> vex4b limit(vex4<T>& v, const vex4<T>& min, const vex4<T>&
     return v;
 };
 
-template <typename T> const T& max(const vex2<T>& v) { return (v.x > v.y) ? v.x : v.y; };
-template <typename T> const T& max(const vex3<T>& v) { return (v.x > v.y && v.x > v.z) ? v.x : (v.y > v.z) ? v.y : v.z; };
-template <typename T> const T& max(const vex4<T>& v) { return (v.x > v.y && v.x > v.z && v.x > v.w) ? v.x : (v.y > v.z && v.y > v.w) ? v.y : (v.z > v.w) ? v.z : v.w; };
+template <typename T> inline const T& max(const vex2<T>& v) { return (v.x > v.y) ? v.x : v.y; };
+template <typename T> inline const T& max(const vex3<T>& v) { return (v.x > v.y && v.x > v.z) ? v.x : (v.y > v.z) ? v.y : v.z; };
+template <typename T> inline const T& max(const vex4<T>& v) { return (v.x > v.y && v.x > v.z && v.x > v.w) ? v.x : (v.y > v.z && v.y > v.w) ? v.y : (v.z > v.w) ? v.z : v.w; };
 
-template <typename T> const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
-template <typename T> const T& min(const vex3<T>& v) { return (v.x < v.y&& v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
-template <typename T> const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
+template <typename T> inline const T& min(const vex2<T>& v) { return (v.x < v.y) ? v.x : v.y; };
+template <typename T> inline const T& min(const vex3<T>& v) { return (v.x < v.y&& v.x < v.z) ? v.x : (v.y < v.z) ? v.y : v.z; };
+template <typename T> inline const T& min(const vex4<T>& v) { return (v.x < v.y&& v.x < v.z&& v.x < v.w) ? v.x : (v.y < v.z && v.y < v.w) ? v.y : (v.z < v.w) ? v.z : v.w; };
 #endif
 #endif
