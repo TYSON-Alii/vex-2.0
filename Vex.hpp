@@ -1056,6 +1056,10 @@ namespace std {
     template <typename T> std::string to_string(vex4<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
 };
 
+template <> template <typename T> inline vex2<T> sto<vex2<T>>(const std::string& _str) { return std::stov2<T>(_str); };
+template <> template <typename T> inline vex3<T> sto<vex2<T>>(const std::string& _str) { return std::stov3<T>(_str); };
+template <> template <typename T> inline vex4<T> sto<vex2<T>>(const std::string& _str) { return std::stov4<T>(_str); };
+
 template <typename T> std::vector<T>& operator+=(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
 template <typename T> std::vector<T>& operator<<(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
 template <typename T> std::vector<T> operator+(std::vector<T> v, const vex2<T>& i) { std::vector<T> t = v; t.emplace_back({ i.x, i.y }); return t; };
