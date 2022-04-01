@@ -20,10 +20,15 @@ struct vex2 {
 #endif
 #ifdef __VEX2GLM_FUNCS__ // in GLM-Vex.hpp
     __VEX2GLM_FUNCS__;
+#undef __VEX2GLM_FUNCS__
 #endif
 #ifdef __VEX2IM_FUNCS__ // in ImGui-Vex.hpp
     __VEX2IM_FUNCS__;
+#undef __VEX2IM_FUNCS__
 #endif
+    template <int n> T& get();
+    template <> constexpr T& get<0>() { return x; };
+    template <> constexpr T& get<1>() { return y; };
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[2]{ x, y }; };
@@ -233,10 +238,16 @@ struct vex3 {
 #endif
 #ifdef __VEX3GLM_FUNCS__
     __VEX3GLM_FUNCS__;
+#undef __VEX3GLM_FUNCS__
 #endif
 #ifdef __VEX3IM_FUNCS__
     __VEX3IM_FUNCS__;
+#undef __VEX3IM_FUNCS__
 #endif
+    template <int n> T& get();
+    template <> constexpr T& get<0>() { return x; };
+    template <> constexpr T& get<1>() { return y; };
+    template <> constexpr T& get<2>() { return z; };
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[3]{ x, y, z }; };
@@ -467,10 +478,17 @@ struct vex4 {
 #endif
 #ifdef __VEX4GLM_FUNCS__
     __VEX4GLM_FUNCS__;
+#undef __VEX4GLM_FUNCS__
 #endif
 #ifdef __VEX4IM_FUNCS__
     __VEX4IM_FUNCS__;
+#undef __VEX4IM_FUNCS__
 #endif
+    template <int n> T& get();
+    template <> constexpr T& get<0>() { return x; };
+    template <> constexpr T& get<1>() { return y; };
+    template <> constexpr T& get<2>() { return z; };
+    template <> constexpr T& get<3>() { return w; };
     inline T* data() { return &x; };
     inline T* data() const { return &x; };
     inline T* arr() const { return new T[4]{ x, y, z, w }; };
@@ -1054,11 +1072,14 @@ namespace std {
     template <typename T> std::string to_string(vex2<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
     template <typename T> std::string to_string(vex3<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
     template <typename T> std::string to_string(vex4<T> v, const std::string& sep = " ", const std::string& end = "") { return v.str(sep, end); };
+    
+    //template <unsigned n, typename T> T& get(vex2<T>&);
+    //template <typename T> constexpr T& get<0>(vex2<T>& v) { return v.x; };
 };
 
-template <> template <typename T> inline vex2<T> sto<vex2<T>>(const std::string& _str) { return std::stov2<T>(_str); };
-template <> template <typename T> inline vex3<T> sto<vex2<T>>(const std::string& _str) { return std::stov3<T>(_str); };
-template <> template <typename T> inline vex4<T> sto<vex2<T>>(const std::string& _str) { return std::stov4<T>(_str); };
+//template <> template <typename T> inline vex2<T> sto<vex2<T>>(const std::string& _str) { return std::stov2<T>(_str); };
+//template <> template <typename T> inline vex3<T> sto<vex3<T>>(const std::string& _str) { return std::stov3<T>(_str); };
+//template <> template <typename T> inline vex4<T> sto<vex4<T>>(const std::string& _str) { return std::stov4<T>(_str); };
 
 template <typename T> std::vector<T>& operator+=(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
 template <typename T> std::vector<T>& operator<<(std::vector<T>& v, const vex2<T>& i) { v.emplace_back({ i.x, i.y }); return v; };
