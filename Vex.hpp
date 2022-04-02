@@ -740,6 +740,7 @@ typedef vex2<double>        vex2d;
 typedef vex2<long double>   vex2ld;
 typedef vex2<long int>      vex2li;
 typedef vex2<long long int> vex2lli;
+typedef vex2<unsigned char> vex2b;
 typedef vex2<std::string>   vex2s;
 
 typedef vex3<bool>          vex3b;
@@ -750,6 +751,7 @@ typedef vex3<double>        vex3d;
 typedef vex3<long double>   vex3ld;
 typedef vex3<long int>      vex3li;
 typedef vex3<long long int> vex3lli;
+typedef vex3<unsigned char> vex3b;
 typedef vex3<std::string>   vex3s;
 
 typedef vex4<bool>          vex4b;
@@ -760,6 +762,7 @@ typedef vex4<double>        vex4d;
 typedef vex4<long double>   vex4ld;
 typedef vex4<long int>      vex4li;
 typedef vex4<long long int> vex4lli;
+typedef vex4<unsigned char> vex4b;
 typedef vex4<std::string>   vex4s;
 
 #ifndef XS_UTILITY
@@ -785,6 +788,7 @@ DelForIntVexs(int)
 DelForIntVexs(size_t)
 DelForIntVexs(long int)
 DelForIntVexs(long long int)
+DelForIntVexs(unsigned char)
 
 #undef DelForIntVexs
 
@@ -965,6 +969,7 @@ typedef vex2<double>        v2d;   \
 typedef vex2<long double>   v2ld;  \
 typedef vex2<long int>      v2li;  \
 typedef vex2<long long int> v2lli; \
+typedef vex2<unsigned char> v2b;   \
 typedef vex2<std::string>   v2s;   \
                                    \
 typedef vex3<bool>          v3b;   \
@@ -975,6 +980,7 @@ typedef vex3<double>        v3d;   \
 typedef vex3<long double>   v3ld;  \
 typedef vex3<long int>      v3li;  \
 typedef vex3<long long int> v3lli; \
+typedef vex3<unsigned char> v3b;   \
 typedef vex3<std::string>   v3s;   \
                                    \
 typedef vex4<bool>          v4b;   \
@@ -985,6 +991,7 @@ typedef vex4<double>        v4d;   \
 typedef vex4<long double>   v4ld;  \
 typedef vex4<long int>      v4li;  \
 typedef vex4<long long int> v4lli; \
+typedef vex4<unsigned char> v4b;   \
 typedef vex4<std::string>   v4s;
 
 #if !defined(_VEX_NO_SHORT_NAMES)
@@ -1290,6 +1297,13 @@ template <typename T> vex4b limit(vex4<T>& v, const vex4<T>& min, const vex4<T>&
     };
     return v;
 };
+
+inline vex2f lerp(const vex2f& a, const vex2f& b, const vex2f& t) { return {std::lerp(a.x,b.x,t.x),std::lerp(a.y,b.y,t.y)}; };
+inline vex3f lerp(const vex3f& a, const vex3f& b, const vex3f& t) { return {std::lerp(a.x,b.x,t.x),std::lerp(a.y,b.y,t.y),std::lerp(a.z,b.z,t.z)}; };
+inline vex4f lerp(const vex4f& a, const vex4f& b, const vex4f& t) { return {std::lerp(a.x,b.x,t.x),std::lerp(a.y,b.y,t.y),std::lerp(a.z,b.z,t.z),std::lerp(a.w,b.w,t.w)}; };
+template <typename T> inline vex2<T> mix(const vex2<T>& a, const vex2<T>& b) { return (a + b) / 2; };
+template <typename T> inline vex3<T> mix(const vex3<T>& a, const vex3<T>& b) { return (a + b) / 2; };
+template <typename T> inline vex4<T> mix(const vex4<T>& a, const vex4<T>& b) { return (a + b) / 2; };
 
 template <typename T> inline const T& max(const vex2<T>& v) { return (v.x > v.y) ? v.x : v.y; };
 template <typename T> inline const T& max(const vex3<T>& v) { return (v.x > v.y && v.x > v.z) ? v.x : (v.y > v.z) ? v.y : v.z; };
